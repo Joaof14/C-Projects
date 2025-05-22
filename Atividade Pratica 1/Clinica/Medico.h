@@ -6,7 +6,7 @@ enum ESPECIALIDADE {CLÍNICO, PEDIATRA, CARDIOLOGISTA};
 
 struct Medico
 {
-    char Nome[200];
+    char Nome[100];
     char CRM[14];
     enum ESPECIALIDADE especialidade;
 
