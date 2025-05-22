@@ -5,7 +5,8 @@
 // Ir Para Consulta ------
 // Ir Para Relatórios ----
 
-#include "Medico.h"
+#include <stdio.h>
+#include "medico.h"
 #include "Consulta.h"
 #include "Paciente.h"
 #include "Relatorios.h"
