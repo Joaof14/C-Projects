@@ -13,6 +13,14 @@ void listarMedicos(){
 
 }
 
+void removerMedicos(){
+
+}
+
+void atualizarMedicos(){
+    
+}
+
 void Medico(){
     
 }
