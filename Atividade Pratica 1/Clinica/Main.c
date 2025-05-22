@@ -6,9 +6,11 @@
 // Ir Para Relatórios ----
 
 #include <stdio.h>
-#include "medico.h"
-#include "Consulta.h"
+#include <stdlib.h>
+#include "Medico.h"
 #include "Paciente.h"
-#include "Relatorios.h"
+#include "Consulta.h"
+#include "Relatorio.h"
+
 
 
