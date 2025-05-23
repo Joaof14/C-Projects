@@ -3,28 +3,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 void relatorioConsultaPacientes(); {
 
-
-
+printf("Relatorio de Consultas.\n");
 
 }
 
 void relatorioConsultaMedicos(); {
 
+printf("Relatorio de Medicos.\n");
 
 
 }
 
 void relatorioConsultaPorEspecialidae(); {
 
-
+printf("Relatorio Por especialidade.\n");
 
 }
 
 void relatorioConsultaDiaAtual(); {
 
-
+printf("Relatorio de Consulta.\n");
 
 
 }
