@@ -4,26 +4,26 @@
 #include <string.h>
 
 
-void relatorioConsultaPacientes(); {
+void relatorioConsultaPacientes() {
 
 printf("Relatorio de Consultas.\n");
 
 }
 
-void relatorioConsultaMedicos(); {
+void relatorioConsultaMedicos() {
 
 printf("Relatorio de Medicos.\n");
 
 
 }
 
-void relatorioConsultaPorEspecialidae(); {
+void relatorioConsultaPorEspecialidae() {
 
 printf("Relatorio Por especialidade.\n");
 
 }
 
-void relatorioConsultaDiaAtual(); {
+void relatorioConsultaDiaAtual() {
 
 printf("Relatorio de Consulta.\n");
 
