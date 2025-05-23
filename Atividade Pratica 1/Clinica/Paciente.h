@@ -2,17 +2,19 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
 
-typedef struct {
+struct Paciente{
     char nome[100];
-    char cpf[15];
-    char telefone[20];
-} Paciente;
+    char cpf[11];
+    char Telefone[11];
+} ;
+
+void cadastrarPaciente();
+
+void listarPaciente();
+
+void atualizarPacientes();
+
+void removerPaciente();
 
 void menuPaciente();
-void cadastrarPaciente();
-void removerPaciente();
-void editarPaciente();
-
-
-#endif
 
