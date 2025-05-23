@@ -10,7 +10,7 @@
 #include "Medico.h"
 #include "Paciente.h"
 #include "Consulta.h"
-#include "Relatorio.h"
+#include "Relatorios.h"
 
 
 
