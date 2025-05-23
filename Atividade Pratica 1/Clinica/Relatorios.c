@@ -6,17 +6,26 @@
 void relatorioConsultaPacientes(); {
 
 
+
+
 }
 
 void relatorioConsultaMedicos(); {
+
+
 
 }
 
 void relatorioConsultaPorEspecialidae(); {
 
+
+
 }
 
 void relatorioConsultaDiaAtual(); {
+
+
+
 
 }
 
