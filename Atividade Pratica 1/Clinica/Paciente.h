@@ -18,3 +18,4 @@ void removerPaciente();
 
 void menuPaciente();
 
+#endif
