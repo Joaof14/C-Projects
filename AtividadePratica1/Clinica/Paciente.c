@@ -3,18 +3,22 @@
 #include <stdio.h>
 
 void cadastrarPaciente(){
+    printf("Cadastro de Paciente");
 
 }
 
 void listarPaciente(){
+    printf("Listar Pacientes");
 
 }
 
 void atualizarPaciente(){
+    printf("Atualizar Paciente");
 
 }
 
 void removerPaciente(){
+    printf("Remover Paciente");
 
 }
 
