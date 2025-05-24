@@ -58,7 +58,7 @@ void menuPaciente(){
             case 3:
                 removerPaciente();
                 break;
-            case 4:
+            case 4: //Remover depois
                 listarPaciente();
                 break;
             default:
