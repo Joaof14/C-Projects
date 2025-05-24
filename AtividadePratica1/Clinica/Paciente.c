@@ -9,7 +9,9 @@ void cadastrarPaciente()
     if (arquivo == NULL) {
         arquivo = fopen("Arquivos/Pacientes.txt", "w");
         fclose(arquivo);
-    } 
+    } else {
+        fclose(arquivo);
+    }
     fclose(arquivo);
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
     char nome[100];
