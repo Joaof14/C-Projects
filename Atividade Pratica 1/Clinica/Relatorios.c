@@ -30,10 +30,8 @@ void relatorioConsultaDiaAtual() {
 
 }
 
-
-int main() //Menu Relatorios
-    
-{
+   
+void menuRelatorios() {
     int opcao;
     do
     {
@@ -64,6 +62,7 @@ int main() //Menu Relatorios
                 printf("Opcao invalida! Tente novamente.\n");
         }
     } while (opcao != 5);
-
-    return 0;
+      
 }
+
+
