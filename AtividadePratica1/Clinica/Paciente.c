@@ -30,7 +30,7 @@ void menuPaciente(){
         printf("1. Cadastrar Paciente\n");
         printf("2. Atualizar Paciente\n");
         printf("3. Remover Paciente\n");
-        printf("4. Voltar\n");
+        printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 

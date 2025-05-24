@@ -19,21 +19,20 @@ int main (){
         //Switch case para decidir o menu que será encaminhado
         switch (n)
         {
+        case 0:
+            printf("Fechando programa");
+            break;
         case 1:
             menuMedico();
             break;
-            
         case 2:
             menuPaciente();
-            /* code */
             break;
         case 3:
             menuRelatorios();
-            /* code */
             break;
         case 4:
             menuConsultas();
-            /* code */
             break;
         
         default:

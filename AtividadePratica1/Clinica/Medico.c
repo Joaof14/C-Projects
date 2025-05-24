@@ -32,12 +32,15 @@ void menuMedico(){
         printf("1. Cadastrar Medico\n");
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
-        printf("4. Voltar\n");
+        printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
         {
+            case 0:
+                printf("Fechando programa");
+                break;
             case 1:
                 cadastrarMedico();
                 break;
