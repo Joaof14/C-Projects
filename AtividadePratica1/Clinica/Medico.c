@@ -28,7 +28,7 @@ void menuMedico(){
     int opcao;
     do
     {
-        printf("Menu Principal de Médicos\n");
+        printf("\n\n\n\n\nMenu Principal de Médicos\n");
         printf("1. Cadastrar Medico\n");
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
@@ -39,7 +39,7 @@ void menuMedico(){
         switch (opcao)
         {
             case 0:
-                printf("Fechando programa");
+                return;
                 break;
             case 1:
                 cadastrarMedico();
