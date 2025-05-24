@@ -5,11 +5,23 @@
 void cadastrarPaciente()
 {
     printf("Cadastrar Novo Paciente\n");
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (arquivo == NULL) {
+        arquivo = fopen("Arquivos/Pacientes.txt", "w");
+        if (arquivo == NULL) {
+            printf("Erro ao criar o arquivo!\n");
+            return;
+        }
+        fclose(arquivo);
+    }
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
     char nome[100];
     char cpf[12];
     char contato[20];
-
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
     printf("Digite o nome do paciente: ");
     getchar(); // Limpa o buffer do teclado
     fgets(nome, sizeof(nome), stdin);
@@ -29,19 +41,29 @@ void cadastrarPaciente()
 
 void listarPaciente()
 {
-    printf("Pacientes Cadastrados\n");
-    fopen("Pacientes.txt", "r");
+    printf("Lista de Pacientes:\n");
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    char nome[100];
-    int cpf;
-    int contato;
+    if (arquivo == NULL) {
+        printf("Nenhum paciente cadastrado ou erro ao abrir o arquivo!\n");
+        return;
+    }
+    char linha[200];
+    int contador = 1;
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nome[100], cpf[20], contato[30];
+        char *token = strtok(linha, ",");
+        if (token != NULL) strcpy(nome, token);
+        token = strtok(NULL, ",");
+        if (token != NULL) strcpy(cpf, token);
+        token = strtok(NULL, ",\n");
+        if (token != NULL) strcpy(contato, token);
 
-    while (fscanf(arquivo, "%s,%d,%d", nome, &cpf, &contato) != EOF)
-    {
-        printf("Nome: %s, CPF: %d, Contato: %d\n", nome, cpf, contato);
+        printf("Paciente %d:\n", contador++);
+        printf("  Nome: %s\n", nome);
+        printf("  CPF: %s\n", cpf);
+        printf("  Contato: %s\n\n", contato);
     }
     fclose(arquivo);
-    printf("\n");
 }
 
 void atualizarPaciente()
