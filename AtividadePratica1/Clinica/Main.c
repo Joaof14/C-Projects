@@ -12,7 +12,7 @@ int main (){
 
     do {
         //Recebimento de valor para tomada de decisão
-        printf("Sistema de Gerenciamento Clínico\n.Menus: \n");
+        printf("\nSistema de Gerenciamento Clínico\n.Menus: \n");
         printf("1. Médicos\n2. Pacientes\n3. Relatorios\n4. Consultas\n0. Sair\nEscolha a opção que voce quer acessar: ");
         scanf("%d", &n);
 
@@ -20,7 +20,7 @@ int main (){
         switch (n)
         {
         case 0:
-            printf("Fechando programa");
+            printf("Fechando programa\n");
             break;
         case 1:
             menuMedico();
