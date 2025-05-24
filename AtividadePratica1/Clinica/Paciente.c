@@ -11,7 +11,7 @@ void listarPaciente(){
     printf("Pacientes Cadastrados\n");
     fopen("Pacientes.txt", "r");
     FILE *file = fopen("Pacientes.txt", "r");
-    char linha;
+    char linha [256];
     while (fgets(linha, sizeof(linha), file) != NULL) {
         printf("%s", linha);
     }
