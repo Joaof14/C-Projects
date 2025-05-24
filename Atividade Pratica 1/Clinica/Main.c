@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "Medico.h"
@@ -25,20 +24,20 @@ int main (){
             break;
             
         case 2:
-        menuPaciente();
+            menuPaciente();
             /* code */
             break;
         case 3:
-        menuRelatorios();
+            menuRelatorios();
             /* code */
             break;
         case 4:
-        menuConsultas();
+            menuConsultas();
             /* code */
             break;
         
         default:
-        printf("Opção inválida");
+            printf("Opção inválida");
             break;
         }
         
