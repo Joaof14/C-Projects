@@ -3,23 +3,26 @@
 #include <string.h>
 #include "Medico.h"
 
-void cadastrarMedico() {
-   
-    printf("Você está cadastrando um Medico"); 
+void cadastrarMedico(){
+    printf("Cadastro de Medico");
 
 }
 
-void listarMedicos(){
-
-}
-
-void removerMedico(){
+void listarMedico(){
+    printf("Listar Medicos");
 
 }
 
 void atualizarMedico(){
-    
+    printf("Atualizar Medico");
+
 }
+
+void removerMedico(){
+    printf("Remover Medico");
+
+}
+
 
 void menuMedico(){
     int opcao;
