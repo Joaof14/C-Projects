@@ -35,7 +35,7 @@ void menuRelatorios() {
     int opcao;
     do
     {
-        printf("Menu Principal\n");
+        printf("\nMenu Principal\n");
         printf("1. Relatório de Consultas (Pacientes)\n");
         printf("2. Relatório de Consultas (Medicos)\n");
         printf("3. Relatório de Consulta (Especialidade)\n");

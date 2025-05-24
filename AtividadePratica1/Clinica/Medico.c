@@ -28,7 +28,7 @@ void menuMedico(){
     int opcao;
     do
     {
-        printf("\n\n\n\n\nMenu Principal de Médicos\n");
+        printf("\nMenu Principal de Médicos\n");
         printf("1. Cadastrar Medico\n");
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
