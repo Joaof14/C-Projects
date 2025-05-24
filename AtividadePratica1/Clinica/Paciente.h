@@ -12,7 +12,7 @@ void cadastrarPaciente();
 
 void listarPaciente();
 
-void atualizarPacientes();
+void atualizarPaciente();
 
 void removerPaciente();
 
