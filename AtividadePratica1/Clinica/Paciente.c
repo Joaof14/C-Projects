@@ -1,39 +1,53 @@
 #include <stdio.h>
-#include <string.h> 
+#include <string.h>
 #include <stdio.h>
 
-void cadastrarPaciente(){
-    printf("Cadastro de Paciente");
-
+void cadastrarPaciente()
+{
+    printf("Cadastrar Novo Paciente\n");
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "w");
+    char nome[100];
+    int cpf;
+    int contato;
+    printf("Digite o nome do paciente: ");
+    scanf("%s", nome);
+    printf("Digite o CPF do paciente: ");
+    scanf("%d", &cpf);
+    printf("Digite o contato do paciente: ");
+    scanf("%d", &contato);
+    fprintf(arquivo, "%s,%d,%d\n", nome, cpf, contato);
+    fclose(arquivo);
 }
 
-void listarPaciente(){
+void listarPaciente()
+{
     printf("Pacientes Cadastrados\n");
     fopen("Pacientes.txt", "r");
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    char nome [100];
+    char nome[100];
     int cpf;
     int contato;
 
-    while (fscanf(arquivo, "%s,%d,%d", nome, &cpf, &contato) != EOF) {
+    while (fscanf(arquivo, "%s,%d,%d", nome, &cpf, &contato) != EOF)
+    {
         printf("Nome: %s, CPF: %d, Contato: %d\n", nome, cpf, contato);
     }
     fclose(arquivo);
     printf("\n");
-
 }
 
-void atualizarPaciente(){
+void atualizarPaciente()
+{
     printf("Atualizar Paciente");
-
 }
 
-void removerPaciente(){
+void removerPaciente()
+{
     printf("Remover Paciente");
-
 }
 
-void menuPaciente(){
+void menuPaciente()
+{
     int opcao;
     do
     {
@@ -46,24 +60,24 @@ void menuPaciente(){
         scanf("%d", &opcao);
 
         switch (opcao)
-        {   case 0:
-                return;
-                break;
-            case 1:
-                cadastrarPaciente();
-                break;
-            case 2:
-                atualizarPaciente();
-                break;
-            case 3:
-                removerPaciente();
-                break;
-            case 4: //Remover depois
-                listarPaciente();
-                break;
-            default:
-                printf("Opcao invalida! Tente novamente.\n");
+        {
+        case 0:
+            return;
+            break;
+        case 1:
+            cadastrarPaciente();
+            break;
+        case 2:
+            atualizarPaciente();
+            break;
+        case 3:
+            removerPaciente();
+            break;
+        case 4: // Remover depois
+            listarPaciente();
+            break;
+        default:
+            printf("Opcao invalida! Tente novamente.\n");
         }
     } while (opcao != 5);
-
 }
