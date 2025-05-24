@@ -5,17 +5,25 @@
 void cadastrarPaciente()
 {
     printf("Cadastrar Novo Paciente\n");
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "w");
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
     char nome[100];
-    int cpf;
-    int contato;
+    char cpf[12];
+    char contato[20];
+
     printf("Digite o nome do paciente: ");
-    scanf("%s", nome);
+    getchar(); // Limpa o buffer do teclado
+    fgets(nome, sizeof(nome), stdin);
+    nome[strcspn(nome, "\n")] = 0; // Remove o \n do final
+
     printf("Digite o CPF do paciente: ");
-    scanf("%d", &cpf);
+    fgets(cpf, sizeof(cpf), stdin);
+    cpf[strcspn(cpf, "\n")] = 0;
+
     printf("Digite o contato do paciente: ");
-    scanf("%d", &contato);
-    fprintf(arquivo, "%s,%d,%d\n", nome, cpf, contato);
+    fgets(contato, sizeof(contato), stdin);
+    contato[strcspn(contato, "\n")] = 0;
+
+    fprintf(arquivo, "%s,%s,%s\n", nome, cpf, contato);
     fclose(arquivo);
 }
 
