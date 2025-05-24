@@ -10,10 +10,13 @@ void cadastrarPaciente(){
 void listarPaciente(){
     printf("Pacientes Cadastrados\n");
     fopen("Pacientes.txt", "r");
-    FILE *file = fopen("Arquivos/Pacientes.txt", "r");
-    char linha [256];
-    while (fgets(linha, sizeof(linha), file) != NULL) {
-        printf("%s", linha);
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    char nome [100];
+    int cpf;
+    int contato;
+
+    while (fscanf(arquivo, "%s, %d, %d", nome, &cpf, &contato) != EOF) {
+        printf("Nome: %s, CPF: %d, Contato: %d\n", nome, cpf, contato);
     }
     fclose(file);
     printf("\n");
