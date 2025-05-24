@@ -56,6 +56,7 @@ void menuPaciente(){
                 removerPaciente();
                 break;
             case 4:
+                listarPaciente();
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
