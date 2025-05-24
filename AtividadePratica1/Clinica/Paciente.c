@@ -18,7 +18,7 @@ void listarPaciente(){
     while (fscanf(arquivo, "%s,%d,%d", nome, &cpf, &contato) != EOF) {
         printf("Nome: %s, CPF: %d, Contato: %d\n", nome, cpf, contato);
     }
-    fclose(file);
+    fclose(arquivo);
     printf("\n");
 
 }
