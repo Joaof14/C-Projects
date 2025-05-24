@@ -34,7 +34,7 @@ void cadastrarPaciente()
     fgets(contato, sizeof(contato), stdin);
     contato[strcspn(contato, "\n")] = 0;
 
-    fprintf(arquivo, "%s,%s,%s\n", nome, cpf, contato);
+    fprintf(arquivo, "\n%s,%s,%s", nome, cpf, contato);
     fclose(arquivo);
 }
 
