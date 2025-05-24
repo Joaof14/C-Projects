@@ -8,12 +8,9 @@ void cadastrarPaciente()
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
     if (arquivo == NULL) {
         arquivo = fopen("Arquivos/Pacientes.txt", "w");
-        if (arquivo == NULL) {
-            printf("Erro ao criar o arquivo!\n");
-            return;
-        }
         fclose(arquivo);
-    }
+    } 
+    fclose(arquivo);
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
     char nome[100];
     char cpf[12];
@@ -73,7 +70,8 @@ void atualizarPaciente()
 
 void removerPaciente()
 {
-    printf("Remover Paciente");
+
+
 }
 
 void menuPaciente()
