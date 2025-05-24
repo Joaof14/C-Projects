@@ -8,14 +8,10 @@ void cadastrarPaciente(){
 }
 
 void listarPaciente(){
-    printf("Listar Pacientes");
+    printf("Pacientes Cadastrados\n");
     fopen("Pacientes.txt", "r");
     FILE *file = fopen("Pacientes.txt", "r");
-    if (file == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return;
-    }
-    char linha[256];
+    char linha;
     while (fgets(linha, sizeof(linha), file) != NULL) {
         printf("%s", linha);
     }
