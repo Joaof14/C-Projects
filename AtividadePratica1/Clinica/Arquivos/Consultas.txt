@@ -1,1 +1,1 @@
-id,paciente,medico,data,hora,status
+id,Paciente,Medico,Data,Hora,Status
