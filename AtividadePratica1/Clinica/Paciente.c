@@ -38,16 +38,18 @@ void menuPaciente(){
     int opcao;
     do
     {
-        printf("Menu Principal de Pacientes\n");
+        printf("\n\n\n\n\nMenu Principal de Pacientes\n");
         printf("1. Cadastrar Paciente\n");
         printf("2. Atualizar Paciente\n");
         printf("3. Remover Paciente\n");
-        printf("4. Voltar\n");
+        printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
-        {
+        {   case 0:
+                return;
+                break;
             case 1:
                 cadastrarPaciente();
                 break;

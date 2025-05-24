@@ -40,12 +40,15 @@ void menuRelatorios() {
         printf("2. Relatório de Consultas (Medicos)\n");
         printf("3. Relatório de Consulta (Especialidade)\n");
         printf("4. Relatório de Consulta Dia Atual\n");
-        printf("5. Sair\n");
+        printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
         {
+            case 0:
+                printf("Voltando");
+                break;
             case 1:
                 relatorioConsultaPacientes();
                 break;
