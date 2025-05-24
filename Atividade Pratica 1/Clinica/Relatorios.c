@@ -6,32 +6,32 @@
 
 void relatorioConsultaPacientes() {
 
-printf("Relatorio de Consultas.\n");
+    printf("Relatorio de Consultas.\n");
 
 }
 
 void relatorioConsultaMedicos() {
 
-printf("Relatorio de Medicos.\n");
+    printf("Relatorio de Medicos.\n");
 
 
 }
 
 void relatorioConsultaPorEspecialidae() {
 
-printf("Relatorio Por especialidade.\n");
+    printf("Relatorio Por especialidade.\n");
 
 }
 
 void relatorioConsultaDiaAtual() {
 
-printf("Relatorio de Consulta.\n");
+    printf("Relatorio de Consulta.\n");
 
 
 }
 
 
-int main()
+int main() //Menu Relatorios
     
 {
     int opcao;
