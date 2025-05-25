@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "medico.h": "c",
-        "consulta.h": "c"
+        "consulta.h": "c",
+        "stdlib.h": "c"
     }
 }
