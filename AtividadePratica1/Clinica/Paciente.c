@@ -1,41 +1,69 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include "Paciente.h"
+#include "Auxiliar.h"
 
 void cadastrarPaciente()
 {
-    printf("Cadastrar Novo Paciente\n");
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (arquivo == NULL) {
-        arquivo = fopen("Arquivos/Pacientes.txt", "w");
-        fclose(arquivo);
-    } else {
-        fclose(arquivo);
-    }
-    fclose(arquivo);
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
-    char nome[100];
-    char cpf[12];
-    char contato[20];
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
+    criarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Telefone");
+
+    // Alocar memória para o paciente
+    Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
+    if (novo == NULL) {
+        printf("Erro de alocação de memória!\n");
         return;
     }
-    printf("Digite o nome do paciente: ");
-    getchar(); // Limpa o buffer do teclado
-    fgets(nome, sizeof(nome), stdin);
-    nome[strcspn(nome, "\n")] = 0; // Remove o \n do final
 
-    printf("Digite o CPF do paciente: ");
-    fgets(cpf, sizeof(cpf), stdin);
-    cpf[strcspn(cpf, "\n")] = 0;
+    // Coletar dados usando ponteiros
+    printf("\n--- Novo Paciente ---\n");
+    
+    printf("Nome: ");
+    lerString(novo->nome, sizeof(novo->nome));
 
-    printf("Digite o contato do paciente: ");
-    fgets(contato, sizeof(contato), stdin);
-    contato[strcspn(contato, "\n")] = 0;
+    printf("CPF (11 dígitos): ");
+    lerString(novo->cpf, sizeof(novo->cpf));
 
-    fprintf(arquivo, "\n%s,%s,%s", nome, cpf, contato);
-    fclose(arquivo);
+    printf("Telefone: ");
+    lerString(novo->Telefone, sizeof(novo->Telefone));
+
+    // Menu de opções
+    int opcao;
+    do {
+        printf("\n1. Salvar\n");
+        printf("2. Sair sem salvar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+        getchar(); // Limpar buffer
+
+        switch(opcao) {
+            case 1:
+                // Salvar no arquivo
+                FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
+                if (arquivo) {
+                    fprintf(arquivo, "\n%s,%s,%s", 
+                            novo->nome, 
+                            novo->cpf, 
+                            novo->Telefone);
+                    fclose(arquivo);
+                    printf("Paciente salvo com sucesso!\n");
+                } else {
+                    printf("Erro ao abrir arquivo!\n");
+                }
+                break;
+                
+            case 2:
+                printf("Cadastro descartado.\n");
+                break;
+                
+            default:
+                printf("Opção inválida!\n");
+                continue;
+        }
+    } while(opcao < 1 || opcao > 2);
+
+    free(novo); // Liberar memória
 }
 
 void listarPaciente()

@@ -1,5 +1,10 @@
 #include "Relatorios.h"
 #include "Consulta.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 
 void listarConsultas(){
@@ -45,7 +50,7 @@ void menuConsultas(){
                 cancelarConsulta();
                 break;
             case 4: //Remover depois
-                listarConsulta();
+                listarConsultas();
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");

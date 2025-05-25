@@ -3,10 +3,10 @@
 
 void criarArquivo();
 
-void lerArquivo();
+void lerString(char *destino, int tamanho);
 
-void alterarArquivo();
+void removerQuebraLinha(char *str);
 
-void lerArquivo();
+
 
 #endif

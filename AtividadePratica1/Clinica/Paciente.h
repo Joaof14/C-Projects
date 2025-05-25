@@ -2,11 +2,11 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
 
-struct Paciente{
+typedef struct {
     char nome[100];
     char cpf[11];
     char Telefone[11];
-} ;
+} Paciente;
 
 void cadastrarPaciente();
 

@@ -3,27 +3,33 @@
 #include <string.h>
 #include "Auxiliar.h"
 
+void removerQuebraLinha(char *str) {
+    while (*str != '\0') {
+        if (*str == '\n') {
+            *str = '\0'; // Substitui quebra de linha por terminador
+            break;
+        }
+        str++;
+    }
+}
 
-
-void criarArquivo(const char *caminho){
+void criarArquivo(const char *caminho, const char *colunas) {
     FILE *arquivo = fopen(caminho, "r");
-    
-
-    if (arquivo == NULL){
+    if (arquivo == NULL) {
         arquivo = fopen(caminho, "w");
-        fclose(arquivo);
+        if (arquivo != NULL) {
+            // Adiciona quebra de linha após os cabeçalhos
+            fprintf(arquivo, "%s", colunas); // "\n" no final
+            fclose(arquivo);
+        } else {
+            printf("Erro ao criar o arquivo: %s\n", caminho);
+        }
+    } else {
+        fclose(arquivo); // Arquivo já existe
     }
-    else{
-        fclose(arquivo);
-    }
 }
 
-void lerArquivo(const char *caminho, int *totalLinhas){
-    
-
+void lerString(char *destino, int tamanho) {
+    scanf(" %[^\n]", destino); // Lê até encontrar '\n'
+    removerQuebraLinha(destino); // Remove a quebra de linha (se houver)
 }
-
-void alterarArquivo(const char *caminho, const char *modo, const char *conteudo ){
-
-}
-

@@ -2,6 +2,7 @@
     "files.associations": {
         "medico.h": "c",
         "consulta.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "relatorios.h": "c"
     }
 }
