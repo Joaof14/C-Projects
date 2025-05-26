@@ -1,2 +1,6 @@
 Nome,CRM,Especialidade,Contato
 joao pedro,123456,0,232223
+joao,123123,2,123
+joao,223333,2,2222
+joao,232323,4,123123
+oooo  ss,122321,4,234

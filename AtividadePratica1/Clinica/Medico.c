@@ -6,7 +6,7 @@
 #include "Auxiliar.h"
 
 
-const char* especialidadeParaString(enum ESPECIALIDADE esp) {
+const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
     switch (esp) {
         case CLINICO: return "CLINICO";
         case PEDIATRA: return "PEDIATRA";
@@ -63,7 +63,7 @@ void cadastrarMedico()
     // coleta da especialidade
     printf("Selecione a especialidade:\n");
     for (int i = 0; i < 6; i++) {
-        printf("  %d - %s\n", i, especialidadeParaString(i));
+        printf("  %d - %s\n", i, especialidadeParaTexto(i));
     }
 
     do {
@@ -88,7 +88,7 @@ void cadastrarMedico()
     printf("\nDados do novo medico:\n");    
     printf("Nome: %s\n", novo->nome);
     printf("CRM: %s\n", novo->crm);
-    printf("  Especialidade: %s\n", especialidadeParaString(novo->especialidade));
+    printf("Especialidade: %s\n", especialidadeParaTexto(novo->especialidade));
     printf("Contato: %s\n", novo->contato);
 
     // perguntar se deseja salvar ou sair sem salvar
@@ -103,19 +103,19 @@ void cadastrarMedico()
 
         switch(opcao) {
             case 1:
-        FILE *arquivo = fopen("Arquivos/Medicos.txt", "a");
-        if (arquivo) {
-            fprintf(arquivo, "\n%s,%s,%d,%s", 
-                    novo->nome, 
-                    novo->crm, 
-                    novo->especialidade, 
-                    novo->contato);
-            fclose(arquivo);
-            printf("Medico salvo com sucesso!\n");
-                } else {
-                    printf("Erro ao abrir arquivo!\n");
-                }
-                break;
+                FILE *arquivo = fopen("Arquivos/Medicos.txt", "a");
+                if (arquivo) {
+                    fprintf(arquivo, "\n%s,%s,%d,%s", 
+                            novo->nome, 
+                            novo->crm, 
+                            novo->especialidade, 
+                            novo->contato);
+                    fclose(arquivo);
+                    printf("Medico salvo com sucesso!\n");
+                        } else {
+                            printf("Erro ao abrir arquivo!\n");
+                        }
+                        break;
             case 2:
                 printf("Cadastro descartado.\n");
                 break;
@@ -334,7 +334,7 @@ void menuMedico(){
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
         printf("0. Voltar\n");
-        printf("novo->especialidade uma opcao: ");
+        printf("Selecione uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
