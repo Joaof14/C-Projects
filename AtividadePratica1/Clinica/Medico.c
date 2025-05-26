@@ -110,9 +110,36 @@ void cadastrarMedico()
 }
 
 void listarMedico(){
-    printf("Listar Medicos");
+   printf("Lista de Medicos:\n");
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) {
+        printf("Nenhum Medico cadastrado ou erro ao abrir o arquivo!\n");
+        return;
+    }
+    char linha[256];
+    int contador = 1;
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nome[100], crm[10], especialidade[50], contato[30];
+        char *token = strtok(linha, ",");
+        if (token != NULL) strcpy(nome, token);
+        token = strtok(NULL, ",");
+        if (token != NULL) strcpy(crm, token);
+        token = strtok(NULL, ",");
+        if (token != NULL) strcpy(especialidade, token);
+        token = strtok(NULL, ",\n");
+        if (token != NULL) strcpy(contato, token);
 
+        printf("Medico %d:\n", contador++);
+        printf("  Nome: %s\n", nome);
+        printf("  CRM: %s\n", crm);
+        printf("  Especialidade: %s\n", especialidade);
+        printf("  Contato: %s\n\n", contato);
+    }
+    fclose(arquivo);
+   
 }
+
+
 
 void atualizarMedico(){
     printf("Atualizar Medico");
