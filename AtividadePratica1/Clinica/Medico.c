@@ -135,34 +135,38 @@ void cadastrarMedico()
 
 
 
-void listarMedico(){ /*
-   printf("Lista de Medicos:\n");
+void listarMedicos(){ 
+    printf("Lista de Medicos:\n");
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
     if (arquivo == NULL) {
         printf("Nenhum Medico cadastrado ou erro ao abrir o arquivo!\n");
         return;
     }
-    char linha[256];
+    //pular cabeçalho
+    char cabecalho[200];
+    fscanf(arquivo, "%199[^\n]\n", cabecalho);
+    Medico medico;
     int contador = 1;
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char nome[100], crm[10], especialidade[50], contato[30];
-        char *token = strtok(linha, ",");
-        if (token != NULL) strcpy(nome, token);
-        token = strtok(NULL, ",");
-        if (token != NULL) strcpy(crm, token);
-        token = strtok(NULL, ",");
-        if (token != NULL) strcpy(especialidade, token);
-        token = strtok(NULL, ",\n");
-        if (token != NULL) strcpy(contato, token);
+    int especialidade_tmp;
 
-        printf("Medico %d:\n", contador++);
-        printf("  Nome: %s\n", nome);
-        printf("  CRM: %s\n", crm);
-        printf("  Especialidade: %s\n", especialidade);
-        printf("  Contato: %s\n\n", contato);
+    //ler dados 
+    while (fscanf(arquivo, "%99[^,],%6[^,],%d,%19[^\n]\n",
+                  medico.nome,
+                  medico.crm,
+                  &especialidade_tmp,
+                  medico.contato) == 4) 
+    {
+        //converter o inteiro para enum
+        medico.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
+
+        //exibir dados formatados
+        printf("Médico %d:\n", contador++);
+        printf("Nome: %s\n", medico.nome);
+        printf("CRM: %s\n", medico.crm);
+        printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
+        printf("Contato: %s\n\n", medico.contato);
     }
     fclose(arquivo);
-    */
 }
 
 
@@ -333,6 +337,7 @@ void menuMedico(){
         printf("1. Cadastrar Medico\n");
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
+        printf("4. listar Medicos\n");
         printf("0. Voltar\n");
         printf("Selecione uma opcao: ");
         scanf("%d", &opcao);
@@ -352,6 +357,7 @@ void menuMedico(){
                 removerMedico();
                 break;
             case 4:
+            listarMedicos();
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
