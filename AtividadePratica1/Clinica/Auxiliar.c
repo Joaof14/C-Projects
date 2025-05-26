@@ -22,6 +22,8 @@ void criarArquivo(const char *caminho, const char *colunas) {
 }
 
 
+
+
 // lê entrada do usuário com controle de tamanho
 int entradaLimitada(char *destino, int tamanho_max) {
     int i = 0;
@@ -68,5 +70,38 @@ int CPFJaCadastrado(const char *cpf) {
     fclose(arquivo);
     return 0;
 }
+
+// verifica se um CRM já existe no arquivo
+
+int CRMJaCadastrado(const char *crm) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) return 0;
+
+    char nome[100], crmArquivo[12], especialidade[100], contato[20];
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+    while (fscanf(arquivo, "%99[^,],%11[^,],%99[^,],%19[^\n]\n", nome, crmArquivo, especialidade, contato) == 4) {
+        if (strcmp(crmArquivo, crm) == 0) {
+            fclose(arquivo);
+            return 1;
+        }
+    }
+
+    fclose(arquivo);
+    return 0;
+}
+
+// valida se o CRM tem 6 dígitos numéricos
+
+int validarCRM(const char *crm) {
+    if (strlen(crm) != 6) return 0;
+    for (int i = 0; i < 6; i++) {
+        if (!isdigit(crm[i])) return 0;
+    }
+    
+    return 1; // crm válido
+}
+
 
 

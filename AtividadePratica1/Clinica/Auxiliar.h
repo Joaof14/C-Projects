@@ -9,6 +9,10 @@ int validarCPF(const char *cpf);
 
 int CPFJaCadastrado(const char *cpf);
 
+int CRMJaCadastrado(const char *crm);
+
+int validarCRM(const char *crm);
+
 
 
 #endif

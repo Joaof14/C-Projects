@@ -21,7 +21,8 @@ void cadastrarPaciente()
     do {
         printf("Nome (máx 99 caracteres): ");
         entradaLimitada(novo->nome, 100);
-    } while (strlen(novo->nome) == 0) ;
+    }
+    while (strlen(novo->nome) == 0); 
 
     // coleta do CPF com validações
     int cpfValido = 0;
@@ -100,24 +101,26 @@ void listarPaciente()
         printf("Nenhum paciente cadastrado ou erro ao abrir o arquivo!\n");
         return;
     }
-    char linha[200];
+    //Pular cabeçalho
+    char cabecalho[200];
+    fscanf(arquivo, "%199[^\n]\n", cabecalho);
+    Paciente paciente;
     int contador = 1;
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char nome[100], cpf[20], contato[30];
-        char *token = strtok(linha, ",");
-        if (token != NULL) strcpy(nome, token);
-        token = strtok(NULL, ",");
-        if (token != NULL) strcpy(cpf, token);
-        token = strtok(NULL, ",\n");
-        if (token != NULL) strcpy(contato, token);
-
+    //Ler dados
+    while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n",
+                  paciente.nome,
+                  paciente.cpf,
+                  paciente.telefone) == 3) 
+    {
         printf("Paciente %d:\n", contador++);
-        printf("  Nome: %s\n", nome);
-        printf("  CPF: %s\n", cpf);
-        printf("  Contato: %s\n\n", contato);
+        printf("Nome: %s\n", paciente.nome);
+        printf("CPF: %s\n", paciente.cpf);
+        printf("Telefone: %s\n\n", paciente.telefone);
     }
+
     fclose(arquivo);
 }
+
 
 void atualizarPaciente()
 {
