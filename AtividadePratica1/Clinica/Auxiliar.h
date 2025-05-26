@@ -3,9 +3,11 @@
 
 void criarArquivo();
 
-void lerString(char *destino, int tamanho);
+int entradaLimitada(char *destino, int tamanho_max);
 
-void removerQuebraLinha(char *str);
+int validarCPF(const char *cpf);
+
+int CPFJaCadastrado(const char *cpf);
 
 
 

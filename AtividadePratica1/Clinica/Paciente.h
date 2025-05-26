@@ -4,8 +4,8 @@
 
 typedef struct {
     char nome[100];
-    char cpf[11];
-    char Telefone[11];
+    char cpf[12];
+    char telefone[20];
 } Paciente;
 
 void cadastrarPaciente();

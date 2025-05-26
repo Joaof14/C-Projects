@@ -9,50 +9,69 @@ void cadastrarPaciente()
 {
     criarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Telefone");
 
-    // Alocar memória para o paciente
+    // alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
     if (novo == NULL) {
         printf("Erro de alocação de memória!\n");
         return;
     }
 
-    // Coletar dados usando ponteiros
-    printf("\n--- Novo Paciente ---\n");
+    // coletar dados usando ponteiros
+    printf("\n Novo Paciente \n");
+    while (strlen(novo->nome) == 0) {
+        printf("Nome (máx 99 caracteres): ");
+        entradaLimitada(novo->nome, 100);
+    }
+
+    // coleta do cpf com validações
+    int cpfValido = 0;
+    do {
+        printf("CPF (só numeros): ");
+        entradaLimitada(novo->cpf, 12);
+        
+        if (!validarCPF(novo->cpf)) {
+            printf("Erro: CPF deve conter exatamente 11 números!\n");
+            continue;
+        }
+        
+        if (CPFJaCadastrado(novo->cpf)) {
+            printf("Erro: CPF já cadastrado no sistema!\n");
+            continue;
+        }
+        
+        cpfValido = 1;
+    } while (!cpfValido);
+
     
-    printf("Nome: ");
-    lerString(novo->nome, sizeof(novo->nome));
+    do {
+        printf("Telefone (só numeros): ");
+        entradaLimitada(novo->telefone, 20);
+    } while (strlen(novo->telefone) == 0);
 
-    printf("CPF (11 dígitos): ");
-    lerString(novo->cpf, sizeof(novo->cpf));
 
-    printf("Telefone: ");
-    lerString(novo->Telefone, sizeof(novo->Telefone));
-
-    // Menu de opções
     int opcao;
     do {
         printf("\n1. Salvar\n");
         printf("2. Sair sem salvar\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
-        getchar(); // Limpar buffer
+        getchar(); 
 
         switch(opcao) {
             case 1:
-                // Salvar no arquivo
+                //salvamentos dos dados
                 FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
                 if (arquivo) {
                     fprintf(arquivo, "\n%s,%s,%s", 
                             novo->nome, 
                             novo->cpf, 
-                            novo->Telefone);
+                            novo->telefone);
                     fclose(arquivo);
                     printf("Paciente salvo com sucesso!\n");
                 } else {
                     printf("Erro ao abrir arquivo!\n");
                 }
                 break;
-                
             case 2:
                 printf("Cadastro descartado.\n");
                 break;
@@ -63,8 +82,15 @@ void cadastrarPaciente()
         }
     } while(opcao < 1 || opcao > 2);
 
-    free(novo); // Liberar memória
+    free(novo); 
 }
+
+
+
+
+
+
+
 
 void listarPaciente()
 {
