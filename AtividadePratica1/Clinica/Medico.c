@@ -155,7 +155,7 @@ void atualizarMedico(){
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
-    
+
     // cria um arquivo temporário para armazenar os dados atualizados
     FILE *temp = fopen("Arquivos/temp.txt", "w");
     if (temp == NULL) {
