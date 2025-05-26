@@ -22,6 +22,8 @@ void criarArquivo(const char *caminho, const char *colunas) {
 }
 
 
+
+
 // lê entrada do usuário com controle de tamanho
 int entradaLimitada(char *destino, int tamanho_max) {
     int i = 0;
@@ -93,7 +95,7 @@ int CRMJaCadastrado(const char *crm) {
 // valida se o CRM tem 6 dígitos numéricos
 
 int validarCRM(const char *crm) {
-    if (strlen(crm) != ) return 0;
+    if (strlen(crm) != 6) return 0;
     for (int i = 0; i < 6; i++) {
         if (!isdigit(crm[i])) return 0;
     }

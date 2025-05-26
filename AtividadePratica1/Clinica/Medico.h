@@ -2,16 +2,16 @@
 #ifndef MEDICO_H
 #define MEDICO_H
 
-enum ESPECIALIDADE {CLÍNICO, PEDIATRA, CARDIOLOGISTA};
+enum ESPECIALIDADE {CLINICO, PEDIATRA, CARDIOLOGISTA, DERMATOLOGISTA, PSIQUIATRA, ORTOPEDISTA};
 
-struct Medico
+typedef struct 
 {
-    char Nome[100];
-    char CRM[6];
+    char nome[100];
+    char crm[7];
     enum ESPECIALIDADE especialidade;
-    char Telefone[11];
+    char contato[20];
 
-};
+} Medico;
 
 
 void cadastrarMedico();

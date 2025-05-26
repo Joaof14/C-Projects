@@ -6,6 +6,19 @@
 #include "Auxiliar.h"
 
 
+const char* especialidadeParaString(enum ESPECIALIDADE esp) {
+    switch (esp) {
+        case CLINICO: return "CLINICO";
+        case PEDIATRA: return "PEDIATRA";
+        case CARDIOLOGISTA: return "CARDIOLOGISTA";
+        case DERMATOLOGISTA: return "DERMATOLOGISTA";
+        case PSIQUIATRA: return "PSIQUIATRA";
+        case ORTOPEDISTA: return "ORTOPEDISTA";
+        
+        default: return "DESCONHECIDO";
+    }
+}
+
 void cadastrarMedico()
 {
     criarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidae,Contato\n");
@@ -48,12 +61,19 @@ void cadastrarMedico()
     } while (!crmValido);
 
     // coleta da especialidade
-    printf("Especialidade (máx 49 caracteres): ");      
-    entradaLimitada(novo->especialidade, 50);
-    while (strlen(novo->especialidade) == 0) {
-        printf("Especialidade (máx 49 caracteres): ");
-        entradaLimitada(novo->especialidade, 50);
+    printf("Selecione a especialidade:\n");
+    for (int i = 0; i < 6; i++) {
+        printf("  %d - %s\n", i, especialidadeParaString(i));
     }
+
+    do {
+        printf("Digite o número da especialidade: ");
+        scanf("%d", (int*)&novo->especialidade);
+        while (getchar() != '\n'); // limpa o buffer
+        if (novo->especialidade < 0 || novo->especialidade >= 6) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+    } while (novo->especialidade < 0 || novo->especialidade >= 6);
 
 
     // coleta do contato com validações
@@ -68,7 +88,7 @@ void cadastrarMedico()
     printf("\nDados do novo medico:\n");    
     printf("Nome: %s\n", novo->nome);
     printf("CRM: %s\n", novo->crm);
-    printf("Especialidade: %s\n", novo->especialidade);
+    printf("  Especialidade: %s\n", especialidadeParaString(novo->especialidade));
     printf("Contato: %s\n", novo->contato);
 
     // perguntar se deseja salvar ou sair sem salvar
@@ -77,7 +97,7 @@ void cadastrarMedico()
     do {
         printf("\n1. Salvar\n");
         printf("2. Sair sem salvar\n");
-        printf("Escolha: ");
+        printf("selecione uma opção: ");
         scanf("%d", &opcao);
         getchar(); 
 
@@ -85,7 +105,7 @@ void cadastrarMedico()
             case 1:
         FILE *arquivo = fopen("Arquivos/Medicos.txt", "a");
         if (arquivo) {
-            fprintf(arquivo, "\n%s,%s,%s,%s", 
+            fprintf(arquivo, "\n%s,%s,%d,%s", 
                     novo->nome, 
                     novo->crm, 
                     novo->especialidade, 
@@ -109,7 +129,13 @@ void cadastrarMedico()
     free(novo); 
 }
 
-void listarMedico(){
+
+
+
+
+
+
+void listarMedico(){ /*
    printf("Lista de Medicos:\n");
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
     if (arquivo == NULL) {
@@ -136,12 +162,12 @@ void listarMedico(){
         printf("  Contato: %s\n\n", contato);
     }
     fclose(arquivo);
-   
+    */
 }
 
 
 
-void atualizarMedico(){
+void atualizarMedico(){ /*
   
     printf("Atualização de Medico\n");
     listarMedico();
@@ -242,12 +268,14 @@ void atualizarMedico(){
     }
 
     printf("Atualização concluída.\n");
+    */
     
 }
 
 
 
 void removerMedico(){
+    /*
 
     printf("Remoção de Medico\n");
     listarMedico();
@@ -292,7 +320,7 @@ void removerMedico(){
         remove("Arquivos/temp.txt");
         printf("CRM não encontrado para remoção!\n");
     }
-
+*/
 }
 
 
@@ -306,7 +334,7 @@ void menuMedico(){
         printf("2. Atualizar Medico\n");
         printf("3. Remover Medico\n");
         printf("0. Voltar\n");
-        printf("Escolha uma opcao: ");
+        printf("novo->especialidade uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
