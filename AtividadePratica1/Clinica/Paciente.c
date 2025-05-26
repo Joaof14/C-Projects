@@ -18,12 +18,12 @@ void cadastrarPaciente()
 
     // coletar dados usando ponteiros
     printf("\n Novo Paciente \n");
-    while (strlen(novo->nome) == 0) {
+    do {
         printf("Nome (máx 99 caracteres): ");
         entradaLimitada(novo->nome, 100);
-    }
+    } while (strlen(novo->nome) == 0) ;
 
-    // coleta do cpf com validações
+    // coleta do CPF com validações
     int cpfValido = 0;
     do {
         printf("CPF (só numeros): ");
@@ -42,7 +42,7 @@ void cadastrarPaciente()
         cpfValido = 1;
     } while (!cpfValido);
 
-    
+    // coleta do Telefone
     do {
         printf("Telefone (só numeros): ");
         entradaLimitada(novo->telefone, 20);
