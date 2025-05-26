@@ -1,7 +1,7 @@
 #ifndef AUXILIAR_H
 #define AUXILIAR_H
 
-void criarArquivo();
+void verificarArquivo();
 
 int entradaLimitada(char *destino, int tamanho_max);
 

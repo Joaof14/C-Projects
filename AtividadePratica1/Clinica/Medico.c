@@ -19,9 +19,75 @@ const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
     }
 }
 
+
+
+void carregarMedicos(Medico **medicos, int *total) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (!arquivo) {
+        *total = 0;
+        *medicos = NULL;
+        return;
+    }
+
+    // Pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Medico temp;
+    int especialidade_tmp;
+
+    // Ler cada linha do arquivo
+    while (fscanf(arquivo, "%99[^,],%6[^,],%d,%19[^\n]\n", 
+                temp.nome, 
+                temp.crm, 
+                &especialidade_tmp, 
+                temp.contato) == 4) {
+
+        // Converter especialidade de int para enum
+        temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
+
+        // Alocar espaço para mais um médico
+        *medicos = realloc(*medicos, (*total + 1) * sizeof(Medico));
+        
+        // Adicionar ao array
+        (*medicos)[*total] = temp;
+        (*total)++;
+    }
+
+    fclose(arquivo);
+}
+
+void salvarMedicos(Medico *medicos, int total, const char *modo) {
+
+    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
+    
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", modo);
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo!\n");
+        return;
+    }
+
+    //se for modo write, reescreve o cabeçalho
+    if (strcmp(modo, "w") == 0) {
+        fprintf(arquivo, "Nome,CRM,Especialidade,Contato\n");
+    }
+
+    //escreve os médicos
+    for (int i = 0; i < total; i++) {
+        fprintf(arquivo, "%s,%s,%d,%s\n", 
+                medicos[i].nome, 
+                medicos[i].crm, 
+                medicos[i].especialidade, 
+                medicos[i].contato);
+    }
+
+    fclose(arquivo);
+}
+
 void cadastrarMedico()
 {
-    criarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidae,Contato\n");
+    
 
     // alocar memória para o Medico
     Medico *novo = (Medico*)malloc(sizeof(Medico));
@@ -103,19 +169,8 @@ void cadastrarMedico()
 
         switch(opcao) {
             case 1:
-                FILE *arquivo = fopen("Arquivos/Medicos.txt", "a");
-                if (arquivo) {
-                    fprintf(arquivo, "\n%s,%s,%d,%s", 
-                            novo->nome, 
-                            novo->crm, 
-                            novo->especialidade, 
-                            novo->contato);
-                    fclose(arquivo);
-                    printf("Medico salvo com sucesso!\n");
-                        } else {
-                            printf("Erro ao abrir arquivo!\n");
-                        }
-                        break;
+            salvarMedicos(novo, 1, "a"); 
+            printf("Médico cadastrado com sucesso!\n");
             case 2:
                 printf("Cadastro descartado.\n");
                 break;
@@ -171,160 +226,171 @@ void listarMedicos(){
 
 
 
-void atualizarMedico(){ /*
   
-    printf("Atualização de Medico\n");
-    listarMedico();
-    
+void atualizarMedico() {
+    Medico *medicos = NULL;
+    int total = 0;
+    carregarMedicos(&medicos, &total);
+
+    while (getchar() != '\n');
+
+    // Buscar médico pelo CRM
     char crm[7];
-    printf("Digite o CRM do medico a ser atualizado: ");
-    entradaLimitada(crm, 7);
-
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
-        return;
-    }
-
-    // cria um arquivo temporário para armazenar os dados atualizados
-    FILE *temp = fopen("Arquivos/temp.txt", "w");
-    if (temp == NULL) {
-        fclose(arquivo);
-        printf("Erro ao criar arquivo temporário!\n");
-        return;
-    }
-
-    char linha[256];
-    int encontrado = 0;
-
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char *token = strtok(linha, ",");
-        if (token != NULL && strcmp(token, crm) == 0) {
-            encontrado = 1;
-            Medico novo;
-            printf("Atualizando Dados:\n");
-
-            // coleta do nome atualizado
-            printf("Nome (máx 99 caracteres): ");
-            entradaLimitada(novo.nome, 100);
-            while (strlen(novo.nome) == 0) {
-                printf("Nome (máx 99 caracteres): ");
-                entradaLimitada(novo.nome, 100);
-            }
-
-            // coleta do CRM atualizado
-            int crmValido = 0;
-            do {
-                printf("CRM (só numeros): ");
-                entradaLimitada(novo.crm, 7);
-                
-                if (!validarCRM(novo.crm)) {
-                    printf("Erro: CRM deve conter exatamente 6 números!\n");
-                    continue;
-                }
-                
-                if (CRMJaCadastrado(novo.crm)) {
-                    printf("Erro: CRM já cadastrado no sistema!\n");
-                    continue;
-                }
-                
-                crmValido = 1;
-            } while (!crmValido);
-
-            // coleta da especialidade atualizada
-            printf("Especialidade (máx 49 caracteres): ");      
-            entradaLimitada(novo.especialidade, 50);
-            while (strlen(novo.especialidade) == 0) {
-                printf("Especialidade (máx 49 caracteres): ");
-                entradaLimitada(novo.especialidade, 50);
-            }
-
-            // coleta do contato atualizado
-            printf("Contato (máx 19 caracteres): ");    
-            entradaLimitada(novo.contato, 20);
-            while (strlen(novo.contato) == 0) {
-                printf("Contato (máx 19 caracteres): ");
-                entradaLimitada(novo.contato, 20);
-            }
-
-            // escreve os dados atualizados no arquivo temporário
-            fprintf(temp, "%s,%s,%s,%s\n", novo.nome, novo.crm, novo.especialidade, novo.contato);
-        } else {
-            fputs(linha, temp);
+    printf("\n--- Atualização de Médico ---\n");
+    printf("Digite o CRM (6 dígitos): ");
+    entradaLimitada(crm, sizeof(crm));
+    
+    int encontrado = -1;
+    for(int i = 0; i < total; i++) {
+        if(strcmp(medicos[i].crm, crm) == 0) {
+            encontrado = i;
+            break;
         }
-
-    }
-    if (!encontrado) {
-        fprintf(temp, "%s,%s,%s,%s\n", linha, crm, "Especialidade", "Contato");
-    }
-    // fecha os arquivos
-
-    fclose(temp);
-    fclose(arquivo);
-
-    if (encontrado) {
-        remove("Arquivos/Medicos.txt");
-        rename("Arquivos/temp.txt", "Arquivos/Medicos.txt");
-        printf("Medico atualizado com sucesso!\n");
-    } else {
-        remove("Arquivos/temp.txt");
-        printf("CRM não encontrado para atualização!\n");
     }
 
-    printf("Atualização concluída.\n");
-    */
+    if(encontrado == -1) {
+        printf("Médico não encontrado!\n");
+        free(medicos);
+        return;
+    }
+
+    Medico atualizado = medicos[encontrado]; 
+
+    //cooletar novos dados (mesma sequência do cadastro)
+    printf("\n--- Novos Dados (mantenha o mesmo CRM) ---\n");
+    
+    //atualizar nome
+    printf("Nome atual: %s\n", atualizado.nome);
+    do {
+        printf("Novo nome (máx 99 caracteres): ");
+        entradaLimitada(atualizado.nome, sizeof(atualizado.nome));
+        if(strlen(atualizado.nome) == 0) {
+            printf("Nome não pode ser vazio!\n");
+        }
+    } while(strlen(atualizado.nome) == 0);
+
+    //atualizar especialidade
+    printf("\nEspecialidade atual: %s\n", especialidadeParaTexto(atualizado.especialidade));
+    for(int i = 0; i < 6; i++) {
+        printf("  %d - %s\n", i, especialidadeParaTexto(i));
+    }
+    do {
+        printf("Nova especialidade: ");
+        scanf("%d", (int*)&atualizado.especialidade);
+        while(getchar() != '\n'); // Limpar buffer
+        if(atualizado.especialidade < 0 || atualizado.especialidade >= 6) {
+            printf("Opção inválida!\n");
+        }
+    } while(atualizado.especialidade < 0 || atualizado.especialidade >= 6);
+
+    //atualizar contato
+    printf("\nContato atual: %s\n", atualizado.contato);
+    do {
+        printf("Novo contato (máx 19 caracteres): ");
+        entradaLimitada(atualizado.contato, sizeof(atualizado.contato));
+        if(strlen(atualizado.contato) == 0) {
+            printf("Contato não pode ser vazio!\n");
+        }
+    } while(strlen(atualizado.contato) == 0);
+
+    //substituir no vetor
+    medicos[encontrado] = atualizado;
+
+
+    int opcao;
+    do {
+        printf("\n1. Salvar\n");
+        printf("2. Sair sem salvar\n");
+        printf("selecione uma opção: ");
+        scanf("%d", &opcao);
+        getchar(); 
+
+        switch(opcao) {
+            case 1:
+            salvarMedicos(medicos, total, "w");
+            printf("\nDados atualizados com sucesso\n");
+            case 2:
+                printf("Atualização descartada\n");
+                break;
+                
+            default:
+                printf("Opção inválida\n");
+                continue;
+        }
+    } while(opcao < 1 || opcao > 2);
+    free(medicos);
     
 }
 
 
-
 void removerMedico(){
-    /*
+    Medico *medicos = NULL;
+    int total = 0;
+    carregarMedicos(&medicos, &total);
 
-    printf("Remoção de Medico\n");
-    listarMedico();
-    
+    if(total == 0) {
+        printf("Nenhum médico cadastrado!\n");
+        return;
+    }
+
+    while (getchar() != '\n');
+    //obter CRM para remoção e usar para remover medico
     char crm[7];
-    printf("Digite o CRM do medico a ser removido: ");
-    entradaLimitada(crm, 7);
+    printf("\n--- Remoção de Médico ---\n");
+    printf("Digite o CRM do médico (6 dígitos): ");
+    entradaLimitada(crm, sizeof(crm));
 
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
-        return;
-    }
-
-    FILE *temp = fopen("Arquivos/temp.txt", "w");
-    if (temp == NULL) {
-        fclose(arquivo);
-        printf("Erro ao criar arquivo temporário!\n");
-        return;
-    }
-
-    char linha[256];
-    int encontrado = 0;
-
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char *token = strtok(linha, ",");
-        if (token != NULL && strcmp(token, crm) != 0) {
-            fputs(linha, temp);
-        } else {
-            encontrado = 1;
+    int encontrado = -1;
+    for(int i = 0; i < total; i++) {
+        if(strcmp(medicos[i].crm, crm) == 0) {
+            encontrado = i;
+            break;
         }
     }
 
-    fclose(arquivo);
-    fclose(temp);
-
-    if (encontrado) {
-        remove("Arquivos/Medicos.txt");
-        rename("Arquivos/temp.txt", "Arquivos/Medicos.txt");
-        printf("Medico removido com sucesso!\n");
-    } else {
-        remove("Arquivos/temp.txt");
-        printf("CRM não encontrado para remoção!\n");
+    if(encontrado == -1) {
+        printf("Médico não encontrado!\n");
+        free(medicos);
+        return;
     }
-*/
+
+    //confirmar remoção
+    int opcao;
+    do {
+        printf("\nDeseja realmente remover o médico %s?\n", medicos[encontrado].nome);
+        printf("1. Confirmar\n");
+        printf("2. Cancelar\n");
+        printf("Opção: ");
+        scanf("%d", &opcao);
+        getchar();
+    } while(opcao < 1 || opcao > 2);
+
+    if(opcao == 2) {
+        printf("Operação cancelada.\n");
+        free(medicos);
+        return;
+    }
+
+    // novo vetor sem o medico
+    Medico *novoVetor = malloc((total - 1) * sizeof(Medico));
+    if(!novoVetor) {
+        printf("Erro de memória!\n");
+        free(medicos);
+        return;
+    }
+    int j = 0;
+    for(int i = 0; i < total; i++) {
+        if(i != encontrado) {
+            novoVetor[j++] = medicos[i];
+        }
+    }
+
+    //salvar
+    salvarMedicos(novoVetor, total - 1, "w");
+    free(medicos);
+    free(novoVetor);
+    
+    printf("\nMédico removido com sucesso!\n");
 }
 
 

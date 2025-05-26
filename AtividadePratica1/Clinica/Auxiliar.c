@@ -5,7 +5,7 @@
 #include "Auxiliar.h"
 
 // cria um arquivo com cabeçalhos se ele não existir
-void criarArquivo(const char *caminho, const char *colunas) {
+void verificarArquivo(const char *caminho, const char *colunas) {
     FILE *arquivo = fopen(caminho, "r");
     
     if (arquivo == NULL) {

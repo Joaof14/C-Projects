@@ -13,6 +13,9 @@ typedef struct
 
 } Medico;
 
+void carregarMedicos(Medico **medicos, int *total);
+
+void salvarMedicos(Medico *medicos, int total, const char *modo);
 
 void cadastrarMedico();
 

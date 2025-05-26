@@ -7,7 +7,7 @@
 
 void cadastrarPaciente()
 {
-    criarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Telefone");
+    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Telefone");
 
     // alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
