@@ -5,9 +5,73 @@
 #include "Paciente.h"
 #include "Auxiliar.h"
 
+
+
+
+void carregarPacientes(Paciente **pacientes, int *total) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (!arquivo) {
+        *total = 0;
+        *pacientes = NULL;
+        return;
+    }
+
+    // Pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Paciente temp;
+    
+
+    // Ler cada linha do arquivo
+    while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n", 
+                temp.nome, 
+                temp.cpf,  
+                temp.contato) == 3) {
+
+
+        // Alocar espaço para mais um médico
+        *pacientes = realloc(*pacientes, (*total + 1) * sizeof(Paciente));
+        
+        // Adicionar ao array
+        (*pacientes)[*total] = temp;
+        (*total)++;
+    }
+
+    fclose(arquivo);
+}
+
+void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
+
+    
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", modo);
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo!\n");
+        return;
+    }
+
+    //se for modo write, reescreve o cabeçalho
+    if (strcmp(modo, "w") == 0) {
+        fprintf(arquivo, "Nome,CPF,Contato\n");
+    }
+
+    //escreve os médicos
+    for (int i = 0; i < total; i++) {
+        fprintf(arquivo, "\n%s,%s,%s", 
+            pacientes[i].nome, 
+            pacientes[i].cpf, 
+            pacientes[i].contato);
+    }
+
+    fclose(arquivo);
+}
+
+
+
 void cadastrarPaciente()
 {
-    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Telefone");
+    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato");
 
     // alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
@@ -43,11 +107,11 @@ void cadastrarPaciente()
         cpfValido = 1;
     } while (!cpfValido);
 
-    // coleta do Telefone
+    // coleta do contato
     do {
-        printf("Telefone (só numeros): ");
-        entradaLimitada(novo->telefone, 20);
-    } while (strlen(novo->telefone) == 0);
+        printf("contato (só numeros): ");
+        entradaLimitada(novo->contato, 20);
+    } while (strlen(novo->contato) == 0);
 
 
     int opcao;
@@ -60,18 +124,8 @@ void cadastrarPaciente()
 
         switch(opcao) {
             case 1:
-                //salvamentos dos dados
-                FILE *arquivo = fopen("Arquivos/Pacientes.txt", "a");
-                if (arquivo) {
-                    fprintf(arquivo, "\n%s,%s,%s", 
-                            novo->nome, 
-                            novo->cpf, 
-                            novo->telefone);
-                    fclose(arquivo);
-                    printf("Paciente salvo com sucesso!\n");
-                } else {
-                    printf("Erro ao abrir arquivo!\n");
-                }
+                salvarPacientes(novo, 1, "a");
+                printf("Paciente salvo com sucesso!\n");
                 break;
             case 2:
                 printf("Cadastro descartado.\n");
@@ -110,12 +164,12 @@ void listarPaciente()
     while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n",
                   paciente.nome,
                   paciente.cpf,
-                  paciente.telefone) == 3) 
+                  paciente.contato) == 3) 
     {
         printf("Paciente %d:\n", contador++);
         printf("Nome: %s\n", paciente.nome);
         printf("CPF: %s\n", paciente.cpf);
-        printf("Telefone: %s\n\n", paciente.telefone);
+        printf("contato: %s\n\n", paciente.contato);
     }
 
     fclose(arquivo);
@@ -142,6 +196,7 @@ void menuPaciente()
         printf("1. Cadastrar Paciente\n");
         printf("2. Atualizar Paciente\n");
         printf("3. Remover Paciente\n");
+        printf("4. Listar Pacientes\n");
         printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);

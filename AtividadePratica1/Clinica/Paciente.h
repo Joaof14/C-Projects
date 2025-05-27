@@ -5,8 +5,12 @@
 typedef struct {
     char nome[100];
     char cpf[12];
-    char telefone[20];
+    char contato[20];
 } Paciente;
+
+void salvarPacientes(Paciente *pacientes, int total, const char *modo);
+
+void carregarPacientes(Paciente **pacientes, int *total);
 
 void cadastrarPaciente();
 
