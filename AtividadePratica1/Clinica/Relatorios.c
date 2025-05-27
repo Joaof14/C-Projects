@@ -6,31 +6,43 @@
 
 void relatorioConsultaPacientes() {
 
-    
-    FILE *file = fopen("Consultas.txt", "r");
-    if (file == NULL) {
-        printf("Erro ao abrir o arquivo de consultas.\n");
+    char cpfBusca[30];
+    printf("Digite o CPF do paciente para listar as consultas: ");
+    fgets(cpfBusca, sizeof(cpfBusca), stdin);
+    cpfBusca[strcspn(cpfBusca, "\n")] = 0;
+
+    FILE *fcon = fopen("Consultas.txt", "r");
+    if (fcon == NULL) {
+        printf("Nenhuma consulta cadastrada ou erro ao abrir o arquivo!\n");
         return;
     }
 
-    char linha[256];
-    char cpf[11];
-    printf("Digite o CPF do paciente: ");
-    scanf("%s", cpf);
-
-    printf("Consultas do Paciente com CPF %s:\n", cpf);
-    while (fgets(linha, sizeof(linha), file)) {
-        char id[10], pacienteCPF[11], pacienteNome[50], medicoCRM[6], medicoNome[50], especialidade[30];
-        char dataHora[20], status[10];
-        sscanf(linha, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s", id, pacienteCPF, pacienteNome, medicoCRM, medicoNome, especialidade, dataHora, status);
-        
-        if (strcmp(pacienteCPF, cpf) == 0) {
-            printf("ID: %s, Paciente: %s (%s), Medico: %s (%s), Especialidade: %s, Data/Hora: %s, Status: %s\n",
-                   id, pacienteNome, pacienteCPF, medicoNome, medicoCRM, especialidade, dataHora, status);
+    char linha[512];
+    int encontrou = 0;
+    printf("\nConsultas do paciente CPF: %s\n", cpfBusca);
+    printf("--------------------------------------------------\n");
+    while (fgets(linha, sizeof(linha), fcon)) {
+        int id;
+        char cpf[30], nomePaciente[100], crm[30], nomeMedico[100], data[15], hora[10], status[20];
+        int campos = sscanf(linha, "%d,%29[^,],%99[^,],%29[^,],%99[^,],%14[^,],%9[^,],%19[^\n]",
+            &id, cpf, nomePaciente, crm, nomeMedico, data, hora, status);
+        if (campos == 8 && strcmp(cpf, cpfBusca) == 0) {
+            printf("ID: %d\n", id);
+            printf("Paciente: %s (CPF: %s)\n", nomePaciente, cpf);
+            printf("Médico: %s (CRM: %s)\n", nomeMedico, crm);
+            printf("Data: %s\n", data);
+            printf("Hora: %s\n", hora);
+            printf("Status: %s\n", status);
+            printf("-----------------------------\n");
+            encontrou = 1;
         }
     }
+    fclose(fcon);
 
-    fclose(file);
+    if (!encontrou) {
+        printf("Nenhuma consulta encontrada para este paciente.\n");
+    }
+
   
 }
 
