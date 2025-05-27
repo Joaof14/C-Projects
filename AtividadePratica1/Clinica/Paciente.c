@@ -176,9 +176,86 @@ void listarPaciente()
 }
 
 
-void atualizarPaciente()
-{
-    printf("Atualizar Paciente");
+void atualizarPaciente() {
+    Paciente *pacientes = NULL;
+    int total = 0;
+    carregarPacientes(&pacientes, &total);
+
+    if (total == 0) {
+        printf("Nenhum paciente cadastrado para atualizar.\n");
+        return;
+    }
+
+    while (getchar() != '\n');
+
+    char cpfBusca[12];
+    printf("\n--- Atualização de Paciente ---\n");
+    printf("Digite o CPF do paciente que deseja atualizar: ");
+    entradaLimitada(cpfBusca, sizeof(cpfBusca));
+
+    int encontrado = -1;
+    for (int i = 0; i < total; i++) {
+        if (strcmp(pacientes[i].cpf, cpfBusca) == 0) {
+            encontrado = i;
+            break;
+            
+    }
+}
+    if (encontrado == -1) {
+        printf("Paciente com CPF %s não encontrado.\n", cpfBusca);
+        free(pacientes);
+        return;
+    }
+
+    Paciente atualizado = pacientes[encontrado];
+
+    //coletar novos dados (mesma sequência do cadastro)
+    printf("\nAtualizar Dados\n");
+
+    //atualizar nome
+    printf("Nome atual: %s\n", atualizado.nome);
+    do {
+        printf("Novo nome (máx 99 caracteres): ");
+        entradaLimitada(atualizado.nome, sizeof(atualizado.nome));
+        if(strlen(atualizado.nome) == 0) {
+            printf("Nome não pode ser vazio!\n");
+        }
+    } while(strlen(atualizado.nome) == 0);
+
+    //atualizar contato
+    printf("\nContato atual: %s\n", atualizado.contato);
+    do {
+        printf("Novo contato (máx 19 caracteres): ");
+        entradaLimitada(atualizado.contato, sizeof(atualizado.contato));
+        if(strlen(atualizado.contato) == 0) {
+            printf("Contato não pode ser vazio!\n");
+        }
+    } while(strlen(atualizado.contato) == 0);
+
+    //substituir no vetor
+    pacientes[encontrado] = atualizado;
+
+    int opcao;
+            do {
+                printf("\n1. Salvar alterações\n");
+                printf("2. Cancelar\n");
+                printf("Escolha: ");
+                scanf("%d", &opcao);
+                getchar(); // limpar buffer
+
+                switch (opcao) {
+                    case 1:
+                        salvarPacientes(pacientes, total, "w");
+                        printf("Paciente atualizado com sucesso!\n");
+                        break;
+                    case 2:
+                        printf("Alterações canceladas.\n");
+                        break;
+                    default:
+                        printf("Opção inválida!\n");
+                }
+            } while (opcao != 1 && opcao != 2);
+            free(pacientes);
 }
 
 void removerPaciente()
