@@ -188,6 +188,8 @@ void menuConsultas(){
         printf("1. Agendar Consulta\n");
         printf("2. Cancelar Consulta\n");
         printf("3. Registar Consulta\n");
+        printf("4. Listar Consultas Por Paciente\n");
+        printf("5. Listar Consultas Por Medico\n");        
         printf("0. Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -205,8 +207,11 @@ void menuConsultas(){
             case 3:
                 cancelarConsulta();
                 break;
-            case 4: //Remover depois
-                listarConsultas();
+            case 4: 
+                relatorioConsultaPacientes();
+                break;
+            case 5:
+                relatorioConsultaMedicos();
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
