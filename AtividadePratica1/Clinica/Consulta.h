@@ -15,7 +15,10 @@ typedef struct {
 typedef struct {
     int id;
     char pacienteCPF[11];
+    char pacienteNome[50];
     char medicoCRM[6];
+    char medicoNome[50];
+    char especialidade[30];
     DataHora data_hora;
     enum statusConsulta status;
 } Consulta;

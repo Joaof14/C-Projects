@@ -2,12 +2,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "Auxiliar.h"
 
 void relatorioConsultaPacientes() {
 
-    printf("Relatorio de Consultas.\n");
+    
+    FILE *file = fopen("Consultas.txt", "r");
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo de consultas.\n");
+        return;
+    }
 
+    char linha[256];
+    char cpf[11];
+    printf("Digite o CPF do paciente: ");
+    scanf("%s", cpf);
+
+    printf("Consultas do Paciente com CPF %s:\n", cpf);
+    while (fgets(linha, sizeof(linha), file)) {
+        char id[10], pacienteCPF[11], pacienteNome[50], medicoCRM[6], medicoNome[50], especialidade[30];
+        char dataHora[20], status[10];
+        sscanf(linha, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s", id, pacienteCPF, pacienteNome, medicoCRM, medicoNome, especialidade, dataHora, status);
+        
+        if (strcmp(pacienteCPF, cpf) == 0) {
+            printf("ID: %s, Paciente: %s (%s), Medico: %s (%s), Especialidade: %s, Data/Hora: %s, Status: %s\n",
+                   id, pacienteNome, pacienteCPF, medicoNome, medicoCRM, especialidade, dataHora, status);
+        }
+    }
+
+    fclose(file);
+  
 }
 
 void relatorioConsultaMedicos() {
