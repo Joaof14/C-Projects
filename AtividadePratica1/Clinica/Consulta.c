@@ -9,9 +9,54 @@
 #include "Paciente.h"
 
 
-void listarConsultas(){
+const char* statusConsultaParaTexto(enum statusConsulta status) {
+    switch(status) {
+        case AGENDADA: return "AGENDADA";
+        case REALIZADA: return "REALIZADA";
+        case CANCELADA: return "CANCELADA";
+        default: return "DESCONHECIDO";
+    }
+}
 
-        FILE *fcon = fopen("Consultas.txt", "r");
+
+void salvarConsultas(Consulta *consultas, int total, const char *modo) {
+
+    
+    
+    FILE *arquivo = fopen("Arquivos/Consultas.txt", modo);
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo!\n");
+        return;
+    }
+
+    //se for modo write, reescreve o cabeçalho
+    if (strcmp(modo, "w") == 0) {
+        fprintf(arquivo, "ID,PacienteCPF,MedicoCRM,Data,Status\n");
+    }
+
+    //escreve as consultas
+    for (int i = 0; i < total; i++) {
+        fprintf(arquivo, "%d,%s,%02d/%02d/%04d %02d:%02d,%d\n", 
+                consultas[i].id, 
+                consultas[i].pacienteCPF,
+                consultas[i].medicoCRM, 
+                consultas[i].data_hora.dia,
+                consultas[i].data_hora.mes,
+                consultas[i].data_hora.ano,
+                consultas[i].data_hora.hora,
+                consultas[i].data_hora.minuto,     
+                consultas[i].status);
+    }
+
+    fclose(arquivo);
+}
+
+
+
+
+void listarConsultas(){
+/*
+FILE *fcon = fopen("Consultas.txt", "r");
     if (fcon == NULL) {
         printf("Nenhuma consulta cadastrada ou erro ao abrir o arquivo!\n");
         return;
@@ -43,15 +88,15 @@ void listarConsultas(){
 
     if (!encontrou) {
         printf("Nenhuma consulta encontrada.\n");
-    }
+    }*/
+        
 
     
 }
 
 void agendarConsulta(){
 
-
-    char cpf[30], crm[30], data[15], hora[10], status[20] = "Agendada";
+/* char cpf[30], crm[30], data[15], hora[10], status[20] = "Agendada";
     char nomePaciente[100], nomeMedico[100];
     int pacienteEncontrado = 0, medicoEncontrado = 0;
 
@@ -166,7 +211,8 @@ void agendarConsulta(){
     fprintf(fcon, "%d,%s,%s,%s,%s,%s,%s,%s\n", novoId, cpf, nomePaciente, crm, nomeMedico, data, hora, status);
     fclose(fcon);
 
-    printf("Consulta agendada com sucesso!\n");
+    printf("Consulta agendada com sucesso!\n");*/
+    
 }   
 
 
