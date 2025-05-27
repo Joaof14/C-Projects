@@ -60,7 +60,7 @@ void carregarMedicos(Medico **medicos, int *total) {
 
 void salvarMedicos(Medico *medicos, int total, const char *modo) {
 
-    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
+    
     
     FILE *arquivo = fopen("Arquivos/Medicos.txt", modo);
     if (!arquivo) {
@@ -87,7 +87,7 @@ void salvarMedicos(Medico *medicos, int total, const char *modo) {
 
 void cadastrarMedico()
 {
-    
+    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
 
     // alocar memória para o Medico
     Medico *novo = (Medico*)malloc(sizeof(Medico));
@@ -228,6 +228,9 @@ void listarMedicos(){
 
   
 void atualizarMedico() {
+
+    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
+
     Medico *medicos = NULL;
     int total = 0;
     carregarMedicos(&medicos, &total);
@@ -324,6 +327,9 @@ void atualizarMedico() {
 
 
 void removerMedico(){
+
+    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
+
     Medico *medicos = NULL;
     int total = 0;
     carregarMedicos(&medicos, &total);
