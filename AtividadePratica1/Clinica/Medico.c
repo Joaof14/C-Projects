@@ -237,7 +237,7 @@ void atualizarMedico() {
 
     while (getchar() != '\n');
 
-    // Buscar médico pelo CRM
+    //Buscar médico pelo crm
     char crm[7];
     printf("\n--- Atualização de Médico ---\n");
     printf("Digite o CRM (6 dígitos): ");
@@ -259,8 +259,8 @@ void atualizarMedico() {
 
     Medico atualizado = medicos[encontrado]; 
 
-    //cooletar novos dados (mesma sequência do cadastro)
-    printf("\n--- Novos Dados (mantenha o mesmo CRM) ---\n");
+    //coletar novos dados (mesma sequência do cadastro)
+    printf("\nAtualizar Dados \n");
     
     //atualizar nome
     printf("Nome atual: %s\n", atualizado.nome);
@@ -342,7 +342,7 @@ void removerMedico(){
     while (getchar() != '\n');
     //obter CRM para remoção e usar para remover medico
     char crm[7];
-    printf("\n--- Remoção de Médico ---\n");
+    printf("\nRemoção de Médico\n");
     printf("Digite o CRM do médico (6 dígitos): ");
     entradaLimitada(crm, sizeof(crm));
 

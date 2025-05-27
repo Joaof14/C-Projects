@@ -58,7 +58,7 @@ void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
 
     //escreve os médicos
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "\n%s,%s,%s", 
+        fprintf(arquivo, "%s,%s,%s\n", 
             pacientes[i].nome, 
             pacientes[i].cpf, 
             pacientes[i].contato);
@@ -71,7 +71,7 @@ void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
 
 void cadastrarPaciente()
 {
-    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato");
+    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
 
     // alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
@@ -177,6 +177,9 @@ void listarPaciente()
 
 
 void atualizarPaciente() {
+
+    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
+
     Paciente *pacientes = NULL;
     int total = 0;
     carregarPacientes(&pacientes, &total);
@@ -259,8 +262,75 @@ void atualizarPaciente() {
 }
 
 void removerPaciente()
-{
+{   verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
 
+    Paciente *pacientes = NULL;
+    int total = 0;
+    carregarPacientes(&pacientes, &total);
+
+    if (total == 0) {
+        printf("Nenhum paciente cadastrado!\n");
+        return;
+    }
+
+    while (getchar() != '\n');
+    // Obter CPF para remoção
+    char cpf[12];
+    printf("\n--- Remoção de Paciente ---\n");
+    printf("Digite o CPF do paciente (somente números): ");
+    entradaLimitada(cpf, sizeof(cpf));
+
+    int encontrado = -1;
+    for (int i = 0; i < total; i++) {
+        if (strcmp(pacientes[i].cpf, cpf) == 0) {
+            encontrado = i;
+            break;
+        }
+    }
+
+    if (encontrado == -1) {
+        printf("Paciente não encontrado!\n");
+        free(pacientes);
+        return;
+    }
+
+    //confirmar remoção
+    int opcao;
+    do {
+        printf("\nDeseja realmente remover o paciente %s?\n", pacientes[encontrado].nome);
+        printf("1. Confirmar\n");
+        printf("2. Cancelar\n");
+        printf("Opção: ");
+        scanf("%d", &opcao);
+        while (getchar() != '\n'); // Limpar buffer
+    } while (opcao < 1 || opcao > 2);
+
+    if (opcao == 2) {
+        printf("Operação cancelada.\n");
+        free(pacientes);
+        return;
+    }
+
+    //criar novo vetor sem o paciente
+    Paciente *novoVetor = malloc((total - 1) * sizeof(Paciente));
+    if (!novoVetor) {
+        printf("Erro de memória!\n");
+        free(pacientes);
+        return;
+    }
+    int j = 0;
+    for (int i = 0; i < total; i++) {
+        if (i != encontrado) {
+            novoVetor[j++] = pacientes[i];
+        }
+    }
+
+    //salvar 
+    salvarPacientes(novoVetor, total - 1, "w");
+    free(pacientes);
+    free(novoVetor);
+
+    printf("\nPaciente removido com sucesso!\n");
 
 }
 
