@@ -38,7 +38,7 @@ int entradaLimitada(char *destino, int tamanho_max) {
     return i; 
 }
 
-// valida se o cpf tem 11 dígitos numéricos
+// Valida se o cpf tem 11 dígitos numéricos
 int validarCPF(const char *cpf) {
     if (strlen(cpf) != 11) return 0;
     for (int i = 0; i < 11; i++) {
@@ -49,7 +49,7 @@ int validarCPF(const char *cpf) {
 }
 
 
-// verifica se um cpf já existe no arquivo
+// Verifica se um cpf já existe no arquivo
 
 int CPFJaCadastrado(const char *cpf) {
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
