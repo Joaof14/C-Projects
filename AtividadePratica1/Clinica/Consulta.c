@@ -36,7 +36,7 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
     //escreve as consultas
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "%d,%s,%02d/%02d/%04d %02d:%02d,%d\n", 
+        fprintf(arquivo, "%d,%s,%s,%02d/%02d/%04d %02d:%02d,%d\n", 
                 consultas[i].id, 
                 consultas[i].pacienteCPF,
                 consultas[i].medicoCRM, 
