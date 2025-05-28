@@ -20,11 +20,13 @@ typedef struct {
     enum statusConsulta status;
 } Consulta;
 
+
+
+void salvarConsultas(Consulta *consultas, int total, const char *modo);
+
 void listarConsultas();
 
-void agendarConsulta();
-
-void registrarConsulta();
+const char* statusConsultaParaTexto(enum statusConsulta status);
 
 void cancelarConsulta() ;
 
