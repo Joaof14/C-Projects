@@ -16,25 +16,22 @@ void carregarPacientes(Paciente **pacientes, int *total) {
         return;
     }
 
-    // Pular cabeçalho (primeira linha)
+    //pular cabeçalho (primeira linha)
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
     *total = 0;
     Paciente temp;
-    
 
-    // Ler cada linha do arquivo
+    //ler cada linha do arquivo
     while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n", 
                 temp.nome, 
                 temp.cpf,  
                 temp.contato) == 3) {
 
 
-        // Alocar espaço para mais um médico
+        //alocar espaço para mais um médico e adicionar
         *pacientes = realloc(*pacientes, (*total + 1) * sizeof(Paciente));
-        
-        // Adicionar ao array
         (*pacientes)[*total] = temp;
         (*total)++;
     }
@@ -73,14 +70,14 @@ void cadastrarPaciente()
 {
     verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
 
-    // alocar memória para o paciente
+    //alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));
     if (novo == NULL) {
         printf("Erro de alocação de memória!\n");
         return;
     }
 
-    // coletar dados usando ponteiros
+    //coletar dados usando ponteiros
     printf("\n Novo Paciente \n");
     do {
         printf("Nome (máx 99 caracteres): ");
@@ -88,7 +85,7 @@ void cadastrarPaciente()
     }
     while (strlen(novo->nome) == 0); 
 
-    // coleta do CPF com validações
+    //coleta do CPF com validações
     int cpfValido = 0;
     do {
         printf("CPF (só numeros): ");
@@ -107,7 +104,7 @@ void cadastrarPaciente()
         cpfValido = 1;
     } while (!cpfValido);
 
-    // coleta do contato
+    //coleta do contato
     do {
         printf("contato (só numeros): ");
         entradaLimitada(novo->contato, 20);
@@ -155,7 +152,7 @@ void listarPaciente()
         printf("Nenhum paciente cadastrado ou erro ao abrir o arquivo!\n");
         return;
     }
-    //Pular cabeçalho
+    //pular cabeçalho
     char cabecalho[200];
     fscanf(arquivo, "%199[^\n]\n", cabecalho);
     Paciente paciente;
