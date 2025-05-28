@@ -202,78 +202,10 @@ void agendarConsulta(){
                 continue;
         }
     } while(opcao < 1 || opcao > 2);
-
-    
-
-
-
-
-    
+ 
     
     free(nova);
 
-
-/* 
-
-   
-    // CRM do médico 
-    printf("Digite o CRM do médico: ");
-    fgets(crm, sizeof(crm), stdin);
-    crm[strcspn(crm, "\n")] = 0;
-
-    // Procurar médico no arquivo
-    FILE *fmed = fopen("Arquivos/Medicos.txt", "r");
-    if (fmed == NULL) {
-        printf("Erro ao abrir o arquivo de médicos!\n");
-        return;
-    }
-    while (fgets(linha, sizeof(linha), fmed)) {
-        char nome[100], crmArq[30], especialidade[50];
-        sscanf(linha, "%99[^,],%29[^,],%49[^\n]", nome, crmArq, especialidade);
-        if (strcmp(crm, crmArq) == 0) {
-            strcpy(nomeMedico, nome);
-            medicoEncontrado = 1;
-            break;
-        }
-    }
-    fclose(fmed);
-
-    if (!medicoEncontrado) {
-        printf("Médico não encontrado. Cancelando agendamento.\n");
-        return;
-    }
-
-    // Pede a Data e hora da consulta
-    printf("Digite a data da consulta (DD/MM/AAAA): ");
-    fgets(data, sizeof(data), stdin);
-    data[strcspn(data, "\n")] = 0;
-
-    printf("Digite a hora da consulta (HH:MM): ");
-    fgets(hora, sizeof(hora), stdin);
-    hora[strcspn(hora, "\n")] = 0;
-
-    //Gerar ID sequencial
-    int novoId = 1;
-    FILE *fcon = fopen("Consultas.txt", "r");
-    if (fcon) {
-        while (fgets(linha, sizeof(linha), fcon)) {
-            int idTemp;
-            sscanf(linha, "%d,", &idTemp);
-            if (idTemp >= novoId) novoId = idTemp + 1;
-        }
-        fclose(fcon);
-    }
-
-    // Salva a consulta
-    fcon = fopen("Consultas.txt", "a");
-    if (!fcon) {
-        printf("Erro ao abrir arquivo de consultas.\n");
-        return;
-    }
-    fprintf(fcon, "%d,%s,%s,%s,%s,%s,%s,%s\n", novoId, cpf, nomePaciente, crm, nomeMedico, data, hora, status);
-    fclose(fcon);
-
-    printf("Consulta agendada com sucesso!\n");*/
     
 }   
 
