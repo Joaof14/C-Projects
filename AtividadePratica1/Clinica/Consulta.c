@@ -89,7 +89,18 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 }
 
 
+void alterarStatusConsulta(enum statusConsulta novoStatus){
+    int id, total;
+    printf("Digite o id da consulta que voce quer alterar: ");
+    scanf("%d",&id);
 
+    Consulta *consultas = NULL;
+    carregarConsultas(&consultas, &total);
+
+    int encontrado = -1;
+
+
+    }
 
 void listarConsultas(){
     Consulta *consultas = NULL;
@@ -106,66 +117,103 @@ void listarConsultas(){
         printf("Status: %s\n", statusConsultaParaTexto(consultas[i].status));
     }
 
+    free(consultas);
+
 }
 
 void agendarConsulta(){
 
-/* char cpf[30], crm[30], data[15], hora[10], status[20] = "Agendada";
-    char nomePaciente[100], nomeMedico[100];
-    int pacienteEncontrado = 0, medicoEncontrado = 0;
+    verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteCPF,MedicoCRM,Data,Hora,Status\n");
 
- printf("O Paciente Ja esta cadastrado? (S/N): ");
-        char op;
-        scanf(" %c", &op);
-        if (op == 'n' || op == 'N') {
-            cadastrarPaciente();
-            printf("Digite Novamente CPF do paciente: ");
-            fgets(cpf, sizeof(cpf), stdin);
-            cpf[strcspn(cpf, "\n")] = 0;
+    int cadastros = 0;
+    printf("\nPaciente e Médico da consulta ja estão cadastrados no sistema?\nDigite: 1-Sim, 2-Não\n");
+    scanf("%d", &cadastros);
 
-            // Busca as informações do paciente cadastrado no arquivo para coletar o nome
-            fpac = fopen("Arquivos/Pacientes.txt", "r");
-            while (fgets(linha, sizeof(linha), fpac)) {
-                char nome[100], cpfArq[30], contato[30];
-                sscanf(linha, "%99[^,],%29[^,],%29[^\n]", nome, cpfArq, contato);
-                if (strcmp(cpf, cpfArq) == 0) {
-                    strcpy(nomePaciente, nome);
-                    pacienteEncontrado = 1;
-                    break;
-                }
-            }
-            fclose(fpac);
-            if (!pacienteEncontrado) {
-                printf("Paciente ainda não encontrado. Cancelando agendamento.\n");
-                return;
-            } 
-        } else if (op == 's' || op == 'S') {
-
-    // CPF do paciente 
-    printf("Digite o CPF do paciente Para a Consulta: ");
-    fgets(cpf, sizeof(cpf), stdin);
-    cpf[strcspn(cpf, "\n")] = 0;
-
-    // Procurar paciente no arquivo para coletar o nome
-    FILE *fpac = fopen("Arquivos/Pacientes.txt", "r");
-    if (fpac == NULL) {
-        printf("Erro ao abrir o arquivo de pacientes!\n");
+    if(cadastros != 1){
+        printf("\nCadastre primeiro o médico ou paciente!\n");
         return;
     }
-    char linha[256];
-    while (fgets(linha, sizeof(linha), fpac)) {
-        char nome[100], cpfArq[30], contato[30];
-        sscanf(linha, "%99[^,],%29[^,],%29[^\n]", nome, cpfArq, contato);
-        if (strcmp(cpf, cpfArq) == 0) {
-            strcpy(nomePaciente, nome);
-            pacienteEncontrado = 1;
-            break;
-        }
-    }
-    fclose(fpac);
 
-           
-    } 
+    Consulta * nova = (Consulta*)malloc(sizeof(Consulta));
+    int totalConsultas;
+    
+    printf("\nAgendamento do Paciente: \nPreencha com atenção. Em caso de erro o processo deverá ser reiniciado!\n");
+    
+    while (getchar() != '\n');
+    //receber cpf everificar se cpf está nos dados
+    printf("Digite o cpf do paciente (apenas números): ");
+    entradaLimitada(nova->pacienteCPF, 12);
+    if(!CPFJaCadastrado(nova->pacienteCPF))
+    {
+        printf("\nERRO: CPF NÃO ENCONTRADO!\n");
+        return;
+    }
+
+    printf("Digite o CRM do Médico (apenas números): ");
+    entradaLimitada(nova->medicoCRM, 7);
+    if(!CRMJaCadastrado(nova->medicoCRM))
+    {
+        printf("\nERRO: CRM NÃO ENCONTRADO!\n");
+        free(nova);
+        return;
+    }
+    
+    //Coletar data e hora
+    printf("Data da consulta (DD/MM/AAAA): ");
+    scanf("%d/%d/%d", &nova->data_hora.dia, &nova->data_hora.mes, &nova->data_hora.ano);
+
+    printf("Hora da consulta (HH:MM): ");
+    scanf("%d:%d", &nova->data_hora.hora, &nova->data_hora.minuto);
+
+    //Validar data e hora
+
+
+    //Confirmar salvamento
+    int opcao;
+    do
+    {
+        printf("\n1. Salvar\n");
+        printf("2. Sair sem salvar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+        getchar(); 
+
+        switch(opcao) {
+            case 1:
+
+            //gerar id para consulta
+                Consulta *consultas = NULL;
+                carregarConsultas(&consultas, &totalConsultas);
+        
+                if (totalConsultas > 0)
+                    {nova->id = consultas[totalConsultas-1].id + 1;}
+                free(consultas);
+
+                //Salvar Consultas
+                salvarConsultas(nova, 1, "a");
+                printf("Consulta salva com sucesso!\n");
+                break;
+            case 2:
+                printf("Agendamento descartado.\n");
+                break;
+                
+            default:
+                printf("Opção inválida!\n");
+                continue;
+        }
+    } while(opcao < 1 || opcao > 2);
+
+    
+
+
+
+
+    
+    
+    free(nova);
+
+
+/* 
 
    
     // CRM do médico 
