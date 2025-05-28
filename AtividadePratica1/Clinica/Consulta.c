@@ -18,6 +18,43 @@ const char* statusConsultaParaTexto(enum statusConsulta status) {
     }
 }
 
+void carregarConsultas(Consulta **consultas, int *total)
+{
+    FILE *arquivo = fopen("Arquivos/Consultas.txt", "r");
+    if(!arquivo) 
+    {
+        *total = 0;
+        *consultas = NULL;
+        return;
+    }
+    //pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Consulta temp;
+    int status_temp;
+
+    //ler cada linha do arquivo
+    while(fscanf(arquivo, "%d,%11[^,],%6[^,],%d/%d/%d %d:%d,%d\n",
+    &temp.id,
+        temp.pacienteCPF,
+        temp.medicoCRM,
+        &temp.data_hora.dia,
+        &temp.data_hora.mes,
+        &temp.data_hora.ano,
+        &temp.data_hora.hora,
+        &temp.data_hora.minuto,
+        &status_temp) == 9) 
+
+        {
+            //alocar espaço para mais um médico e adicionar
+            *consultas = realloc(*consultas, (*total + 1) * sizeof(Consulta));
+            (*consultas)[*total] = temp;
+            (*total)++;
+    }
+    fclose(arquivo);
+}
 
 void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
@@ -55,43 +92,20 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
 
 void listarConsultas(){
-/*
-FILE *fcon = fopen("Consultas.txt", "r");
-    if (fcon == NULL) {
-        printf("Nenhuma consulta cadastrada ou erro ao abrir o arquivo!\n");
-        return;
+    Consulta *consultas = NULL;
+    int total;
+    carregarConsultas(&consultas, &total);
+
+    printf("Lista de Consultas:\n");
+    for (int i = 0; i < total; i++)
+    {
+        printf("\nID: %d", consultas[i].id);
+        printf("Médico (CRM): %s\n", consultas[i].medicoCRM);
+        printf("Paciente (CPF): %s\n", consultas[i].pacienteCPF);
+        printf("\nData: %02d/%02d/%04d %02d:%02d", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
+        printf("Status: %s\n", statusConsultaParaTexto(consultas[i].status));
     }
 
-    char linha[512];
-    int encontrou = 0;
-    printf("\n--- Lista de Consultas ---\n");
-    while (fgets(linha, sizeof(linha), fcon)) {
-        int id;
-        char cpf[30], nomePaciente[100], crm[30], nomeMedico[100], data[15], hora[10], status[20];
-
-        int campos = sscanf(linha, "%d,%29[^,],%99[^,],%29[^,],%99[^,],%14[^,],%9[^,],%19[^\n]",
-            &id, cpf, nomePaciente, crm, nomeMedico, data, hora, status);
-
-        if (campos == 8) {
-            printf("-------------------------\n");
-            printf("ID: %d\n", id);
-            printf("Paciente: %s (CPF: %s)\n", nomePaciente, cpf);
-            printf("Médico: %s (CRM: %s)\n", nomeMedico, crm);
-            printf("Data: %s\n", data);
-            printf("Hora: %s\n", hora);
-            printf("Status: %s\n", status);
-            printf("-------------------------\n");
-            encontrou = 1;
-        }
-    }
-    fclose(fcon);
-
-    if (!encontrou) {
-        printf("Nenhuma consulta encontrada.\n");
-    }*/
-        
-
-    
 }
 
 void agendarConsulta(){
@@ -254,6 +268,7 @@ void menuConsultas(){
                 cancelarConsulta();
                 break;
             case 4: 
+                listarConsultas();
                 relatorioConsultaPacientes();
                 break;
             case 5:

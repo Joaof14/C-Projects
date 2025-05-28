@@ -29,7 +29,7 @@ void carregarMedicos(Medico **medicos, int *total) {
         return;
     }
 
-    // Pular cabeçalho (primeira linha)
+    //pular cabeçalho (primeira linha)
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
@@ -37,24 +37,21 @@ void carregarMedicos(Medico **medicos, int *total) {
     Medico temp;
     int especialidade_tmp;
 
-    // Ler cada linha do arquivo
+    //ler cada linha do arquivo
     while (fscanf(arquivo, "%99[^,],%6[^,],%d,%19[^\n]\n", 
                 temp.nome, 
                 temp.crm, 
                 &especialidade_tmp, 
                 temp.contato) == 4) {
 
-        // Converter especialidade de int para enum
+        //converter especialidade
         temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
 
-        // Alocar espaço para mais um médico
+        //alocar espaço para mais um médico e adicionar
         *medicos = realloc(*medicos, (*total + 1) * sizeof(Medico));
-        
-        // Adicionar ao array
         (*medicos)[*total] = temp;
         (*total)++;
     }
-
     fclose(arquivo);
 }
 
@@ -183,11 +180,6 @@ void cadastrarMedico()
 
     free(novo); 
 }
-
-
-
-
-
 
 
 void listarMedicos(){ 
