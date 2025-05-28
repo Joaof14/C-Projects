@@ -182,38 +182,26 @@ void cadastrarMedico()
 }
 
 
-void listarMedicos(){ 
-    printf("Lista de Medicos:\n");
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) {
-        printf("Nenhum Medico cadastrado ou erro ao abrir o arquivo!\n");
+void listarMedicos() {
+    Medico *medicos = NULL;
+    int total;
+    carregarMedicos(&medicos, &total);
+
+    if(total == 0) {
+        printf("Nenhum médico cadastrado!\n");
         return;
     }
-    //pular cabeçalho
-    char cabecalho[200];
-    fscanf(arquivo, "%199[^\n]\n", cabecalho);
-    Medico medico;
-    int contador = 1;
-    int especialidade_tmp;
 
-    //ler dados 
-    while (fscanf(arquivo, "%99[^,],%6[^,],%d,%19[^\n]\n",
-                  medico.nome,
-                  medico.crm,
-                  &especialidade_tmp,
-                  medico.contato) == 4) 
-    {
-        //converter o inteiro para enum
-        medico.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
-
-        //exibir dados formatados
-        printf("Médico %d:\n", contador++);
-        printf("Nome: %s\n", medico.nome);
-        printf("CRM: %s\n", medico.crm);
-        printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
-        printf("Contato: %s\n\n", medico.contato);
+    printf("\nLista de Médicos\n");
+    for(int i = 0; i < total; i++) {
+        printf("\nMédico %d:\n", i+1);
+        printf("Nome: %s\n", medicos[i].nome);
+        printf("CRM: %s\n", medicos[i].crm);
+        printf("Especialidade: %s\n", especialidadeParaTexto(medicos[i].especialidade));
+        printf("Contato: %s\n", medicos[i].contato);
     }
-    fclose(arquivo);
+    
+    free(medicos); //liberar memória alocada
 }
 
 

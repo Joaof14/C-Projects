@@ -96,7 +96,7 @@ void listarConsultas(){
     int total;
     carregarConsultas(&consultas, &total);
 
-    printf("Lista de Consultas:\n");
+    printf("\nLista de Consultas:\n");
     for (int i = 0; i < total; i++)
     {
         printf("\nID: %d", consultas[i].id);

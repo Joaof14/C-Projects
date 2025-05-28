@@ -146,30 +146,26 @@ void cadastrarPaciente()
 
 void listarPaciente()
 {
-    printf("Lista de Pacientes:\n");
+   Paciente *pacientes = NULL;
+    int total;
+    carregarPacientes(&pacientes, &total);   
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (arquivo == NULL) {
-        printf("Nenhum paciente cadastrado ou erro ao abrir o arquivo!\n");
+    if (total == 0) {
+        printf("Nenhum paciente cadastrado!\n");
         return;
     }
-    //pular cabeçalho
-    char cabecalho[200];
-    fscanf(arquivo, "%199[^\n]\n", cabecalho);
-    Paciente paciente;
-    int contador = 1;
-    //Ler dados
-    while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n",
-                  paciente.nome,
-                  paciente.cpf,
-                  paciente.contato) == 3) 
+    
+    
+    printf("\nLista de Pacientes:\n"); 
+    for(int i = 0; i < total; i++)
     {
-        printf("Paciente %d:\n", contador++);
-        printf("Nome: %s\n", paciente.nome);
-        printf("CPF: %s\n", paciente.cpf);
-        printf("contato: %s\n\n", paciente.contato);
+        printf("\nPaciente %d:\n", i+1);
+        printf("Nome: %s\n", pacientes[i].nome);
+        printf("CPF: %s\n", pacientes[i].cpf);
+        printf("contato: %s\n\n", pacientes[i].contato);
     }
-
-    fclose(arquivo);
+    
+    free(pacientes); //liberar memória alocada
 }
 
 
