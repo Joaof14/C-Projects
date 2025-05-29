@@ -56,9 +56,7 @@ void carregarConsultas(Consulta **consultas, int *total)
     fclose(arquivo);
 }
 
-void salvarConsultas(Consulta *consultas, int total, const char *modo) {
-
-    
+void salvarConsultas(Consulta *consultas, int total, const char *modo) { 
     
     FILE *arquivo = fopen("Arquivos/Consultas.txt", modo);
     if (!arquivo) {
@@ -68,7 +66,7 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
     //se for modo write, reescreve o cabeçalho
     if (strcmp(modo, "w") == 0) {
-        fprintf(arquivo, "ID,PacienteCPF,MedicoCRM,Data,Status\n");
+        fprintf(arquivo, "ID,PacienteCPF,MedicoCRM,Data Hora,Status\n");
     }
 
     //escreve as consultas
@@ -91,14 +89,56 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
 void alterarStatusConsulta(enum statusConsulta novoStatus){
     int id, total;
-    printf("Digite o id da consulta que voce quer alterar: ");
+    printf("\nDigite o id da consulta que voce quer alterar: ");
     scanf("%d",&id);
 
+    //Verificar se id está cadastrada.
     Consulta *consultas = NULL;
     carregarConsultas(&consultas, &total);
-
     int encontrado = -1;
+    for (int i = 0; i < total; i++){
+        if(consultas[i].id == id) 
+        {
+            printf("ID: %d\n", consultas[i].id);
+            printf("Médico (CRM): %s\n", consultas[i].medicoCRM);
+            printf("Paciente (CPF): %s\n", consultas[i].pacienteCPF);
+            printf("\nData: %02d/%02d/%04d %02d:%02d\n", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
+            printf("Status atual: %s\n", statusConsultaParaTexto(consultas[i].status));
+            encontrado = i;
+            break;
+        }
+    }
+    //Salvamento da alteraçao
+    if (encontrado != -1){
+        //Confirmar alteração
+        printf("\nDeseja alterar o status para %s?", statusConsultaParaTexto(novoStatus));
+        int opcao;
+        do {
+            printf("\n1. Salvar\n");
+            printf("2. Sair sem salvar\n");
+            printf("selecione uma opção: ");
+            scanf("%d", &opcao);
+            getchar(); 
 
+            switch(opcao) {
+                case 1:
+                consultas[encontrado].status = novoStatus;
+                salvarConsultas(consultas, total,"w");
+                printf("Status atualizado!\n");
+                case 2:
+                    printf("Atualização de status descartada.\n");
+                    break;
+                    
+                default:
+                    printf("Opção inválida!\n");
+                    continue;
+            }
+        } while(opcao < 1 || opcao > 2);
+    }
+    else {
+        printf("Consulta não encontrada");
+    }
+    free(consultas);
 
     }
 
@@ -113,7 +153,7 @@ void listarConsultas(){
         printf("\nID: %d", consultas[i].id);
         printf("Médico (CRM): %s\n", consultas[i].medicoCRM);
         printf("Paciente (CPF): %s\n", consultas[i].pacienteCPF);
-        printf("\nData: %02d/%02d/%04d %02d:%02d", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
+        printf("Data: %02d/%02d/%04d %02d:%02d\n", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
         printf("Status: %s\n", statusConsultaParaTexto(consultas[i].status));
     }
 
@@ -123,7 +163,7 @@ void listarConsultas(){
 
 void agendarConsulta(){
 
-    verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteCPF,MedicoCRM,Data,Hora,Status\n");
+    verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteCPF,MedicoCRM,Data Hora,Status\n");
 
     int cadastros = 0;
     printf("\nPaciente e Médico da consulta ja estão cadastrados no sistema?\nDigite: 1-Sim, 2-Não\n");
@@ -212,11 +252,12 @@ void agendarConsulta(){
 
 
 void registrarConsulta(){
+    
 
 }
 
 void cancelarConsulta() {
-
+    
 }
 
 
@@ -242,10 +283,12 @@ void menuConsultas(){
                 agendarConsulta();
                 break;
             case 2:
-                registrarConsulta();
+                printf("\nCancelamento de consulta!\n");
+                alterarStatusConsulta(CANCELADA);
                 break;
             case 3:
-                cancelarConsulta();
+                printf("\nRegistro de consulta!\n");
+                alterarStatusConsulta(REALIZADA);
                 break;
             case 4: 
                 listarConsultas();
@@ -256,7 +299,7 @@ void menuConsultas(){
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
-        }
+        }  
     } while (opcao != 5);
 
 }

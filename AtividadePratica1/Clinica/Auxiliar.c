@@ -77,11 +77,11 @@ int CRMJaCadastrado(const char *crm) {
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
     if (arquivo == NULL) return 0;
 
-    char nome[100], crmArquivo[12], especialidade[100], contato[20];
+    char nome[100], crmArquivo[7], especialidade[100], contato[20];
 
     // Pular o cabeçalho
     fscanf(arquivo, "%*[^\n]\n");
-    while (fscanf(arquivo, "%99[^,],%11[^,],%99[^,],%19[^\n]\n", nome, crmArquivo, especialidade, contato) == 4) {
+    while (fscanf(arquivo, "%99[^,],%7[^,],%99[^,],%19[^\n]\n", nome, crmArquivo, especialidade, contato) == 4) {
         if (strcmp(crmArquivo, crm) == 0) {
             fclose(arquivo);
             return 1;
