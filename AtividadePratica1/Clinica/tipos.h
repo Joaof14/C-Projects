@@ -43,6 +43,8 @@ typedef struct {
 } Consulta;
 
 
+//Setor de relatório
+
 
 #endif
 
