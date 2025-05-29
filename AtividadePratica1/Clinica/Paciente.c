@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tipos.h"
 #include "Paciente.h"
 #include "Auxiliar.h"
 
@@ -86,23 +87,7 @@ void cadastrarPaciente()
     while (strlen(novo->nome) == 0); 
 
     //coleta do CPF com validações
-    int cpfValido = 0;
-    do {
-        printf("CPF (só numeros): ");
-        entradaLimitada(novo->cpf, 12);
-        
-        if (!validarCPF(novo->cpf)) {
-            printf("Erro: CPF deve conter exatamente 11 números!\n");
-            continue;
-        }
-        
-        if (CPFJaCadastrado(novo->cpf)) {
-            printf("Erro: CPF já cadastrado no sistema!\n");
-            continue;
-        }
-        
-        cpfValido = 1;
-    } while (!cpfValido);
+    receberCPF(novo->cpf);
 
     //coleta do contato
     do {

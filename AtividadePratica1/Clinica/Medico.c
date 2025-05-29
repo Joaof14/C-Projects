@@ -2,8 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tipos.h"
 #include "Medico.h"
 #include "Auxiliar.h"
+
 
 
 const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
@@ -108,7 +110,7 @@ void cadastrarMedico()
     int crmValido = 0;
     do {
         printf("CRM (só numeros): ");
-        entradaLimitada(novo->crm, 7);
+        entradaLimitada(novo->crm, 6);
         
         if (!validarCRM(novo->crm)) {
             printf("Erro: CRM deve conter exatamente 6 números!\n");

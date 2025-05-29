@@ -1,12 +1,12 @@
-#include "Relatorios.h"
-#include "Consulta.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tipos.h"
+#include "Relatorios.h"
+#include "Consulta.h"
 #include "Auxiliar.h"
-#include "Medico.h"
-#include "Paciente.h"
+
 
 
 const char* statusConsultaParaTexto(enum statusConsulta status) {

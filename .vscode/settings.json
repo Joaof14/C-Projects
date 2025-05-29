@@ -3,6 +3,9 @@
         "medico.h": "c",
         "consulta.h": "c",
         "stdlib.h": "c",
-        "relatorios.h": "c"
+        "relatorios.h": "c",
+        "auxiliar.h": "c",
+        "stdio.h": "c",
+        "string.h": "c"
     }
 }
