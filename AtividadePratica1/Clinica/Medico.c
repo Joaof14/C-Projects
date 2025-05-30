@@ -8,21 +8,6 @@
 
 
 
-const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
-    switch (esp) {
-        case CLINICO: return "CLINICO";
-        case PEDIATRA: return "PEDIATRA";
-        case CARDIOLOGISTA: return "CARDIOLOGISTA";
-        case DERMATOLOGISTA: return "DERMATOLOGISTA";
-        case PSIQUIATRA: return "PSIQUIATRA";
-        case ORTOPEDISTA: return "ORTOPEDISTA";
-        
-        default: return "DESCONHECIDO";
-    }
-}
-
-
-
 void carregarMedicos(Medico **medicos, int *total) {
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
     if (!arquivo) {
@@ -99,55 +84,16 @@ void cadastrarMedico()
     printf("Digite os dados do novo medico:\n");
     
     // coleta do nome com validações
-    printf("Nome (máx 99 caracteres): ");
-    entradaLimitada(novo->nome, 100);
-    while (strlen(novo->nome) == 0) {
-        printf("Nome (máx 99 caracteres): ");
-        entradaLimitada(novo->nome, 100);
-    }
+    receberNome(novo->nome);
 
     // coleta do CRM com validações
-    int crmValido = 0;
-    do {
-        printf("CRM (só numeros): ");
-        entradaLimitada(novo->crm, 6);
-        
-        if (!validarCRM(novo->crm)) {
-            printf("Erro: CRM deve conter exatamente 6 números!\n");
-            continue;
-        }
-        
-        if (CRMJaCadastrado(novo->crm)) {
-            printf("Erro: CRM já cadastrado no sistema!\n");
-            continue;
-        }
-        
-        crmValido = 1;
-    } while (!crmValido);
+    receberCRM(novo->crm);
 
     // coleta da especialidade
-    printf("Selecione a especialidade:\n");
-    for (int i = 0; i < 6; i++) {
-        printf("  %d - %s\n", i, especialidadeParaTexto(i));
-    }
-
-    do {
-        printf("Digite o número da especialidade: ");
-        scanf("%d", (int*)&novo->especialidade);
-        while (getchar() != '\n'); // limpa o buffer
-        if (novo->especialidade < 0 || novo->especialidade >= 6) {
-            printf("Opção inválida. Tente novamente.\n");
-        }
-    } while (novo->especialidade < 0 || novo->especialidade >= 6);
-
+    receberEspecialidade(&novo->especialidade);
 
     // coleta do contato com validações
-    printf("Contato (máx 19 caracteres): ");    
-    entradaLimitada(novo->contato, 20);
-    while (strlen(novo->contato) == 0) {
-        printf("Contato (máx 19 caracteres): ");
-        entradaLimitada(novo->contato, 20);
-    }
+    receberContato(novo->contato);
 
     // exibir os dados coletados
     printf("\nDados do novo medico:\n");    
@@ -196,11 +142,7 @@ void listarMedicos() {
 
     printf("\nLista de Médicos\n");
     for(int i = 0; i < total; i++) {
-        printf("\nMédico %d:\n", i+1);
-        printf("Nome: %s\n", medicos[i].nome);
-        printf("CRM: %s\n", medicos[i].crm);
-        printf("Especialidade: %s\n", especialidadeParaTexto(medicos[i].especialidade));
-        printf("Contato: %s\n", medicos[i].contato);
+        exibirMedico(medicos[i]);
     }
     
     free(medicos); //liberar memória alocada
@@ -246,37 +188,16 @@ void atualizarMedico() {
     
     //atualizar nome
     printf("Nome atual: %s\n", atualizado.nome);
-    do {
-        printf("Novo nome (máx 99 caracteres): ");
-        entradaLimitada(atualizado.nome, sizeof(atualizado.nome));
-        if(strlen(atualizado.nome) == 0) {
-            printf("Nome não pode ser vazio!\n");
-        }
-    } while(strlen(atualizado.nome) == 0);
+    receberNome(atualizado.nome);
 
     //atualizar especialidade
     printf("\nEspecialidade atual: %s\n", especialidadeParaTexto(atualizado.especialidade));
-    for(int i = 0; i < 6; i++) {
-        printf("  %d - %s\n", i, especialidadeParaTexto(i));
-    }
-    do {
-        printf("Nova especialidade: ");
-        scanf("%d", (int*)&atualizado.especialidade);
-        while(getchar() != '\n'); // Limpar buffer
-        if(atualizado.especialidade < 0 || atualizado.especialidade >= 6) {
-            printf("Opção inválida!\n");
-        }
-    } while(atualizado.especialidade < 0 || atualizado.especialidade >= 6);
+    receberEspecialidade(&atualizado.especialidade);
 
     //atualizar contato
     printf("\nContato atual: %s\n", atualizado.contato);
-    do {
-        printf("Novo contato (máx 19 caracteres): ");
-        entradaLimitada(atualizado.contato, sizeof(atualizado.contato));
-        if(strlen(atualizado.contato) == 0) {
-            printf("Contato não pode ser vazio!\n");
-        }
-    } while(strlen(atualizado.contato) == 0);
+    receberContato(atualizado.contato);
+    
 
     //substituir no vetor
     medicos[encontrado] = atualizado;

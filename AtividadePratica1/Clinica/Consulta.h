@@ -7,8 +7,6 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo);
 
 void listarConsultas();
 
-const char* statusConsultaParaTexto(enum statusConsulta status);
-
 void cancelarConsulta() ;
 
 void menuConsultas();

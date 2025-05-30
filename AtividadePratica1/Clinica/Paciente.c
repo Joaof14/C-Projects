@@ -77,23 +77,16 @@ void cadastrarPaciente()
         printf("Erro de alocação de memória!\n");
         return;
     }
-
-    //coletar dados usando ponteiros
     printf("\n Novo Paciente \n");
-    do {
-        printf("Nome (máx 99 caracteres): ");
-        entradaLimitada(novo->nome, 100);
-    }
-    while (strlen(novo->nome) == 0); 
 
+    //coletar nome
+    receberNome(novo->nome);
+    
     //coleta do CPF com validações
     receberCPF(novo->cpf);
 
     //coleta do contato
-    do {
-        printf("contato (só numeros): ");
-        entradaLimitada(novo->contato, 20);
-    } while (strlen(novo->contato) == 0);
+    receberContato(novo->contato);
 
 
     int opcao;
@@ -140,14 +133,10 @@ void listarPaciente()
         return;
     }
     
-    
     printf("\nLista de Pacientes:\n"); 
     for(int i = 0; i < total; i++)
     {
-        printf("\nPaciente %d:\n", i+1);
-        printf("Nome: %s\n", pacientes[i].nome);
-        printf("CPF: %s\n", pacientes[i].cpf);
-        printf("contato: %s\n\n", pacientes[i].contato);
+        exibirPaciente(pacientes[i]);
     }
     
     free(pacientes); //liberar memória alocada
@@ -191,27 +180,18 @@ void atualizarPaciente() {
     Paciente atualizado = pacientes[encontrado];
 
     //coletar novos dados (mesma sequência do cadastro)
+    
     printf("\nAtualizar Dados\n");
 
     //atualizar nome
-    printf("Nome atual: %s\n", atualizado.nome);
-    do {
-        printf("Novo nome (máx 99 caracteres): ");
-        entradaLimitada(atualizado.nome, sizeof(atualizado.nome));
-        if(strlen(atualizado.nome) == 0) {
-            printf("Nome não pode ser vazio!\n");
-        }
-    } while(strlen(atualizado.nome) == 0);
+    receberNome(atualizado.nome);
 
+    //Atualizar cpf
+    receberCPF(atualizado.cpf);
+    
     //atualizar contato
-    printf("\nContato atual: %s\n", atualizado.contato);
-    do {
-        printf("Novo contato (máx 19 caracteres): ");
-        entradaLimitada(atualizado.contato, sizeof(atualizado.contato));
-        if(strlen(atualizado.contato) == 0) {
-            printf("Contato não pode ser vazio!\n");
-        }
-    } while(strlen(atualizado.contato) == 0);
+    receberContato(atualizado.contato);
+    
 
     //substituir no vetor
     pacientes[encontrado] = atualizado;

@@ -16,7 +16,7 @@ void removerMedico();
 
 void menuMedico();
 
-const char* especialidadeParaTexto(enum ESPECIALIDADE esp);
+
 
 
 #endif

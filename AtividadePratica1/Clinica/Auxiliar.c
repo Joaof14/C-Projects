@@ -25,12 +25,15 @@ void verificarArquivo(const char *caminho, const char *colunas) {
 
 // lê entrada do usuário com controle de tamanho
 int entradaLimitada(char *destino, int tamanho_max) {
-    int i = 0;
+    int i = 0, excesso = 0;
     char c;
     
     while ((c = getchar()) != '\n' && c != EOF) {
         if (i < tamanho_max - 1) {
             destino[i++] = c;
+        }
+        else{
+            excesso = 1;
         }
     }
     destino[i] = '\0';
@@ -39,7 +42,7 @@ int entradaLimitada(char *destino, int tamanho_max) {
 
 
 
-// Funções relacionadas a CPF
+// Funções relacionadas a entrada CPF
 
 // Valida se o cpf tem 11 dígitos numéricos
 int validarCPF(const char *cpf) {
@@ -55,7 +58,7 @@ int validarCPF(const char *cpf) {
 // Verifica se um cpf já existe no arquivo
 int CPFJaCadastrado(const char *cpf) {
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (arquivo == NULL) return 0;
+    if (arquivo == NULL) {return -1;}
 
     char nome[100], cpfArquivo[12], telefone[20];
 
@@ -88,6 +91,10 @@ int receberCPF(char *cpf){
             printf("CPF já cadastrado no sistema!\n");
             continue;
         }
+        if (CPFJaCadastrado(cpf) == -1){
+            printf("Erro na verificação, tente novamente!\n");
+            continue;
+        }
         cpfValido=1;
         
     }while(!cpfValido);
@@ -97,10 +104,22 @@ int receberCPF(char *cpf){
 
 //Funções de CRM
 
+
+// valida se o CRM tem 6 dígitos numéricos
+
+int validarCRM(const char *crm) {
+    if (strlen(crm) != 6) return 0;
+    for (int i = 0; i < 6; i++) {
+        if (!isdigit(crm[i])) return 0;
+    }
+    
+    return 1; // crm válido
+}
+
 // Verifica se um CRM já existe no arquivo
 int CRMJaCadastrado(const char *crm) {
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) return 0;
+    if (arquivo == NULL) {return -1;}
 
     char nome[100], crmArquivo[7], especialidade[100], contato[20];
 
@@ -117,18 +136,6 @@ int CRMJaCadastrado(const char *crm) {
     return 0;
 }
 
-// valida se o CRM tem 6 dígitos numéricos
-
-int validarCRM(const char *crm) {
-    if (strlen(crm) != 6) return 0;
-    for (int i = 0; i < 6; i++) {
-        if (!isdigit(crm[i])) return 0;
-    }
-    
-    return 1; // crm válido
-}
-
-
 //Receber CRM
 int receberCRM(char *crm){
     
@@ -140,8 +147,12 @@ int receberCRM(char *crm){
             printf("CRM deve conter exatamente 6 números!\n");
             continue;
         }
-        if (CPFJaCadastrado(crm)){
+        if (CRMJaCadastrado(crm)){
             printf("CRM já cadastrado no sistema!\n");
+            continue;
+        }
+        if (CRMJaCadastrado(crm)== -1){
+            printf("Erro na verificação, tente novamente!\n");
             continue;
         }
         crmValido=1;
@@ -152,41 +163,183 @@ int receberCRM(char *crm){
 
 
 
-//Funções de nome
+//Funções de Entrada nome
 
 
 //Validar nome
-int validarNOME(const char *nome){}
+int validarNome(const char *nome) {
+    // Verificar tamanho e se contém apenas letras e espaços
+    if (strlen(nome) == 0 || strlen(nome) > 99) {
+        return 0;
+    }
+    
+    // Verificar se contém apenas espaços
+    int apenasEspacos = 1;
+    for (int i = 0; i < strlen(nome); i++) {
+        if (!isspace(nome[i])) {
+            apenasEspacos = 0;
+            break;
+        }
+    }
+    if (apenasEspacos) {
+        return 0;
+    }
 
-//Receber Nome
-int receberNome(char *nome){
-
+    for (int i = 0; i < strlen(nome); i++) {
+        if (!isalpha(nome[i]) && nome[i] != ' ') {
+            return 0;
+        }
+    }
+    
+    return 1;
 }
 
 
+//Receber Nome
+int receberNome(char *nome){
+    do {
+        printf("Nome (máx 99 caracteres): ");
+        entradaLimitada(nome, 100);
 
-//Funções de Contato
+        if (!validarNome(nome)) {
+            printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");
+            continue;
+        }
+        break;
+    }
+    while (1);
+
+    return 1;
+    
+
+}
+
+//Funções de entrada Contato
 
 
 //Validar contato
 int validarContato(const char *contato){
-
-}
-
-//Verificar unicidade de contato
-int contatoJaCadastrado(const char * contato){
+    int len = strlen(contato);
+    if (len < 10 || len > 19) return 0;
     
+    // Verificar se contém apenas dígitos
+    for (int i = 0; i < len; i++) {
+        if (!isdigit(contato[i])) {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 //Receber Contato
 int receberContato(char *contato) {
+    
+    do {
+        printf("contato (só numeros): ");
+        entradaLimitada(contato, 20);
+        if (!validarContato(contato)) {
+            printf("Erro: Use apenas números!\n");
+            continue;
+        }
+        break;
+        
+    } while (strlen(contato) == 0);
 
+    return 1;
 }
+
+
+
+
+//Funções para Enums
+
+//Converter Especialidade para string
+const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
+    switch (esp) {
+        case CLINICO: return "CLINICO";
+        case PEDIATRA: return "PEDIATRA";
+        case CARDIOLOGISTA: return "CARDIOLOGISTA";
+        case DERMATOLOGISTA: return "DERMATOLOGISTA";
+        case PSIQUIATRA: return "PSIQUIATRA";
+        case ORTOPEDISTA: return "ORTOPEDISTA";
+        
+        default: return "DESCONHECIDO";
+    }
+}
+
+
+//Converter status da consulta para texto
+const char* statusConsultaParaTexto(enum statusConsulta status) {
+    switch(status) {
+        case AGENDADA: return "AGENDADA";
+        case REALIZADA: return "REALIZADA";
+        case CANCELADA: return "CANCELADA";
+        default: return "DESCONHECIDO";
+    }
+}
+
+
+//Função para receber Especialidade
+
+int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
+    printf("Selecione a especialidade:\n");
+    for (int i = 0; i < 6; i++) {
+        printf("  %d - %s\n", i, especialidadeParaTexto(i));
+    }
+
+    int opcao;
+    do {
+        printf("Digite o número da especialidade: ");
+        scanf("%d", &opcao);
+        while (getchar() != '\n'); 
+        
+        if (opcao < 0 || opcao >= 6) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        else {
+            *especialidade = (enum ESPECIALIDADE)opcao;
+            break;
+        }
+    } while (1);
+    
+    return 1;
+}
+
+//Funções de exibição
+
+void exibirMedico(Medico medico){
+    printf("\nDados do novo medico:\n");    
+    printf("Nome: %s\n", medico.nome);
+    printf("CRM: %s\n", medico.crm);
+    printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
+    printf("Contato: %s\n", medico.contato);
+}
+
+void exibirPaciente(Paciente paciente){
+    printf("Nome: %s\n", paciente.nome);
+    printf("CPF: %s\n", paciente.cpf);
+    printf("contato: %s\n\n", paciente.contato);
+}
+
+void exibirConsulta(Consulta consulta){
+    printf("ID: %d\n", consulta.id);
+    printf("Médico (CRM): %s\n", consulta.medicoCRM);
+    printf("Paciente (CPF): %s\n", consulta.pacienteCPF);
+    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
+    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
+}
+
 
 
 //Funções de busca
 
+//BuscaPacienteCPF(){}
 
+//BuscaMedicoCRM{}
+
+//BuscaConsultaCPF{}
+
+//BuscaConsultaCRM{}
 
 
 

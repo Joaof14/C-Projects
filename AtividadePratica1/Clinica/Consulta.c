@@ -9,14 +9,6 @@
 
 
 
-const char* statusConsultaParaTexto(enum statusConsulta status) {
-    switch(status) {
-        case AGENDADA: return "AGENDADA";
-        case REALIZADA: return "REALIZADA";
-        case CANCELADA: return "CANCELADA";
-        default: return "DESCONHECIDO";
-    }
-}
 
 void carregarConsultas(Consulta **consultas, int *total)
 {
@@ -99,11 +91,7 @@ void alterarStatusConsulta(enum statusConsulta novoStatus){
     for (int i = 0; i < total; i++){
         if(consultas[i].id == id) 
         {
-            printf("ID: %d\n", consultas[i].id);
-            printf("Médico (CRM): %s\n", consultas[i].medicoCRM);
-            printf("Paciente (CPF): %s\n", consultas[i].pacienteCPF);
-            printf("\nData: %02d/%02d/%04d %02d:%02d\n", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
-            printf("Status atual: %s\n", statusConsultaParaTexto(consultas[i].status));
+            exibirConsulta(consultas[i]);
             encontrado = i;
             break;
         }
@@ -150,11 +138,7 @@ void listarConsultas(){
     printf("\nLista de Consultas:\n");
     for (int i = 0; i < total; i++)
     {
-        printf("\nID: %d", consultas[i].id);
-        printf("Médico (CRM): %s\n", consultas[i].medicoCRM);
-        printf("Paciente (CPF): %s\n", consultas[i].pacienteCPF);
-        printf("Data: %02d/%02d/%04d %02d:%02d\n", consultas[i].data_hora.dia, consultas[i].data_hora.mes, consultas[i].data_hora.ano, consultas[i].data_hora.hora, consultas[i].data_hora.minuto);
-        printf("Status: %s\n", statusConsultaParaTexto(consultas[i].status));
+        exibirConsulta(consultas[i]);
     }
 
     free(consultas);
