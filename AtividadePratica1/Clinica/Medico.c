@@ -96,12 +96,7 @@ void cadastrarMedico()
     receberContato(novo->contato);
 
     // exibir os dados coletados
-    printf("\nDados do novo medico:\n");    
-    printf("Nome: %s\n", novo->nome);
-    printf("CRM: %s\n", novo->crm);
-    printf("Especialidade: %s\n", especialidadeParaTexto(novo->especialidade));
-    printf("Contato: %s\n", novo->contato);
-
+    exibirMedico(*novo);
     // perguntar se deseja salvar ou sair sem salvar
     printf("\nDeseja salvar os dados?");
     int opcao;

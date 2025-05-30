@@ -333,13 +333,21 @@ void exibirConsulta(Consulta consulta){
 
 //Funções de busca
 
-//BuscaPacienteCPF(){}
+//buscaPacienteCPF(){} tem que retornar um paciente
 
-//BuscaMedicoCRM{}
+//buscaPacienteId(){} tem que retornar um paciente
 
-//BuscaConsultaCPF{}
+//buscaMedicoCRM(){} tem que retornar um medico
 
-//BuscaConsultaCRM{}
+//buscaMedicoId(){} tem que retornar um medico
+
+//buscaConsultaEspecialidade(){} tem que retornar uma lista de consultas
+
+//buscaConsultaCPF(){} tem que retornar uma lista de consultas
+
+//buscaConsultaCRM(){} tem que retornar uma lista de consultas
+
+//BuscaConsultaId(){} tem que retornar uma só consulta
 
 
 
