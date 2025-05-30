@@ -7,45 +7,71 @@
 
 
 void relatorioConsultaPacientes() {
-
-    char cpfBusca[30];
-    printf("Digite o CPF do paciente para listar as consultas: ");
+    char cpfBusca[12];
+    printf("\nDigite o CPF do paciente para buscar suas consultas: ");
     fgets(cpfBusca, sizeof(cpfBusca), stdin);
     cpfBusca[strcspn(cpfBusca, "\n")] = 0;
 
-    FILE *fcon = fopen("Consultas.txt", "r");
-    if (fcon == NULL) {
-        printf("Nenhuma consulta cadastrada ou erro ao abrir o arquivo!\n");
+    // Busca o ID do paciente pelo CPF
+    int idPaciente = buscaPacienteCPF(cpfBusca);
+    if (idPaciente == -1) {
+        printf("Paciente não encontrado!\n");
         return;
     }
 
-    char linha[512];
-    int encontrou = 0;
-    printf("\nConsultas do paciente CPF: %s\n", cpfBusca);
-    printf("--------------------------------------------------\n");
-    while (fgets(linha, sizeof(linha), fcon)) {
-        int id;
-        char cpf[30], nomePaciente[100], crm[30], nomeMedico[100], data[15], hora[10], status[20];
-        int campos = sscanf(linha, "%d,%29[^,],%99[^,],%29[^,],%99[^,],%14[^,],%9[^,],%19[^\n]",
-            &id, cpf, nomePaciente, crm, nomeMedico, data, hora, status);
-        if (campos == 8 && strcmp(cpf, cpfBusca) == 0) {
-            printf("ID: %d\n", id);
-            printf("Paciente: %s (CPF: %s)\n", nomePaciente, cpf);
-            printf("Médico: %s (CRM: %s)\n", nomeMedico, crm);
-            printf("Data: %s\n", data);
-            printf("Hora: %s\n", hora);
-            printf("Status: %s\n", status);
-            printf("-----------------------------\n");
-            encontrou = 1;
+    // Busca os dados do paciente pelo ID
+    Paciente paciente = buscaPacienteId(idPaciente);
+    if (paciente.cpf[0] == '\0') {
+        printf("Erro ao buscar dados do paciente!\n");
+        return;
+    }
+
+    // Abre o arquivo de consultas
+    FILE *arquivo = fopen("Arquivos/Consultas.txt", "r");
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo de consultas!\n");
+        return;
+    }
+
+    // Pula o cabeçalho
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    printf("\n=== Consultas do Paciente ===\n");
+    printf("Nome: %s\n", paciente.nome);
+    printf("CPF: %s\n", paciente.cpf);
+    printf("Contato: %s\n", paciente.contato);
+    printf("--------------------------------\n");
+
+    // Variáveis para ler cada linha do arquivo
+    int id, idMed, idPac, dia, mes, ano, hora, min, status;
+    int encontrouConsulta = 0;
+
+    // Lê cada consulta do arquivo
+    while (fscanf(arquivo, "%d,%d,%d,%d/%d/%d %d:%d,%d\n",
+           &id, &idMed, &idPac, &dia, &mes, &ano, &hora, &min, &status) == 9) {
+        
+        if (idPac == idPaciente) {
+            encontrouConsulta = 1;
+            
+            // Busca dados do médico
+            Medico medico = buscaMedicoId(idMed);
+            
+            printf("\nConsulta ID: %d\n", id);
+            printf("Médico: %s (CRM: %s)\n", medico.nome, medico.crm);
+            printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
+            printf("Data: %02d/%02d/%04d\n", dia, mes, ano);
+            printf("Hora: %02d:%02d\n", hora, min);
+            printf("Status: %s\n", statusConsultaParaTexto(status));
+            printf("--------------------------------\n");
         }
     }
-    fclose(fcon);
 
-    if (!encontrou) {
+    if (!encontrouConsulta) {
         printf("Nenhuma consulta encontrada para este paciente.\n");
     }
 
-  
+    fclose(arquivo);
 }
 
 void relatorioConsultaMedicos() {
