@@ -42,6 +42,28 @@ int entradaLimitada(char *destino, int tamanho_max) {
 
 
 
+//Função gera id
+int gerarNovoId(const char *arquivoPath) {
+    FILE *arquivo = fopen(arquivoPath, "r");
+    if (!arquivo) return 1; // Primeiro ID se arquivo não existir
+    
+    int maxId = 0;
+    char linha[256];
+    
+    // Pular cabeçalho
+    fgets(linha, sizeof(linha), arquivo);
+    
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        int id;
+        if (sscanf(linha, "%d,", &id) == 1) {
+            if (id > maxId) maxId = id;
+        }
+    }
+    
+    fclose(arquivo);
+    return maxId + 1;
+}
+
 // Funções relacionadas a entrada CPF
 
 // Valida se o cpf tem 11 dígitos numéricos
@@ -307,8 +329,8 @@ int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
 
 //Funções de exibição
 
-void exibirMedico(Medico medico){
-    printf("\nDados do novo medico:\n");    
+void exibirMedico(Medico medico){   
+    printf("ID: %d\n", medico.id);
     printf("Nome: %s\n", medico.nome);
     printf("CRM: %s\n", medico.crm);
     printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
@@ -316,6 +338,7 @@ void exibirMedico(Medico medico){
 }
 
 void exibirPaciente(Paciente paciente){
+    printf("ID: %d\n", paciente.id);
     printf("Nome: %s\n", paciente.nome);
     printf("CPF: %s\n", paciente.cpf);
     printf("contato: %s\n\n", paciente.contato);
@@ -323,8 +346,8 @@ void exibirPaciente(Paciente paciente){
 
 void exibirConsulta(Consulta consulta){
     printf("ID: %d\n", consulta.id);
-    printf("Médico (CRM): %s\n", consulta.medicoCRM);
-    printf("Paciente (CPF): %s\n", consulta.pacienteCPF);
+    printf("Médico (CRM): %s\n", consulta.medicoId);
+    printf("Paciente (CPF): %s\n", consulta.pacienteId);
     printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
     printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
 }
@@ -333,7 +356,7 @@ void exibirConsulta(Consulta consulta){
 
 //Funções de busca
 
-//buscaPacienteCPF(){} tem que retornar um paciente
+//buscaPacienteCPF(){} tem que retornar um paciente 
 
 //buscaPacienteId(){} tem que retornar um paciente
 
@@ -341,7 +364,7 @@ void exibirConsulta(Consulta consulta){
 
 //buscaMedicoId(){} tem que retornar um medico
 
-//buscaConsultaEspecialidade(){} tem que retornar uma lista de consultas
+//buscaConsultaDataHora(){} tem que retornar uma lista de consultas
 
 //buscaConsultaCPF(){} tem que retornar uma lista de consultas
 

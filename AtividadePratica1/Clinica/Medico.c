@@ -54,12 +54,18 @@ void salvarMedicos(Medico *medicos, int total, const char *modo) {
 
     //se for modo write, reescreve o cabeçalho
     if (strcmp(modo, "w") == 0) {
-        fprintf(arquivo, "Nome,CRM,Especialidade,Contato\n");
+        fprintf(arquivo, "Id,Nome,CRM,Especialidade,Contato\n");
     }
 
     //escreve os médicos
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "%s,%s,%d,%s\n", 
+        // Gerar ID se for novo registro
+        if (medicos[i].id == 0) {
+            medicos[i].id = gerarNovoId("Arquivos/Medicos.txt");
+        }
+        
+        fprintf(arquivo, "%d,%s,%s,%d,%s\n", 
+                medicos[i].id,
                 medicos[i].nome, 
                 medicos[i].crm, 
                 medicos[i].especialidade, 
@@ -71,7 +77,7 @@ void salvarMedicos(Medico *medicos, int total, const char *modo) {
 
 void cadastrarMedico()
 {
-    verificarArquivo("Arquivos/Medicos.txt", "Nome,CRM,Especialidade,Contato\n");
+    verificarArquivo("Arquivos/Medicos.txt", "Id,Nome,CRM,Especialidade,Contato\n");
 
     // alocar memória para o Medico
     Medico *novo = (Medico*)malloc(sizeof(Medico));
@@ -97,6 +103,7 @@ void cadastrarMedico()
 
     // exibir os dados coletados
     exibirMedico(*novo);
+    
     // perguntar se deseja salvar ou sair sem salvar
     printf("\nDeseja salvar os dados?");
     int opcao;

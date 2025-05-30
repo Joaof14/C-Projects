@@ -51,15 +51,21 @@ void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
 
     //se for modo write, reescreve o cabeçalho
     if (strcmp(modo, "w") == 0) {
-        fprintf(arquivo, "Nome,CPF,Contato\n");
+        fprintf(arquivo, "Id,Nome,CPF,Contato\n");
     }
 
-    //escreve os médicos
+    //escreve os Pacientes
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "%s,%s,%s\n", 
-            pacientes[i].nome, 
-            pacientes[i].cpf, 
-            pacientes[i].contato);
+    // Gerar ID se for novo registro
+        if (pacientes[i].id == 0) {
+            pacientes[i].id = gerarNovoId("Arquivos/Pacientes.txt");
+        }
+        
+        fprintf(arquivo, "%d,%s,%s,%s\n", 
+                pacientes[i].id,
+                pacientes[i].nome, 
+                pacientes[i].cpf, 
+                pacientes[i].contato);
     }
 
     fclose(arquivo);
@@ -88,6 +94,8 @@ void cadastrarPaciente()
     //coleta do contato
     receberContato(novo->contato);
 
+    // exibir os dados coletados
+    exibirPaciente(*novo);
 
     int opcao;
     do {
@@ -184,12 +192,15 @@ void atualizarPaciente() {
     printf("\nAtualizar Dados\n");
 
     //atualizar nome
+    printf("Nome atual: %s\n", atualizado.nome);
     receberNome(atualizado.nome);
 
     //Atualizar cpf
+    printf("\nCPF atual: %s\n", atualizado.cpf);
     receberCPF(atualizado.cpf);
     
     //atualizar contato
+    printf("\nContato atual: %s\n", atualizado.contato);
     receberContato(atualizado.contato);
     
 

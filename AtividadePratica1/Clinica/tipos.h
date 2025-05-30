@@ -4,6 +4,7 @@
 
 //setor de pacientes
 typedef struct {
+    int id;
     char nome[100];
     char cpf[12];
     char contato[20];
@@ -14,11 +15,11 @@ enum ESPECIALIDADE {CLINICO, PEDIATRA, CARDIOLOGISTA, DERMATOLOGISTA, PSIQUIATRA
 
 typedef struct 
 {
+    int id;
     char nome[100];
     char crm[7];
     enum ESPECIALIDADE especialidade;
     char contato[20];
-
 } Medico;
 
 
@@ -36,8 +37,8 @@ typedef struct {
 
 typedef struct {
     int id;
-    char pacienteCPF[12];
-    char medicoCRM[7];
+    int pacienteId;
+    int medicoId;
     DataHora data_hora;
     enum statusConsulta status;
 } Consulta;

@@ -7,7 +7,7 @@ void verificarArquivo(const char *caminho, const char *colunas);
 
 int entradaLimitada(char *destino, int tamanho_max);
 
-
+int gerarNovoId(const char *arquivoPath);
 
 //Funções de CPF
 
