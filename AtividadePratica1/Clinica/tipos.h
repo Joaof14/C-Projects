@@ -4,9 +4,10 @@
 
 //setor de pacientes
 typedef struct {
-    char nome[100];
-    char cpf[12];
-    char contato[20];
+    int id; // ID do paciente
+    char nome[100]; // Nome do paciente
+    char cpf[12]; // CPF do paciente (apenas números)
+    char contato[20]; // Contato do paciente (apenas números)
 } Paciente;
 
 //Setor de médico
