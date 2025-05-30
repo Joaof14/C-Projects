@@ -356,15 +356,116 @@ void exibirConsulta(Consulta consulta){
 
 //Funções de busca
 
-//buscaPacienteCPF(){} tem que retornar um paciente 
+//buscaPacienteCPF(){} tem que retornar O ID do paciente
+int buscaPacienteCPF(const char *cpf) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de pacientes.\n");
+        return -1; // Erro ao abrir o arquivo
+    }
 
-//buscaPacienteId(){} tem que retornar um paciente
+    char nome[100], cpfArquivo[12], contato[20];
+    int id = 0;
 
-//buscaMedicoCRM(){} tem que retornar um medico
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
 
-//buscaMedicoId(){} tem que retornar um medico
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpfArquivo, contato) == 4) {
+        if (strcmp(cpfArquivo, cpf) == 0) {
+            fclose(arquivo);
+            return id; // Retorna o ID do paciente
+        }
+    }
 
-//buscaConsultaDataHora(){} tem que retornar uma lista de consultas
+    fclose(arquivo);
+    return -1; // CPF não encontrado
+}
+
+//buscaPacienteId(){} tem que retornar um paciente com base no ID
+Paciente buscaPacienteId(int id) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de pacientes.\n");
+        return (Paciente){0}; // Retorna um paciente vazio em caso de erro
+    }
+
+    Paciente paciente = {0};
+    char nome[100], cpf[12], contato[20];
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpf, contato) == 4) {
+        if (id == id) {
+            strcpy(paciente.nome, nome);
+            strcpy(paciente.cpf, cpf);
+            strcpy(paciente.contato, contato);
+            fclose(arquivo);
+            return paciente; // Retorna o paciente encontrado
+        }
+    }
+
+    fclose(arquivo);
+    return (Paciente){0}; // Retorna um paciente vazio se não encontrado
+}
+
+
+
+//buscaMedicoCRM(){} tem que retornar o ID do medico
+int buscaMedicoCRM(const char *crm) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return -1; // Erro ao abrir o arquivo
+    }
+
+    char nome[100], crmArquivo[7], especialidade[100], contato[20];
+    int id = 0;
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%99[^,],%19[^\n]\n", &id, nome, crmArquivo, especialidade, contato) == 5) {
+        if (strcmp(crmArquivo, crm) == 0) {
+            fclose(arquivo);
+            return id; // Retorna o ID do médico
+        }
+    }
+
+    fclose(arquivo);
+    return -1; // CRM não encontrado
+}
+
+//buscaMedicoId(){} tem que retornar um medico com base no ID
+Medico buscaMedicoId(int id) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return (Medico){0}; // Retorna um médico vazio em caso de erro
+    }
+
+    Medico medico = {0};
+    char nome[100], crm[7], especialidade[100], contato[20];
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%99[^,],%19[^\n]\n", &id, nome, crm, especialidade, contato) == 5) {
+        if (id == id) {
+            strcpy(medico.nome, nome);
+            strcpy(medico.crm, crm);
+            medico.especialidade = especialidadeParaTexto(especialidade);
+            strcpy(medico.contato, contato);
+            fclose(arquivo);
+            return medico; // Retorna o médico encontrado
+        }
+    }
+
+    fclose(arquivo);
+    return (Medico){0}; // Retorna um médico vazio se não encontrado
+}
+
+//buscaConsultaEspecialidade(){} tem que retornar uma lista de consultas
 
 //buscaConsultaCPF(){} tem que retornar uma lista de consultas
 
