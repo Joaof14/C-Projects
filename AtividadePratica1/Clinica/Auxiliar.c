@@ -42,26 +42,42 @@ int entradaLimitada(char *destino, int tamanho_max) {
 
 
 
-//Função gera id
 int gerarNovoId(const char *arquivoPath) {
     FILE *arquivo = fopen(arquivoPath, "r");
-    if (!arquivo) return 1; // Primeiro ID se arquivo não existir
+    if (!arquivo) {
+        return 1; // Primeiro ID se arquivo não existir
+    }
     
     int maxId = 0;
     char linha[256];
-    
-    // Pular cabeçalho
-    fgets(linha, sizeof(linha), arquivo);
+    int primeiraLinha = 1;
+    int idsValidos = 0;
     
     while (fgets(linha, sizeof(linha), arquivo)) {
+        // Ignorar cabeçalho
+        if (primeiraLinha) {
+            primeiraLinha = 0;
+            continue;
+        }
+        
+        // Ignorar linhas vazias ou muito curtas
+        if (strlen(linha) < 3) continue;
+        
+        // Extrair ID
         int id;
         if (sscanf(linha, "%d,", &id) == 1) {
-            if (id > maxId) maxId = id;
+            // Filtrar IDs inválidos
+            if (id > 0 && id < 1000000000) { // ID entre 1 e 999.999.999
+                if (id > maxId) maxId = id;
+                idsValidos++;
+            }
         }
     }
     
     fclose(arquivo);
-    return maxId + 1;
+    
+    // Se não encontrou IDs válidos, começa em 1
+    return (idsValidos == 0) ? 1 : maxId + 1;
 }
 
 //Funções para Enums

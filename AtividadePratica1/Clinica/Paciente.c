@@ -52,7 +52,7 @@ void cadastrarPaciente()
         return;
     }
     printf("\n Novo Paciente \n");
-
+    novo->id = 0;
     //coletar nome
     receberNome(novo->nome);
     
