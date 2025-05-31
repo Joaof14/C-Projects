@@ -92,31 +92,77 @@ const char* statusConsultaParaTexto(enum statusConsulta status) {
 }
 
 
-//Função para receber Especialidade
 
-int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
-    printf("Selecione a especialidade:\n");
-    for (int i = 0; i < 6; i++) {
-        printf("  %d - %s\n", i, especialidadeParaTexto(i));
+//Funções de carregamento de arquivos na memória
+void carregarMedicos(Medico **medicos, int *total) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (!arquivo) {
+        *total = 0;
+        *medicos = NULL;
+        return;
     }
 
-    int opcao;
-    do {
-        printf("Digite o número da especialidade: ");
-        scanf("%d", &opcao);
-        while (getchar() != '\n'); 
-        
-        if (opcao < 0 || opcao >= 6) {
-            printf("Opção inválida. Tente novamente.\n");
-        }
-        else {
-            *especialidade = (enum ESPECIALIDADE)opcao;
-            break;
-        }
-    } while (1);
-    
-    return 1;
+    //pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Medico temp;
+    int especialidade_tmp;
+
+    //ler cada linha do arquivo
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
+                &temp.id,
+                temp.nome, 
+                temp.crm, 
+                &especialidade_tmp, 
+                temp.contato) == 4) {
+
+        //converter especialidade
+        temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
+
+        //alocar espaço para mais um médico e adicionar
+        *medicos = realloc(*medicos, (*total + 1) * sizeof(Medico));
+        (*medicos)[*total] = temp;
+        (*total)++;
+    }
+    fclose(arquivo);
 }
+
+void carregarPacientes(Paciente **pacientes, int *total) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (!arquivo) {
+        *total = 0;
+        *pacientes = NULL;
+        return;
+    }
+
+    //pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Paciente temp;
+
+    //ler cada linha do arquivo
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", 
+                &temp.id,
+                temp.nome, 
+                temp.cpf,  
+                temp.contato) == 3) {
+
+
+        //alocar espaço para mais um médico e adicionar
+        *pacientes = realloc(*pacientes, (*total + 1) * sizeof(Paciente));
+        (*pacientes)[*total] = temp;
+        (*total)++;
+    }
+
+    fclose(arquivo);
+}
+
+
+
 
 
 
@@ -270,7 +316,32 @@ void exibirConsulta(Consulta consulta){
     printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
 }
 
+//--------------------FUNÇÔES DE ENTRADA-----------------------
 
+//Função para receber Especialidade
+int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
+    printf("Selecione a especialidade:\n");
+    for (int i = 0; i < 6; i++) {
+        printf("  %d - %s\n", i, especialidadeParaTexto(i));
+    }
+
+    int opcao;
+    do {
+        printf("Digite o número da especialidade: ");
+        scanf("%d", &opcao);
+        while (getchar() != '\n'); 
+        
+        if (opcao < 0 || opcao >= 6) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        else {
+            *especialidade = (enum ESPECIALIDADE)opcao;
+            break;
+        }
+    } while (1);
+    
+    return 1;
+}
 
 // Funções relacionadas a entrada CPF
 

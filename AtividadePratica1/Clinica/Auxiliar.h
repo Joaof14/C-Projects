@@ -9,6 +9,11 @@ int entradaLimitada(char *destino, int tamanho_max);
 
 int gerarNovoId(const char *arquivoPath);
 
+//Funções de carregamento de arquivos na memória
+void carregarMedicos(Medico **medicos, int *total);
+
+void carregarPacientes(Paciente **pacientes, int *total);
+
 //Funções de CPF
 
 int validarCPF(const char *cpf);

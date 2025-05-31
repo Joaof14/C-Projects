@@ -8,40 +8,7 @@
 
 
 
-void carregarMedicos(Medico **medicos, int *total) {
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (!arquivo) {
-        *total = 0;
-        *medicos = NULL;
-        return;
-    }
 
-    //pular cabeçalho (primeira linha)
-    char buffer[256];
-    fgets(buffer, sizeof(buffer), arquivo);
-
-    *total = 0;
-    Medico temp;
-    int especialidade_tmp;
-
-    //ler cada linha do arquivo
-    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
-                &temp.id,
-                temp.nome, 
-                temp.crm, 
-                &especialidade_tmp, 
-                temp.contato) == 4) {
-
-        //converter especialidade
-        temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
-
-        //alocar espaço para mais um médico e adicionar
-        *medicos = realloc(*medicos, (*total + 1) * sizeof(Medico));
-        (*medicos)[*total] = temp;
-        (*total)++;
-    }
-    fclose(arquivo);
-}
 
 void salvarMedicos(Medico *medicos, int total, const char *modo) {
 

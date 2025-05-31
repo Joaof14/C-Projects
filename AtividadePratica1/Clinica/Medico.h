@@ -2,7 +2,7 @@
 #ifndef MEDICO_H
 #define MEDICO_H
 
-void carregarMedicos(Medico **medicos, int *total);
+
 
 void salvarMedicos(Medico *medicos, int total, const char *modo);
 

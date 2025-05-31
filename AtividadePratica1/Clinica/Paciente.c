@@ -8,39 +8,6 @@
 
 
 
-
-void carregarPacientes(Paciente **pacientes, int *total) {
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (!arquivo) {
-        *total = 0;
-        *pacientes = NULL;
-        return;
-    }
-
-    //pular cabeçalho (primeira linha)
-    char buffer[256];
-    fgets(buffer, sizeof(buffer), arquivo);
-
-    *total = 0;
-    Paciente temp;
-
-    //ler cada linha do arquivo
-    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", 
-                &temp.id,
-                temp.nome, 
-                temp.cpf,  
-                temp.contato) == 3) {
-
-
-        //alocar espaço para mais um médico e adicionar
-        *pacientes = realloc(*pacientes, (*total + 1) * sizeof(Paciente));
-        (*pacientes)[*total] = temp;
-        (*total)++;
-    }
-
-    fclose(arquivo);
-}
-
 void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
 
     
