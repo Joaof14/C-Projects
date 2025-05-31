@@ -28,10 +28,10 @@ void carregarConsultas(Consulta **consultas, int *total)
     int status_temp;
 
     //ler cada linha do arquivo
-    while(fscanf(arquivo, "%d,%11[^,],%6[^,],%d/%d/%d %d:%d,%d\n",
-    &temp.id,
-        temp.pacienteId,
-        temp.medicoId,
+    while(fscanf(arquivo, "%d,%d,%d,%d/%d/%d %d:%d,%d\n",
+        &temp.id,
+        &temp.pacienteId,
+        &temp.medicoId,
         &temp.data_hora.dia,
         &temp.data_hora.mes,
         &temp.data_hora.ano,
@@ -63,7 +63,7 @@ void salvarConsultas(Consulta *consultas, int total, const char *modo) {
 
     //escreve as consultas
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "%d,%s,%s,%02d/%02d/%04d %02d:%02d,%d\n", 
+        fprintf(arquivo, "%d,%d,%d,%02d/%02d/%04d %02d:%02d,%d\n", 
                 consultas[i].id, 
                 consultas[i].pacienteId,
                 consultas[i].medicoId, 
@@ -146,8 +146,7 @@ void listarConsultas(){
 }
 
 void agendarConsulta(){
-
-    verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteId,MedicoId,Data Hora,Status\n");
+/* verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteId,MedicoId,Data Hora,Status\n");
 
     int cadastros = 0;
     printf("\nPaciente e Médico da consulta ja estão cadastrados no sistema?\nDigite: 1-Sim, 2-Não\n");
@@ -229,7 +228,8 @@ void agendarConsulta(){
  
     
     free(nova);
-
+*/
+    
     
 }   
 

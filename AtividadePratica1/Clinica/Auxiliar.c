@@ -400,13 +400,13 @@ int buscaMedicoCRM(const char *crm) {
         return -1; // Erro ao abrir o arquivo
     }
 
-    char nome[100], crmArquivo[7], especialidade[100], contato[20];
-    int id = 0;
+    char nome[100], crmArquivo[7], contato[20];
+    int id, especialidade;
 
     // Pular o cabeçalho
     fscanf(arquivo, "%*[^\n]\n");
 
-    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%99[^,],%19[^\n]\n", &id, nome, crmArquivo, especialidade, contato) == 5) {
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", &id, nome, crmArquivo, &especialidade, contato) == 5) {
         if (strcmp(crmArquivo, crm) == 0) {
             fclose(arquivo);
             return id; // Retorna o ID do médico
@@ -418,7 +418,7 @@ int buscaMedicoCRM(const char *crm) {
 }
 
 //buscaMedicoId(){} tem que retornar um medico com base no ID
-Medico buscaMedicoId(int id) {
+Medico buscaMedicoId(int idBuscado) {
     FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
@@ -426,19 +426,22 @@ Medico buscaMedicoId(int id) {
     }
 
     Medico medico = {0};
-    char nome[100], crm[7], especialidade[100], contato[20];
+    char nome[100], crm[7], contato[20];
+    int id, especialidade;
 
     // Pular o cabeçalho
     fscanf(arquivo, "%*[^\n]\n");
 
-    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%99[^,],%19[^\n]\n", &id, nome, crm, especialidade, contato) == 5) {
-        if (id == id) {
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
+                 &id, nome, crm, &especialidade, contato) == 5) {
+        if (id == idBuscado) {
+            medico.id = id;
             strcpy(medico.nome, nome);
             strcpy(medico.crm, crm);
-            medico.especialidade = especialidadeParaTexto(especialidade);
+            medico.especialidade = (enum ESPECIALIDADE)especialidade;
             strcpy(medico.contato, contato);
             fclose(arquivo);
-            return medico; // Retorna o médico encontrado
+            return medico;
         }
     }
 

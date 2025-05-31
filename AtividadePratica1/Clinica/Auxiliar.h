@@ -58,4 +58,13 @@ void exibirPaciente(Paciente paciente);
 
 void exibirConsulta(Consulta consulta);
 
+
+//Funções de busca
+int buscaPacienteCPF(const char *cpf);
+Paciente buscaPacienteId(int id);
+int buscaMedicoCRM(const char *crm);
+Medico buscaMedicoId(int id);
+
+
+
 #endif
