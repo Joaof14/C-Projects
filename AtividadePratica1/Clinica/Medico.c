@@ -93,7 +93,7 @@ void cadastrarMedico()
     receberNome(novo->nome);
 
     // coleta do CRM com validações
-    receberCRM(novo->crm);
+    receberCRM(novo->crm, 0);
 
     // coleta da especialidade
     receberEspecialidade(&novo->especialidade);
@@ -103,7 +103,7 @@ void cadastrarMedico()
 
     // exibir os dados coletados
     exibirMedico(*novo);
-    
+
     // perguntar se deseja salvar ou sair sem salvar
     printf("\nDeseja salvar os dados?");
     int opcao;
@@ -192,6 +192,9 @@ void atualizarMedico() {
     printf("Nome atual: %s\n", atualizado.nome);
     receberNome(atualizado.nome);
 
+    // coleta do CRM com validações
+    receberCRM(atualizado.crm, 0);
+
     //atualizar especialidade
     printf("\nEspecialidade atual: %s\n", especialidadeParaTexto(atualizado.especialidade));
     receberEspecialidade(&atualizado.especialidade);
@@ -246,18 +249,12 @@ void removerMedico(){
 
     while (getchar() != '\n');
     //obter CRM para remoção e usar para remover medico
-    char crm[7];
+    char crmBusca[7];
     printf("\nRemoção de Médico\n");
     printf("Digite o CRM do médico (6 dígitos): ");
-    entradaLimitada(crm, sizeof(crm));
+    receberCRM(crmBusca, 1);
 
-    int encontrado = -1;
-    for(int i = 0; i < total; i++) {
-        if(strcmp(medicos[i].crm, crm) == 0) {
-            encontrado = i;
-            break;
-        }
-    }
+    int encontrado = buscaMedicoCRM(crmBusca);
 
     if(encontrado == -1) {
         printf("Médico não encontrado!\n");

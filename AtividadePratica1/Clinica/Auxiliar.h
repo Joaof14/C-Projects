@@ -15,7 +15,7 @@ int validarCPF(const char *cpf);
 
 int CPFJaCadastrado(const char *cpf);
 
-int receberCPF(char *cpf);
+int receberCPF(char *cpf, int deveExistir);
 
 
 
@@ -25,7 +25,7 @@ int CRMJaCadastrado(const char *crm);
 
 int validarCRM(const char *crm);
 
-int receberCRM(char *cpf);
+int receberCRM(char *cpf, int deveExistir);
 
 
 //Funções de nome

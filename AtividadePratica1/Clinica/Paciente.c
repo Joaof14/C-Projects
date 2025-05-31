@@ -89,7 +89,7 @@ void cadastrarPaciente()
     receberNome(novo->nome);
     
     //coleta do CPF com validações
-    receberCPF(novo->cpf);
+    receberCPF(novo->cpf, 0);
 
     //coleta do contato
     receberContato(novo->contato);
@@ -154,36 +154,25 @@ void listarPaciente()
 void atualizarPaciente() {
 
     verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
-
-    Paciente *pacientes = NULL;
-    int total = 0;
-    carregarPacientes(&pacientes, &total);
-
-    if (total == 0) {
-        printf("Nenhum paciente cadastrado para atualizar.\n");
-        return;
-    }
-
+    
     while (getchar() != '\n');
 
     char cpfBusca[12];
     printf("\n--- Atualização de Paciente ---\n");
     printf("Digite o CPF do paciente que deseja atualizar: ");
-    entradaLimitada(cpfBusca, sizeof(cpfBusca));
+    receberCPF(cpfBusca, 1);
 
-    int encontrado = -1;
-    for (int i = 0; i < total; i++) {
-        if (strcmp(pacientes[i].cpf, cpfBusca) == 0) {
-            encontrado = i;
-            break;
-            
-    }
-}
+     int encontrado = buscarPacienteCpf(cpfBusca);
+    
     if (encontrado == -1) {
         printf("Paciente com CPF %s não encontrado.\n", cpfBusca);
-        free(pacientes);
         return;
     }
+
+    Paciente *pacientes = NULL;
+    int total = 0;
+    carregarPacientes(&pacientes, &total);
+
 
     Paciente atualizado = pacientes[encontrado];
 
@@ -191,18 +180,45 @@ void atualizarPaciente() {
     
     printf("\nAtualizar Dados\n");
 
-    //atualizar nome
-    printf("Nome atual: %s\n", atualizado.nome);
-    receberNome(atualizado.nome);
+    int modificarOutro = 1;
+    do {
+        printf("\nSelecione o campo para atualizar:\n");
+        printf("1. Nome (atual: %s)\n", atualizado.nome);
+        printf("2. CPF (atual: %s)\n", atualizado.cpf);
+        printf("3. Contato (atual: %s)\n", atualizado.contato);
+        printf("4. Finalizar atualização\n");
+        printf("Escolha: ");
 
-    //Atualizar cpf
-    printf("\nCPF atual: %s\n", atualizado.cpf);
-    receberCPF(atualizado.cpf);
-    
-    //atualizar contato
-    printf("\nContato atual: %s\n", atualizado.contato);
-    receberContato(atualizado.contato);
-    
+        int opcaoCampo;
+        scanf("%d", &opcaoCampo);
+        while(getchar() != '\n'); // Limpar buffer
+
+        switch(opcaoCampo) {
+            case 1:
+                printf("\nNovo nome: ");
+                receberNome(atualizado.nome);
+                break;
+            case 2:
+                printf("\nNovo CPF: ");
+                receberCPF(atualizado.cpf, 0);
+                break;
+            case 3:
+                printf("\nNovo contato: ");
+                receberContato(atualizado.contato);
+                break;
+            case 4:
+                modificarOutro = 0;
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+
+        if(opcaoCampo != 4) {
+            printf("\nDeseja modificar outro campo? (1-Sim / 0-Não): ");
+            scanf("%d", &modificarOutro);
+            while(getchar() != '\n'); // Limpar buffer
+        }
+    } while(modificarOutro == 1);
 
     //substituir no vetor
     pacientes[encontrado] = atualizado;
@@ -249,13 +265,7 @@ void removerPaciente()
     printf("Digite o CPF do paciente (somente números): ");
     entradaLimitada(cpf, sizeof(cpf));
 
-    int encontrado = -1;
-    for (int i = 0; i < total; i++) {
-        if (strcmp(pacientes[i].cpf, cpf) == 0) {
-            encontrado = i;
-            break;
-        }
-    }
+    int encontrado = buscarPacienteCpf(pacientes, total, cpf);
 
     if (encontrado == -1) {
         printf("Paciente não encontrado!\n");

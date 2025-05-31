@@ -99,7 +99,7 @@ int CPFJaCadastrado(const char *cpf) {
 }
 
 //Receber CPF
-int receberCPF(char *cpf){
+int receberCPF(char *cpf, int deveExistir){
     
     int cpfValido = 0;
     do{
@@ -159,7 +159,7 @@ int CRMJaCadastrado(const char *crm) {
 }
 
 //Receber CRM
-int receberCRM(char *crm){
+int receberCRM(char *crm, int deveExistir){
     
     int crmValido = 0;
     do{
