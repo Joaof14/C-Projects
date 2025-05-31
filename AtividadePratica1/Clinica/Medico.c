@@ -136,7 +136,7 @@ void atualizarMedico() {
     printf("\n--- Atualização de Médico ---\n");
     while (getchar() != '\n');
     printf("Digite o CRM (6 dígitos): ");
-    receberCRM(crmBusca, 0);
+    receberCRM(crmBusca, 1);
     
     int encontrado = -1;
     for(int i = 0; i < total; i++) {
@@ -151,28 +151,65 @@ void atualizarMedico() {
         free(medicos);
         return;
     }
+    Medico atualizado = medicos[encontrado];
 
-    Medico atualizado = medicos[encontrado]; 
+   int modificarOutro = 1;
+    do {
+        printf("\nSelecione o campo para atualizar:\n");
+        printf("1. Nome (atual: %s)\n", atualizado.nome);
+        printf("2. CRM (atual: %s)\n", atualizado.crm);
+        printf("3. Especialidade (atual: %s)\n", especialidadeParaTexto(atualizado.especialidade));
+        printf("4. Contato (atual: %s)\n", atualizado.contato);
+        printf("5. Finalizar atualização\n");
+        printf("Escolha: ");
 
-    //coletar novos dados (mesma sequência do cadastro)
-    printf("\nAtualizar Dados \n");
-    
-    //atualizar nome
-    printf("Nome atual: %s\n", atualizado.nome);
-    receberNome(atualizado.nome);
+        int opcaoCampo;
+        if(scanf("%d", &opcaoCampo) != 1) {
+            while(getchar() != '\n');  // Limpa input inválido
+            printf("Entrada inválida!\n");
+            continue;
+        }
+        while(getchar() != '\n');  // Limpa buffer do teclado
 
-    // coleta do CRM com validações
-    receberCRM(atualizado.crm, 0);
+        switch(opcaoCampo) {
+            case 1:
+                printf("\nNovo nome: ");
+                receberNome(atualizado.nome);
+                break;
+                
+            case 2:
+                printf("\nNovo CRM: ");
+                // Passa CRM original para permitir manter o mesmo
+                receberCRM(atualizado.crm, 0);
+                break;
+                
+            case 3:
+                printf("\nNova especialidade:\n");
+                receberEspecialidade(&atualizado.especialidade);
+                break;
+                
+            case 4:
+                printf("\nNovo contato: ");
+                receberContato(atualizado.contato);
+                break;
+                
+            case 5:
+                modificarOutro = 0;
+                break;
+                
+            default:
+                printf("Opção inválida!\n");
+        }
 
-    //atualizar especialidade
-    printf("\nEspecialidade atual: %s\n", especialidadeParaTexto(atualizado.especialidade));
-    receberEspecialidade(&atualizado.especialidade);
-
-    //atualizar contato
-    printf("\nContato atual: %s\n", atualizado.contato);
-    receberContato(atualizado.contato);
-    
-
+        // Só pergunta se deseja modificar outro campo se não foi a opção de saída
+        if(opcaoCampo != 5) {
+            printf("\nDeseja modificar outro campo? (1-Sim / 0-Não): ");
+            if(scanf("%d", &modificarOutro) != 1) {
+                modificarOutro = 0;  // Força saída em caso de erro
+            }
+            while(getchar() != '\n');  // Limpa buffer
+        }
+    } while(modificarOutro == 1);
     //substituir no vetor
     medicos[encontrado] = atualizado;
 
