@@ -153,7 +153,11 @@ void listarPaciente()
 
 void atualizarPaciente() {
 
-    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
+    verificarArquivo("Arquivos/Pacientes.txt", "Id,Nome,CPF,Contato\n");
+
+    Paciente *pacientes = NULL;
+    int total = 0;
+    carregarPacientes(&pacientes, &total);
     
     while (getchar() != '\n');
 
@@ -162,17 +166,19 @@ void atualizarPaciente() {
     printf("Digite o CPF do paciente que deseja atualizar: ");
     receberCPF(cpfBusca, 1);
 
-     int encontrado = buscarPacienteCpf(cpfBusca);
-    
-    if (encontrado == -1) {
-        printf("Paciente com CPF %s não encontrado.\n", cpfBusca);
-        return;
+    int encontrado = -1;
+    for(int i = 0; i < total; i++) {
+        if(strcmp(pacientes[i].cpf, cpfBusca) == 0) {
+            encontrado = i;
+            break;
+        }
     }
 
-    Paciente *pacientes = NULL;
-    int total = 0;
-    carregarPacientes(&pacientes, &total);
-
+    if(encontrado == -1) {
+        printf("Paciente não encontrado!\n");
+        free(pacientes);
+        return;
+    }
 
     Paciente atualizado = pacientes[encontrado];
 
@@ -247,7 +253,7 @@ void atualizarPaciente() {
 }
 
 void removerPaciente()
-{   verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
+{   verificarArquivo("Arquivos/Pacientes.txt", "Id,Nome,CPF,Contato\n");
 
     Paciente *pacientes = NULL;
     int total = 0;
@@ -260,14 +266,20 @@ void removerPaciente()
 
     while (getchar() != '\n');
     // Obter CPF para remoção
-    char cpf[12];
+    char cpfBusca[12];
     printf("\n--- Remoção de Paciente ---\n");
     printf("Digite o CPF do paciente (somente números): ");
-    entradaLimitada(cpf, sizeof(cpf));
+    entradaLimitada(cpfBusca, sizeof(cpfBusca));
 
-    int encontrado = buscarPacienteCpf(pacientes, total, cpf);
+    int encontrado = -1;
+    for(int i = 0; i < total; i++) {
+        if(strcmp(pacientes[i].cpf, cpfBusca) == 0) {
+            encontrado = i;
+            break;
+        }
+    }
 
-    if (encontrado == -1) {
+    if(encontrado == -1) {
         printf("Paciente não encontrado!\n");
         free(pacientes);
         return;

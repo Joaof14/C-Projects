@@ -109,14 +109,18 @@ int receberCPF(char *cpf, int deveExistir){
             printf("Erro: CPF deve conter exatamente 11 números!\n");
             continue;
         }
-        if (CPFJaCadastrado(cpf)){
-            printf("CPF já cadastrado no sistema!\n");
-            continue;
-        }
-        if (CPFJaCadastrado(cpf) == -1){
+        if (!deveExistir){
+            if(CPFJaCadastrado(cpf))
+            {
+                printf("CPF já cadastrado no sistema!\n");
+                continue;
+            }
+            if (CPFJaCadastrado(cpf) == -1){
             printf("Erro na verificação, tente novamente!\n");
             continue;
         }
+        }
+        
         cpfValido=1;
         
     }while(!cpfValido);
@@ -169,13 +173,15 @@ int receberCRM(char *crm, int deveExistir){
             printf("CRM deve conter exatamente 6 números!\n");
             continue;
         }
-        if (CRMJaCadastrado(crm)){
+        if(!deveExistir){
+            if (CRMJaCadastrado(crm)){
             printf("CRM já cadastrado no sistema!\n");
             continue;
-        }
-        if (CRMJaCadastrado(crm)== -1){
-            printf("Erro na verificação, tente novamente!\n");
-            continue;
+            }
+            if (CRMJaCadastrado(crm)== -1){
+                printf("Erro na verificação, tente novamente!\n");
+                continue;
+            }
         }
         crmValido=1;
         
