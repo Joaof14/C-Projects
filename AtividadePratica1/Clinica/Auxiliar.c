@@ -333,31 +333,6 @@ int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
     return 1;
 }
 
-//Funções de exibição
-
-void exibirMedico(Medico medico){   
-    printf("ID: %d\n", medico.id);
-    printf("Nome: %s\n", medico.nome);
-    printf("CRM: %s\n", medico.crm);
-    printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
-    printf("Contato: %s\n", medico.contato);
-}
-
-void exibirPaciente(Paciente paciente){
-    printf("ID: %d\n", paciente.id);
-    printf("Nome: %s\n", paciente.nome);
-    printf("CPF: %s\n", paciente.cpf);
-    printf("contato: %s\n\n", paciente.contato);
-}
-
-void exibirConsulta(Consulta consulta){
-    printf("ID: %d\n", consulta.id);
-    printf("Médico (CRM): %s\n", consulta.medicoId);
-    printf("Paciente (CPF): %s\n", consulta.pacienteId);
-    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
-    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
-}
-
 
 
 //Funções de busca
@@ -478,6 +453,34 @@ Medico buscaMedicoId(int id) {
 //buscaConsultaCRM(){} tem que retornar uma lista de consultas
 
 //BuscaConsultaId(){} tem que retornar uma só consulta
+
+
+
+
+//Funções de exibição
+
+void exibirMedico(Medico medico){   
+    printf("ID: %d\n", medico.id);
+    printf("Nome: %s\n", medico.nome);
+    printf("CRM: %s\n", medico.crm);
+    printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
+    printf("Contato: %s\n", medico.contato);
+}
+
+void exibirPaciente(Paciente paciente){
+    printf("ID: %d\n", paciente.id);
+    printf("Nome: %s\n", paciente.nome);
+    printf("CPF: %s\n", paciente.cpf);
+    printf("contato: %s\n\n", paciente.contato);
+}
+
+void exibirConsulta(Consulta consulta){
+    printf("ID: %d\n", consulta.id);
+    printf("Médico (Id): %d\n", consulta.medicoId);
+    printf("Paciente (Id): %d\n", consulta.pacienteId);
+    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
+    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
+}
 
 
 
