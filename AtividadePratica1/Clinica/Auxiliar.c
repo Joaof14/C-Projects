@@ -64,6 +64,214 @@ int gerarNovoId(const char *arquivoPath) {
     return maxId + 1;
 }
 
+//Funções para Enums
+
+//Converter Especialidade para string
+const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
+    switch (esp) {
+        case CLINICO: return "CLINICO";
+        case PEDIATRA: return "PEDIATRA";
+        case CARDIOLOGISTA: return "CARDIOLOGISTA";
+        case DERMATOLOGISTA: return "DERMATOLOGISTA";
+        case PSIQUIATRA: return "PSIQUIATRA";
+        case ORTOPEDISTA: return "ORTOPEDISTA";
+        
+        default: return "DESCONHECIDO";
+    }
+}
+
+
+//Converter status da consulta para texto
+const char* statusConsultaParaTexto(enum statusConsulta status) {
+    switch(status) {
+        case AGENDADA: return "AGENDADA";
+        case REALIZADA: return "REALIZADA";
+        case CANCELADA: return "CANCELADA";
+        default: return "DESCONHECIDO";
+    }
+}
+
+
+//Função para receber Especialidade
+
+int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
+    printf("Selecione a especialidade:\n");
+    for (int i = 0; i < 6; i++) {
+        printf("  %d - %s\n", i, especialidadeParaTexto(i));
+    }
+
+    int opcao;
+    do {
+        printf("Digite o número da especialidade: ");
+        scanf("%d", &opcao);
+        while (getchar() != '\n'); 
+        
+        if (opcao < 0 || opcao >= 6) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        else {
+            *especialidade = (enum ESPECIALIDADE)opcao;
+            break;
+        }
+    } while (1);
+    
+    return 1;
+}
+
+
+
+//Funções de busca
+
+//buscaPacienteCPF(){} tem que retornar O ID do paciente
+int buscaPacienteCPF(const char *cpf) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de pacientes.\n");
+        return -1; // Erro ao abrir o arquivo
+    }
+
+    char nome[100], cpfArquivo[12], contato[20];
+    int id = 0;
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpfArquivo, contato) == 4) {
+        if (strcmp(cpfArquivo, cpf) == 0) {
+            fclose(arquivo);
+            return id; // Retorna o ID do paciente
+        }
+    }
+
+    fclose(arquivo);
+    return -1; // CPF não encontrado
+}
+
+//buscaPacienteId(){} tem que retornar um paciente com base no ID
+Paciente buscaPacienteId(int id) {
+    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de pacientes.\n");
+        return (Paciente){0}; // Retorna um paciente vazio em caso de erro
+    }
+
+    Paciente paciente = {0};
+    char nome[100], cpf[12], contato[20];
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpf, contato) == 4) {
+        if (id == id) {
+            strcpy(paciente.nome, nome);
+            strcpy(paciente.cpf, cpf);
+            strcpy(paciente.contato, contato);
+            fclose(arquivo);
+            return paciente; // Retorna o paciente encontrado
+        }
+    }
+
+    fclose(arquivo);
+    return (Paciente){0}; // Retorna um paciente vazio se não encontrado
+}
+
+
+
+//buscaMedicoCRM(){} tem que retornar o ID do medico
+int buscaMedicoCRM(const char *crm) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return -1; // Erro ao abrir o arquivo
+    }
+
+    char nome[100], crmArquivo[7], contato[20];
+    int id, especialidade;
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", &id, nome, crmArquivo, &especialidade, contato) == 5) {
+        if (strcmp(crmArquivo, crm) == 0) {
+            fclose(arquivo);
+            return id; // Retorna o ID do médico
+        }
+    }
+
+    fclose(arquivo);
+    return -1; // CRM não encontrado
+}
+
+//buscaMedicoId(){} tem que retornar um medico com base no ID
+Medico buscaMedicoId(int idBuscado) {
+    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return (Medico){0}; // Retorna um médico vazio em caso de erro
+    }
+
+    Medico medico = {0};
+    char nome[100], crm[7], contato[20];
+    int id, especialidade;
+
+    // Pular o cabeçalho
+    fscanf(arquivo, "%*[^\n]\n");
+
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
+                 &id, nome, crm, &especialidade, contato) == 5) {
+        if (id == idBuscado) {
+            medico.id = id;
+            strcpy(medico.nome, nome);
+            strcpy(medico.crm, crm);
+            medico.especialidade = (enum ESPECIALIDADE)especialidade;
+            strcpy(medico.contato, contato);
+            fclose(arquivo);
+            return medico;
+        }
+                 }
+
+    fclose(arquivo);
+    return (Medico){0}; // Retorna um médico vazio se não encontrado
+}
+
+//buscaConsultaEspecialidade(){} tem que retornar uma lista de consultas
+
+//buscaConsultaCPF(){} tem que retornar uma lista de consultas
+
+//buscaConsultaCRM(){} tem que retornar uma lista de consultas
+
+//BuscaConsultaId(){} tem que retornar uma só consulta
+
+
+
+
+//Funções de exibição
+
+void exibirMedico(Medico medico){   
+    printf("ID: %d\n", medico.id);
+    printf("Nome: %s\n", medico.nome);
+    printf("CRM: %s\n", medico.crm);
+    printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
+    printf("Contato: %s\n", medico.contato);
+}
+
+void exibirPaciente(Paciente paciente){
+    printf("ID: %d\n", paciente.id);
+    printf("Nome: %s\n", paciente.nome);
+    printf("CPF: %s\n", paciente.cpf);
+    printf("contato: %s\n\n", paciente.contato);
+}
+
+void exibirConsulta(Consulta consulta){
+    printf("ID: %d\n", consulta.id);
+    printf("Médico (Id): %d\n", consulta.medicoId);
+    printf("Paciente (Id): %d\n", consulta.pacienteId);
+    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
+    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
+}
+
+
+
 // Funções relacionadas a entrada CPF
 
 // Valida se o cpf tem 11 dígitos numéricos
@@ -275,215 +483,3 @@ int receberContato(char *contato) {
 
     return 1;
 }
-
-
-
-
-//Funções para Enums
-
-//Converter Especialidade para string
-const char* especialidadeParaTexto(enum ESPECIALIDADE esp) {
-    switch (esp) {
-        case CLINICO: return "CLINICO";
-        case PEDIATRA: return "PEDIATRA";
-        case CARDIOLOGISTA: return "CARDIOLOGISTA";
-        case DERMATOLOGISTA: return "DERMATOLOGISTA";
-        case PSIQUIATRA: return "PSIQUIATRA";
-        case ORTOPEDISTA: return "ORTOPEDISTA";
-        
-        default: return "DESCONHECIDO";
-    }
-}
-
-
-//Converter status da consulta para texto
-const char* statusConsultaParaTexto(enum statusConsulta status) {
-    switch(status) {
-        case AGENDADA: return "AGENDADA";
-        case REALIZADA: return "REALIZADA";
-        case CANCELADA: return "CANCELADA";
-        default: return "DESCONHECIDO";
-    }
-}
-
-
-//Função para receber Especialidade
-
-int receberEspecialidade(enum ESPECIALIDADE *especialidade) {
-    printf("Selecione a especialidade:\n");
-    for (int i = 0; i < 6; i++) {
-        printf("  %d - %s\n", i, especialidadeParaTexto(i));
-    }
-
-    int opcao;
-    do {
-        printf("Digite o número da especialidade: ");
-        scanf("%d", &opcao);
-        while (getchar() != '\n'); 
-        
-        if (opcao < 0 || opcao >= 6) {
-            printf("Opção inválida. Tente novamente.\n");
-        }
-        else {
-            *especialidade = (enum ESPECIALIDADE)opcao;
-            break;
-        }
-    } while (1);
-    
-    return 1;
-}
-
-
-
-//Funções de busca
-
-//buscaPacienteCPF(){} tem que retornar O ID do paciente
-int buscaPacienteCPF(const char *cpf) {
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de pacientes.\n");
-        return -1; // Erro ao abrir o arquivo
-    }
-
-    char nome[100], cpfArquivo[12], contato[20];
-    int id = 0;
-
-    // Pular o cabeçalho
-    fscanf(arquivo, "%*[^\n]\n");
-
-    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpfArquivo, contato) == 4) {
-        if (strcmp(cpfArquivo, cpf) == 0) {
-            fclose(arquivo);
-            return id; // Retorna o ID do paciente
-        }
-    }
-
-    fclose(arquivo);
-    return -1; // CPF não encontrado
-}
-
-//buscaPacienteId(){} tem que retornar um paciente com base no ID
-Paciente buscaPacienteId(int id) {
-    FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de pacientes.\n");
-        return (Paciente){0}; // Retorna um paciente vazio em caso de erro
-    }
-
-    Paciente paciente = {0};
-    char nome[100], cpf[12], contato[20];
-
-    // Pular o cabeçalho
-    fscanf(arquivo, "%*[^\n]\n");
-
-    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpf, contato) == 4) {
-        if (id == id) {
-            strcpy(paciente.nome, nome);
-            strcpy(paciente.cpf, cpf);
-            strcpy(paciente.contato, contato);
-            fclose(arquivo);
-            return paciente; // Retorna o paciente encontrado
-        }
-    }
-
-    fclose(arquivo);
-    return (Paciente){0}; // Retorna um paciente vazio se não encontrado
-}
-
-
-
-//buscaMedicoCRM(){} tem que retornar o ID do medico
-int buscaMedicoCRM(const char *crm) {
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de médicos.\n");
-        return -1; // Erro ao abrir o arquivo
-    }
-
-    char nome[100], crmArquivo[7], contato[20];
-    int id, especialidade;
-
-    // Pular o cabeçalho
-    fscanf(arquivo, "%*[^\n]\n");
-
-    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", &id, nome, crmArquivo, &especialidade, contato) == 5) {
-        if (strcmp(crmArquivo, crm) == 0) {
-            fclose(arquivo);
-            return id; // Retorna o ID do médico
-        }
-    }
-
-    fclose(arquivo);
-    return -1; // CRM não encontrado
-}
-
-//buscaMedicoId(){} tem que retornar um medico com base no ID
-Medico buscaMedicoId(int idBuscado) {
-    FILE *arquivo = fopen("Arquivos/Medicos.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de médicos.\n");
-        return (Medico){0}; // Retorna um médico vazio em caso de erro
-    }
-
-    Medico medico = {0};
-    char nome[100], crm[7], contato[20];
-    int id, especialidade;
-
-    // Pular o cabeçalho
-    fscanf(arquivo, "%*[^\n]\n");
-
-    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
-                 &id, nome, crm, &especialidade, contato) == 5) {
-        if (id == idBuscado) {
-            medico.id = id;
-            strcpy(medico.nome, nome);
-            strcpy(medico.crm, crm);
-            medico.especialidade = (enum ESPECIALIDADE)especialidade;
-            strcpy(medico.contato, contato);
-            fclose(arquivo);
-            return medico;
-        }
-    }
-
-    fclose(arquivo);
-    return (Medico){0}; // Retorna um médico vazio se não encontrado
-}
-
-//buscaConsultaEspecialidade(){} tem que retornar uma lista de consultas
-
-//buscaConsultaCPF(){} tem que retornar uma lista de consultas
-
-//buscaConsultaCRM(){} tem que retornar uma lista de consultas
-
-//BuscaConsultaId(){} tem que retornar uma só consulta
-
-
-
-
-//Funções de exibição
-
-void exibirMedico(Medico medico){   
-    printf("ID: %d\n", medico.id);
-    printf("Nome: %s\n", medico.nome);
-    printf("CRM: %s\n", medico.crm);
-    printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
-    printf("Contato: %s\n", medico.contato);
-}
-
-void exibirPaciente(Paciente paciente){
-    printf("ID: %d\n", paciente.id);
-    printf("Nome: %s\n", paciente.nome);
-    printf("CPF: %s\n", paciente.cpf);
-    printf("contato: %s\n\n", paciente.contato);
-}
-
-void exibirConsulta(Consulta consulta){
-    printf("ID: %d\n", consulta.id);
-    printf("Médico (Id): %d\n", consulta.medicoId);
-    printf("Paciente (Id): %d\n", consulta.pacienteId);
-    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
-    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
-}
-
-
-
