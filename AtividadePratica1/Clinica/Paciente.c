@@ -25,7 +25,8 @@ void carregarPacientes(Paciente **pacientes, int *total) {
     Paciente temp;
 
     //ler cada linha do arquivo
-    while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n", 
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", 
+                temp.id,
                 temp.nome, 
                 temp.cpf,  
                 temp.contato) == 3) {

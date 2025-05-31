@@ -25,7 +25,8 @@ void carregarMedicos(Medico **medicos, int *total) {
     int especialidade_tmp;
 
     //ler cada linha do arquivo
-    while (fscanf(arquivo, "%99[^,],%6[^,],%d,%19[^\n]\n", 
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
+                temp.id,
                 temp.nome, 
                 temp.crm, 
                 &especialidade_tmp, 
@@ -164,14 +165,14 @@ void atualizarMedico() {
     while (getchar() != '\n');
 
     //Buscar médico pelo crm
-    char crm[7];
+    char crmBusca[7];
     printf("\n--- Atualização de Médico ---\n");
     printf("Digite o CRM (6 dígitos): ");
-    entradaLimitada(crm, sizeof(crm));
+    entradaLimitada(crmBusca, sizeof(crmBusca));
     
     int encontrado = -1;
     for(int i = 0; i < total; i++) {
-        if(strcmp(medicos[i].crm, crm) == 0) {
+        if(strcmp(medicos[i].crm, crmBusca) == 0) {
             encontrado = i;
             break;
         }
@@ -254,7 +255,13 @@ void removerMedico(){
     printf("Digite o CRM do médico (6 dígitos): ");
     receberCRM(crmBusca, 1);
 
-    int encontrado = buscaMedicoCRM(crmBusca);
+    int encontrado = -1;
+    for(int i = 0; i < total; i++) {
+        if(strcmp(medicos[i].crm, crmBusca) == 0) {
+            encontrado = i;
+            break;
+        }
+    }
 
     if(encontrado == -1) {
         printf("Médico não encontrado!\n");
