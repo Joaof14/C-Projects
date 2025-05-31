@@ -43,7 +43,7 @@ void salvarPacientes(Paciente *pacientes, int total, const char *modo) {
 
 void cadastrarPaciente()
 {
-    verificarArquivo("Arquivos/Pacientes.txt", "Nome,CPF,Contato\n");
+    verificarArquivo("Arquivos/Pacientes.txt", "Id,Nome,CPF,Contato\n");
 
     //alocar memória para o paciente
     Paciente *novo = (Paciente*)malloc(sizeof(Paciente));

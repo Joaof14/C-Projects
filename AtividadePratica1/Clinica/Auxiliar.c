@@ -116,7 +116,7 @@ void carregarMedicos(Medico **medicos, int *total) {
                 temp.nome, 
                 temp.crm, 
                 &especialidade_tmp, 
-                temp.contato) == 4) {
+                temp.contato) == 5) {
 
         //converter especialidade
         temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
@@ -149,7 +149,7 @@ void carregarPacientes(Paciente **pacientes, int *total) {
                 &temp.id,
                 temp.nome, 
                 temp.cpf,  
-                temp.contato) == 3) {
+                temp.contato) == 4) {
 
 
         //alocar espaço para mais um médico e adicionar
@@ -291,7 +291,7 @@ Medico buscaMedicoId(int idBuscado) {
 
 
 
-//Funções de exibição
+//-----------------------FUNÇÕES DE EXIBIÇÃO
 
 void exibirMedico(Medico medico){   
     printf("ID: %d\n", medico.id);
@@ -315,6 +315,8 @@ void exibirConsulta(Consulta consulta){
     printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
     printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
 }
+
+
 
 //--------------------FUNÇÔES DE ENTRADA-----------------------
 
@@ -362,11 +364,12 @@ int CPFJaCadastrado(const char *cpf) {
     if (arquivo == NULL) {return -1;}
 
     char nome[100], cpfArquivo[12], telefone[20];
+    int id;
+    fscanf(arquivo, "%*[^\n]\n");  // Pular cabeçalho
 
-    // Pular o cabeçalho
-    fscanf(arquivo, "%*[^\n]\n");
-
-    while (fscanf(arquivo, "%99[^,],%11[^,],%19[^\n]\n", nome, cpfArquivo, telefone) == 3) {
+    while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]", 
+            &id, nome, cpfArquivo, telefone) == 4) 
+    {
         if (strcmp(cpfArquivo, cpf) == 0) {
             fclose(arquivo);
             return 1;
@@ -427,10 +430,11 @@ int CRMJaCadastrado(const char *crm) {
     if (arquivo == NULL) {return -1;}
 
     char nome[100], crmArquivo[7], especialidade[100], contato[20];
+    int id;
 
     // Pular o cabeçalho
     fscanf(arquivo, "%*[^\n]\n");
-    while (fscanf(arquivo, "%99[^,],%7[^,],%99[^,],%19[^\n]\n", nome, crmArquivo, especialidade, contato) == 4) {
+    while (fscanf(arquivo, "%d, %99[^,],%6[^,],%99[^,],%19[^\n]\n", &id, nome, crmArquivo, especialidade, contato) == 5) {
         if (strcmp(crmArquivo, crm) == 0) {
             fclose(arquivo);
             return 1;
