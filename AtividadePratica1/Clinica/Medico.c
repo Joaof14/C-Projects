@@ -26,7 +26,7 @@ void carregarMedicos(Medico **medicos, int *total) {
 
     //ler cada linha do arquivo
     while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
-                temp.id,
+                &temp.id,
                 temp.nome, 
                 temp.crm, 
                 &especialidade_tmp, 
