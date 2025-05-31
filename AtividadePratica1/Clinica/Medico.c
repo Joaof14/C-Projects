@@ -55,6 +55,7 @@ void cadastrarMedico()
     novo->id = 0;
     // coletar dados usando ponteiros
     printf("Digite os dados do novo medico:\n");
+    while (getchar() != '\n');
     
     // coleta do nome com validações
     receberNome(novo->nome);
@@ -128,13 +129,14 @@ void atualizarMedico() {
     int total = 0;
     carregarMedicos(&medicos, &total);
 
-    while (getchar() != '\n');
+    
 
     //Buscar médico pelo crm
     char crmBusca[7];
     printf("\n--- Atualização de Médico ---\n");
+    while (getchar() != '\n');
     printf("Digite o CRM (6 dígitos): ");
-    entradaLimitada(crmBusca, sizeof(crmBusca));
+    receberCRM(crmBusca, 0);
     
     int encontrado = -1;
     for(int i = 0; i < total; i++) {

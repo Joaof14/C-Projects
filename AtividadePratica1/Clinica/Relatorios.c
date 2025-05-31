@@ -75,7 +75,7 @@ void relatorioConsultaPacientes() {
     fclose(arquivo);
 }
 
-void relatorioConsultaPacientes() {
+/*void relatorioConsultaPacientes() {
     char cpfBusca[12];
     printf("\nDigite o CPF do paciente para buscar suas consultas: ");
     fgets(cpfBusca, sizeof(cpfBusca), stdin);
@@ -142,7 +142,7 @@ void relatorioConsultaPacientes() {
 
     fclose(arquivo);
 }
-
+*/
 void relatorioConsultaMedicos() {
     
     char crmBusca[12];
