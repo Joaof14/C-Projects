@@ -145,93 +145,87 @@ void listarConsultas(){
 
 }
 
-void agendarConsulta(){
-/* verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteId,MedicoId,Data Hora,Status\n");
+void agendarConsulta() {
+    verificarArquivo("Arquivos/Consultas.txt", "Id,PacienteId,MedicoId,Data Hora,Status\n");
 
-    int cadastros = 0;
-    printf("\nPaciente e Médico da consulta ja estão cadastrados no sistema?\nDigite: 1-Sim, 2-Não\n");
-    scanf("%d", &cadastros);
+    Consulta nova = {0}; // Inicializa a consulta
+    char cpf[12], crm[7];
+    int pacienteId, medicoId;
 
-    if(cadastros != 1){
-        printf("\nCadastre primeiro o médico ou paciente!\n");
+    // Receber CPF do paciente
+    printf("\n--- Dados do Paciente ---\n");
+    receberCPF(cpf, 1); // deveExistir=1 (paciente deve existir)
+    pacienteId = buscaPacienteCPF(cpf);
+    
+    if(pacienteId == -1) {
+        printf("Erro: Paciente não encontrado!\n");
         return;
     }
 
-    Consulta * nova = (Consulta*)malloc(sizeof(Consulta));
-    int totalConsultas;
+    // Receber CRM do médico
+    printf("\n--- Dados do Médico ---\n");
+    receberCRM(crm, 1); // deveExistir=1 (médico deve existir)
+    medicoId = buscaMedicoCRM(crm);
     
-    printf("\nAgendamento do Paciente: \nPreencha com atenção. Em caso de erro o processo deverá ser reiniciado!\n");
-    
-    while (getchar() != '\n');
-    //receber cpf everificar se cpf está nos dados
-    printf("Digite o cpf do paciente (apenas números): ");
-    entradaLimitada(nova->pacienteId, 12);
-    if(!CPFJaCadastrado(nova->pacienteId))
-    {
-        printf("\nERRO: CPF NÃO ENCONTRADO!\n");
+    if(medicoId == -1) {
+        printf("Erro: Médico não encontrado!\n");
         return;
     }
 
-    printf("Digite o CRM do Médico (apenas números): ");
-    entradaLimitada(nova->medicoId, 7);
-    if(!CRMJaCadastrado(nova->medicoId))
-    {
-        printf("\nERRO: CRM NÃO ENCONTRADO!\n");
-        free(nova);
+    // Atribuir IDs encontrados
+    nova.pacienteId = pacienteId;
+    nova.medicoId = medicoId;
+    nova.status = AGENDADA; // Status inicial
+
+    // Coletar data e hora
+    printf("\n--- Data e Hora da Consulta ---\n");
+    printf("Data (DD/MM/AAAA): ");
+    if(scanf("%d/%d/%d", &nova.data_hora.dia, &nova.data_hora.mes, &nova.data_hora.ano) != 3) {
+        printf("Formato de data inválido!\n");
         return;
     }
-    
-    //Coletar data e hora
-    printf("Data da consulta (DD/MM/AAAA): ");
-    scanf("%d/%d/%d", &nova->data_hora.dia, &nova->data_hora.mes, &nova->data_hora.ano);
 
-    printf("Hora da consulta (HH:MM): ");
-    scanf("%d:%d", &nova->data_hora.hora, &nova->data_hora.minuto);
+    printf("Hora (HH:MM): ");
+    if(scanf("%d:%d", &nova.data_hora.hora, &nova.data_hora.minuto) != 2) {
+        printf("Formato de hora inválido!\n");
+        return;
+    }
+    getchar(); // Limpar buffer do teclado
 
-    //Validar data e hora
+    // Confirmar dados
+    printf("\n--- Resumo da Consulta ---\n");
+    printf("Paciente ID: %d\n", nova.pacienteId);
+    printf("Médico ID: %d\n", nova.medicoId);
+    printf("Data: %02d/%02d/%04d\n", nova.data_hora.dia, nova.data_hora.mes, nova.data_hora.ano);
+    printf("Hora: %02d:%02d\n", nova.data_hora.hora, nova.data_hora.minuto);
 
-
-    //Confirmar salvamento
+    // Confirmar salvamento
     int opcao;
-    do
-    {
-        printf("\n1. Salvar\n");
-        printf("2. Sair sem salvar\n");
+    do {
+        printf("\n1. Confirmar agendamento\n");
+        printf("2. Cancelar\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
-        getchar(); 
+        getchar();
 
         switch(opcao) {
             case 1:
-
-            //gerar id para consulta
-                Consulta *consultas = NULL;
-                carregarConsultas(&consultas, &totalConsultas);
-        
-                if (totalConsultas > 0)
-                    {nova->id = consultas[totalConsultas-1].id + 1;}
-                free(consultas);
-
-                //Salvar Consultas
-                salvarConsultas(nova, 1, "a");
-                printf("Consulta salva com sucesso!\n");
+                // GERAR ID USANDO SUA FUNÇÃO
+                nova.id = gerarNovoId("Arquivos/Consultas.txt");
+                
+                // Salvar a nova consulta
+                salvarConsultas(&nova, 1, "a");
+                printf("\nConsulta agendada com sucesso! ID: %d\n", nova.id);
                 break;
             case 2:
-                printf("Agendamento descartado.\n");
+                printf("Agendamento cancelado.\n");
                 break;
-                
             default:
                 printf("Opção inválida!\n");
                 continue;
         }
-    } while(opcao < 1 || opcao > 2);
- 
-    
-    free(nova);
-*/
-    
-    
-}   
+    } while(opcao != 1 && opcao != 2);
+}
 
 
 

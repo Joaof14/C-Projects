@@ -39,7 +39,10 @@ int validarNome(const char *nome);
 
 int receberNome(char *nome);
 
-
+//Funçoes de data e hora
+int receberDataHora(DataHora *dh);
+int validarHora(int hora, int minuto);
+int validarData(int dia, int mes, int ano);
 
 //Funções de Contato
 

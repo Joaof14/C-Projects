@@ -324,12 +324,14 @@ void exibirPaciente(Paciente paciente){
     printf("contato: %s\n\n", paciente.contato);
 }
 
-void exibirConsulta(Consulta consulta){
-    printf("ID: %d\n", consulta.id);
-    printf("Médico (Id): %d\n", consulta.medicoId);
-    printf("Paciente (Id): %d\n", consulta.pacienteId);
-    printf("\nData: %02d/%02d/%04d %02d:%02d\n", consulta.data_hora.dia, consulta.data_hora.mes, consulta.data_hora.ano, consulta.data_hora.hora, consulta.data_hora.minuto);
-    printf("Status atual: %s\n", statusConsultaParaTexto(consulta.status));
+void exibirConsulta(Consulta c) {
+    printf("\nID: %d", c.id);
+    printf("\nPaciente ID: %d", c.pacienteId);
+    printf("\nMédico ID: %d", c.medicoId);
+    printf("\nData: %02d/%02d/%04d", c.data_hora.dia, c.data_hora.mes, c.data_hora.ano);
+    printf("\nHora: %02d:%02d", c.data_hora.hora, c.data_hora.minuto);
+    printf("\nStatus: %s", statusConsultaParaTexto(c.status));
+    printf("\n---------------------------\n");
 }
 
 
@@ -416,7 +418,7 @@ int receberCPF(char *cpf, int deveExistir){
             if (CPFJaCadastrado(cpf) == -1){
             printf("Erro na verificação, tente novamente!\n");
             continue;
-        }
+            }
         }
         
         cpfValido=1;
@@ -572,5 +574,51 @@ int receberContato(char *contato) {
         
     } while (strlen(contato) == 0);
 
+    return 1;
+}
+
+//Funções para data e hora
+
+int validarHora(int hora, int minuto) {
+    if (hora < 0 || hora > 23) return 0;
+    if (minuto < 0 || minuto > 59) return 0;
+    return 1;
+}
+
+
+// Verifica se a data é válida
+int validarData(int dia, int mes, int ano) {
+    if (ano < 1900 || ano > 2100) return 0;
+    if (mes < 1 || mes > 12) return 0;
+
+    int diasNoMes[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    // Verifica ano bissexto
+    if ((ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0)
+        diasNoMes[1] = 29;
+
+    if (dia < 1 || dia > diasNoMes[mes - 1]) return 0;
+
+    return 1;
+}
+
+int receberDataHora(DataHora *dh) {
+    do {
+        printf("Data e hora da consulta (DD/MM/AAAA HH:MM): ");
+        if (scanf("%d/%d/%d %d:%d", &dh->dia, &dh->mes, &dh->ano, &dh->hora, &dh->minuto) != 5) {
+            printf("Erro: Formato inválido! Tente novamente no formato DD/MM/AAAA HH:MM.\n");
+            while (getchar() != '\n'); // Limpa buffer
+            continue;
+        }
+        if (!validarData(dh->dia, dh->mes, dh->ano)) {
+            printf("Erro: Data inválida!\n");
+            continue;
+        }
+        if (!validarHora(dh->hora, dh->minuto)) {
+            printf("Erro: Hora inválida!\n");
+            continue;
+        }
+        break;
+    } while (1);
     return 1;
 }
