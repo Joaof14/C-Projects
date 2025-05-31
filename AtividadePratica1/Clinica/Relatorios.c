@@ -38,7 +38,7 @@ void relatorioConsultaPacientes() {
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
-    printf("\n=== Consultas do Paciente ===\n");
+    printf("\n--- Consultas do Paciente ---\n");
     printf("Nome: %s\n", paciente.nome);
     printf("CPF: %s\n", paciente.cpf);
     printf("Contato: %s\n", paciente.contato);
@@ -78,7 +78,6 @@ void relatorioConsultaPacientes() {
 void relatorioConsultaPacientes() {
     char cpfBusca[12];
     printf("\nDigite o CPF do paciente para buscar suas consultas: ");
-    getchar(); // Limpa o buffer
     fgets(cpfBusca, sizeof(cpfBusca), stdin);
     cpfBusca[strcspn(cpfBusca, "\n")] = 0;
 
@@ -107,7 +106,7 @@ void relatorioConsultaPacientes() {
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
-    printf("\n=== Consultas do Paciente ===\n");
+    printf("\n--- Consultas do Paciente ---\n");
     printf("Nome: %s\n", paciente.nome);
     printf("CPF: %s\n", paciente.cpf);
     printf("Contato: %s\n", paciente.contato);
@@ -176,7 +175,7 @@ void relatorioConsultaMedicos() {
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
-    printf("\n=== Consultas do Médico ===\n");
+    printf("\n--- Consultas do Médico ---\n");
     printf("Nome: %s\n", medico.nome);
     printf("CRM: %s\n", medico.crm);
     printf("Especialidade: %s\n", especialidadeParaTexto(medico.especialidade));
