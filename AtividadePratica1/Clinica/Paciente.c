@@ -237,7 +237,7 @@ void removerPaciente()
     char cpfBusca[12];
     printf("\n--- Remoção de Paciente ---\n");
     printf("Digite o CPF do paciente (somente números): ");
-    entradaLimitada(cpfBusca, sizeof(cpfBusca));
+    receberCPF(cpfBusca, 1);
 
     int encontrado = -1;
     for(int i = 0; i < total; i++) {
