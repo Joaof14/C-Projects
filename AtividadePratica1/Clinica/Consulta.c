@@ -113,6 +113,7 @@ void alterarStatusConsulta(enum statusConsulta novoStatus){
                 consultas[encontrado].status = novoStatus;
                 salvarConsultas(consultas, total,"w");
                 printf("Status atualizado!\n");
+                break;
                 case 2:
                     printf("Atualização de status descartada.\n");
                     break;
@@ -154,6 +155,7 @@ void agendarConsulta() {
 
     // Receber CPF do paciente
     printf("\n--- Dados do Paciente ---\n");
+    while (getchar() != '\n');
     receberCPF(cpf, 1); // deveExistir=1 (paciente deve existir)
     pacienteId = buscaPacienteCPF(cpf);
     
@@ -179,18 +181,7 @@ void agendarConsulta() {
 
     // Coletar data e hora
     printf("\n--- Data e Hora da Consulta ---\n");
-    printf("Data (DD/MM/AAAA): ");
-    if(scanf("%d/%d/%d", &nova.data_hora.dia, &nova.data_hora.mes, &nova.data_hora.ano) != 3) {
-        printf("Formato de data inválido!\n");
-        return;
-    }
-
-    printf("Hora (HH:MM): ");
-    if(scanf("%d:%d", &nova.data_hora.hora, &nova.data_hora.minuto) != 2) {
-        printf("Formato de hora inválido!\n");
-        return;
-    }
-    getchar(); // Limpar buffer do teclado
+    receberDataHora(&nova.data_hora);
 
     // Confirmar dados
     printf("\n--- Resumo da Consulta ---\n");
@@ -229,15 +220,6 @@ void agendarConsulta() {
 
 
 
-void registrarConsulta(){
-    
-
-}
-
-void cancelarConsulta() {
-    
-}
-
 
 void menuConsultas(){
     int opcao;
@@ -246,7 +228,7 @@ void menuConsultas(){
         printf("\nMenu Principal de Consultas\n");
         printf("1. Agendar Consulta\n");
         printf("2. Cancelar Consulta\n");
-        printf("3. Registar Consulta\n");
+        printf("3. Registrar Consulta\n");
         printf("4. Listar Consultas Por Paciente\n");
         printf("5. Listar Consultas Por Medico\n");        
         printf("0. Voltar\n");
