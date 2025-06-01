@@ -192,7 +192,7 @@ void menuRelatorios() {
             default:
                 printf("Opcao invalida! Tente novamente.\n");
         }
-    } while (opcao != 5);
+    } while (opcao != 0);
       
 }
 
