@@ -181,7 +181,7 @@ void menuRelatorios() {
                 relatorioConsultaPacientes();
                 break;
             case 2:
-                void relatorioConsultaMedicos();
+                relatorioConsultaMedicos();
                 break;
             case 3:
                 relatorioConsultaPorEspecialidae();
