@@ -1,0 +1,11 @@
+=== Relatório de Consultas por Especialidade ===
+Data do relatório: 01/06/2025 20:41:27
+
+CLINICO             : 1 consultas
+PEDIATRA            : 1 consultas
+CARDIOLOGISTA       : 0 consultas
+DERMATOLOGISTA      : 1 consultas
+PSIQUIATRA          : 0 consultas
+ORTOPEDISTA         : 0 consultas
+
+Total de consultas: 3
