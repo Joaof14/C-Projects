@@ -269,7 +269,6 @@ void menuConsultas(){
                 alterarStatusConsulta(REALIZADA);
                 break;
             case 4: 
-                listarConsultas();
                 relatorioConsultaPacientes();
                 break;
             case 5:

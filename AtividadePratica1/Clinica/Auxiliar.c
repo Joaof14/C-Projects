@@ -210,31 +210,33 @@ int buscaPacienteCPF(const char *cpf) {
 }
 
 //buscaPacienteId(){} tem que retornar um paciente com base no ID
-Paciente buscaPacienteId(int id) {
+Paciente buscaPacienteId(int idBuscado) {
     FILE *arquivo = fopen("Arquivos/Pacientes.txt", "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de pacientes.\n");
-        return (Paciente){0}; // Retorna um paciente vazio em caso de erro
+        return (Paciente){0};
     }
 
     Paciente paciente = {0};
     char nome[100], cpf[12], contato[20];
+    int id;
 
     // Pular o cabeçalho
     fscanf(arquivo, "%*[^\n]\n");
 
     while (fscanf(arquivo, "%d,%99[^,],%11[^,],%19[^\n]\n", &id, nome, cpf, contato) == 4) {
-        if (id == id) {
+        if (id == idBuscado) { // Corrigido: antes estava comparando com id == id
+            paciente.id = id;
             strcpy(paciente.nome, nome);
             strcpy(paciente.cpf, cpf);
             strcpy(paciente.contato, contato);
             fclose(arquivo);
-            return paciente; // Retorna o paciente encontrado
+            return paciente;
         }
     }
 
     fclose(arquivo);
-    return (Paciente){0}; // Retorna um paciente vazio se não encontrado
+    return (Paciente){0};
 }
 
 
