@@ -251,10 +251,10 @@ void menuRelatorios() {
                 void relatorioConsultaMedicos();
                 break;
             case 3:
-                void relatorioConsultaPorEspecialidae();
+                relatorioConsultaPorEspecialidae();
                 break;
             case 4:
-               void relatorioConsultaDiaAtual();
+                relatorioConsultaDiaAtual();
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
