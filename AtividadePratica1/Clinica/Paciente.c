@@ -52,6 +52,7 @@ void cadastrarPaciente()
         return;
     }
     printf("\n Novo Paciente \n");
+    while (getchar() != '\n');
     novo->id = 0;
     //coletar nome
     receberNome(novo->nome);
@@ -65,18 +66,19 @@ void cadastrarPaciente()
     // exibir os dados coletados
     exibirPaciente(*novo);
 
+    printf("\nDeseja salvar os dados?");
     int opcao;
     do {
         printf("\n1. Salvar\n");
         printf("2. Sair sem salvar\n");
-        printf("Escolha: ");
+        printf("selecione uma opção: ");
         scanf("%d", &opcao);
         getchar(); 
 
         switch(opcao) {
             case 1:
                 salvarPacientes(novo, 1, "a");
-                printf("Paciente salvo com sucesso!\n");
+                printf("Paciente cadastrado com sucesso!\n");
                 break;
             case 2:
                 printf("Cadastro descartado.\n");
@@ -188,7 +190,7 @@ void atualizarPaciente() {
         }
 
         if(opcaoCampo != 4) {
-            printf("\nDeseja modificar outro campo? (1-Sim / 0-Não): ");
+            printf("\nDeseja modificar outro campo? (0-Não /1-Sim): ");
             scanf("%d", &modificarOutro);
             while(getchar() != '\n'); // Limpar buffer
         }
@@ -196,7 +198,8 @@ void atualizarPaciente() {
 
     //substituir no vetor
     pacientes[encontrado] = atualizado;
-
+    
+    printf("\nDeseja salvar os dados?");
     int opcao;
             do {
                 printf("\n1. Salvar alterações\n");
