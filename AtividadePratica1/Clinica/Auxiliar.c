@@ -420,6 +420,12 @@ int receberCPF(char *cpf, int deveExistir){
             continue;
             }
         }
+        else{
+            if(!CPFJaCadastrado(cpf)){
+                printf("CPF ainda não cadastrado\n");
+                continue;
+            }
+        }
         
         cpfValido=1;
         
@@ -481,6 +487,12 @@ int receberCRM(char *crm, int deveExistir){
             }
             if (CRMJaCadastrado(crm)== -1){
                 printf("Erro na verificação, tente novamente!\n");
+                continue;
+            }
+        }
+        else{
+            if(!CRMJaCadastrado(crm)){
+                printf("CRM ainda não cadastrado");
                 continue;
             }
         }
