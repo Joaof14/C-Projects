@@ -54,7 +54,7 @@ void cadastrarMedico()
     }
     novo->id = 0;
     // coletar dados usando ponteiros
-    printf("Digite os dados do novo medico:\n");
+    printf("\n Novo medico \n");
     while (getchar() != '\n');
     
     // coleta do nome com validações
@@ -203,7 +203,7 @@ void atualizarMedico() {
 
         // Só pergunta se deseja modificar outro campo se não foi a opção de saída
         if(opcaoCampo != 5) {
-            printf("\nDeseja modificar outro campo? (1-Sim / 0-Não): ");
+            printf("\nDeseja modificar outro campo? (0-Não /1-Sim): ");
             if(scanf("%d", &modificarOutro) != 1) {
                 modificarOutro = 0;  // Força saída em caso de erro
             }
@@ -213,7 +213,7 @@ void atualizarMedico() {
     //substituir no vetor
     medicos[encontrado] = atualizado;
 
-
+    printf("\nDeseja salvar os dados?");
     int opcao;
     do {
         printf("\n1. Salvar\n");
