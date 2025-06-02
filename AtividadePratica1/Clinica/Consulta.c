@@ -185,10 +185,23 @@ void agendarConsulta() {
 
     // Confirmar dados
     printf("\n--- Resumo da Consulta ---\n");
-    printf("Paciente ID: %d\n", nova.pacienteId);
-    printf("Médico ID: %d\n", nova.medicoId);
-    printf("Data: %02d/%02d/%04d\n", nova.data_hora.dia, nova.data_hora.mes, nova.data_hora.ano);
-    printf("Hora: %02d:%02d\n", nova.data_hora.hora, nova.data_hora.minuto);
+    
+    // Buscar e mostrar dados do paciente
+    Paciente paciente = buscaPacienteId(nova.pacienteId);
+    printf("Paciente:\n");
+    printf("  Nome: %s\n", paciente.nome);
+    printf("  CPF: %s\n", paciente.cpf);
+    printf("  Contato: %s\n", paciente.contato);
+
+    // Buscar e mostrar dados do médico
+    Medico medico = buscaMedicoId(nova.medicoId);
+    printf("\nMédico:\n");
+    exibirMedico(medico);
+
+    printf("\nData e Hora:\n");
+    printf("  Data: %02d/%02d/%04d\n", nova.data_hora.dia, nova.data_hora.mes, nova.data_hora.ano);
+    printf("  Hora: %02d:%02d\n", nova.data_hora.hora, nova.data_hora.minuto);
+    printf("--------------------------------\n");
 
     // Confirmar salvamento
     int opcao;
