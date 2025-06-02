@@ -5,3 +5,4 @@ Id,Nome,CRM,Especialidade,Contato
 4,joao pedro,123321,5,1234456
 5,Frederico Gregorio,123123,3,88997474809
 6,Robesvaldo,180219,0,88999995566
+7,joao pedro,123890,4,0000000000000000
