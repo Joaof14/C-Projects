@@ -1,2 +1,2 @@
 # AtividadePratica1EstruturadeDados
-Repositório Dedicado a Pratica 1 da Disciplina de Estrutura de Dados
+Repositório Dedicado  práticas e implementações da Disciplina de Estrutura de Dados
