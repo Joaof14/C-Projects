@@ -5,6 +5,6 @@ void listarLivrosPorGenero();
 
 void listarLivrosPorStatus();
 
-void Menurelatorios();
+void MenuRelatorios();
 
 #endif

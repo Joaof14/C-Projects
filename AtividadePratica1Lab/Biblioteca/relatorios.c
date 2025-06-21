@@ -3,4 +3,8 @@
 #include <string.h>
 #include "tipos.h"
 
+void listarLivrosPorGenero(){}
+
+void listarLivrosPorStatus(){}
+
 void MenuRelatorios(){}
