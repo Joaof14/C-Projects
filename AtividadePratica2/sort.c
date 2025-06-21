@@ -26,13 +26,8 @@ void bubbleSort(int *vetor, int tamanho){
                 vetor[j] = vetor[j+1];
                 vetor[j+1] = aux;
             }
-
         }
     }
-}
-
-void mergeSort(int *vetor, int tamanho){
-
 }
 
 void gnomeSort(int *vetor, int tamanho){
@@ -47,10 +42,16 @@ void gnomeSort(int *vetor, int tamanho){
             vetor[pos-1] = aux;
             pos--;
         }
-        
     }
-    
+
+    //Printar
 }
+
+void mergeSort(int *vetor, int tamanho){
+
+}
+
+
 
 void shellSort(int *vetor, int tamanho){
 
