@@ -1,1 +1,0 @@
-// ------Funções de mcriações de arquivos e verificação de existência -------
