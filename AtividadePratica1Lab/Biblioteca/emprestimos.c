@@ -3,4 +3,4 @@
 #include <string.h>
 #include "tipos.h"
 
-void MenuLivros(){}
+void MenuEmprestimos(){}

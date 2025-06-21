@@ -15,11 +15,15 @@ struct {
     char ISBN[13];
 } Livros;
 
-enum Status {CONCLUIDO, ANDAMENTO, CANCELADO}
+enum STATUS {CONCLUIDO, ANDAMENTO, CANCELADO};
 
-struct Emprestimos{
-
-};
+typedef struct {
+    unsigned int id;
+    char leitor[200];
+    char ISBN[13];
+    DataHora DataDoEmprestimo;
+    enum STATUS status;
+} Emprestimos;
 
 
 
