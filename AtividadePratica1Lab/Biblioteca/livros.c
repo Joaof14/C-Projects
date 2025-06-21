@@ -3,4 +3,10 @@
 #include <string.h>
 #include "tipos.h"
 
-void Menulivros(){}
+void cadastrarLivro(){}
+
+void removerLivro(){}
+
+void atualizarLivro(){}
+
+void MenuLivros(){}

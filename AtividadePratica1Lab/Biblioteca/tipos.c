@@ -3,11 +3,22 @@
 #include <string.h>
 #include "tipos.h"
 
-//Função para verificar se recebeu 13 digitos 
-void verificaISBN(char ISBN){}
+//Função de conversão de enums
+const char* generoParaTexto(int n){}
 
-const char* StatusParaTexto(int n){}
 
+
+
+//Função para ISBN
+void verificarISBN(char ISBN){}
+
+
+
+//EMPRESTIMOS
+//Função de conversão de enums
+const char* statusParaTexto(int n){}
+
+//Data e hora
 
 int validarHora(int hora, int minuto) {
     if (hora < 0 || hora > 23) return 0;
@@ -15,9 +26,6 @@ int validarHora(int hora, int minuto) {
     return 1;
 }
 
-
-
-// Verifica se a data é válida
 int validarData(int dia, int mes, int ano) {
     if (ano < 1900 || ano > 2100) return 0;
     if (mes < 1 || mes > 12) return 0;
@@ -33,7 +41,6 @@ int validarData(int dia, int mes, int ano) {
 
     return 1;
 }
-
 
 int receberDataHora(DataHora *dh) {
     char buffer[100];
@@ -73,3 +80,5 @@ int receberDataHora(DataHora *dh) {
     } while (1);
     return 1;
 }
+
+//

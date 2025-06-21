@@ -3,4 +3,10 @@
 #include <string.h>
 #include "tipos.h"
 
+void cadastrarEmprestimo(){}
+
+void registrarDevol(){}
+
+void listarEmprestimoPorStatus(){}
+
 void MenuEmprestimos(){}
