@@ -12,7 +12,7 @@ typedef struct {
 } DataHora;
 enum GENERO {FICÇÃO, DIDÁTICO, BIOGRAFIA, COMEDIA, TERROR, ROMANCE};
 
-struct {
+typedef struct {
     char titulo[200];
     char Autor[200];
     char ISBN[13];
