@@ -8,4 +8,24 @@ void listarLivrosPorGenero(){}
 
 void listarLivrosPorStatus(){}
 
-void MenuRelatorios(){}
+void MenuRelatorios(){
+    int op;
+    do {
+        printf("\nEMPRESTIMOS\n");
+        printf("Escolha a opção que você quer acessar:\n0.Voltar\n1.Listar Livros por Gênero\n2.Listar Livros por Status\n");
+        switch (op)
+        {
+            case 0:
+                return;
+                break;
+            case 1:
+                listarLivrosPorGenero();
+                break;
+            case 2:
+                listarLivrosPorStatus();
+                break;
+            default:
+                break;
+        }
+    }while(op != 0);
+}
