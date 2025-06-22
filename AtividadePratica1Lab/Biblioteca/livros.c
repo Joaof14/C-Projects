@@ -16,6 +16,7 @@ void MenuLivros(){
     do {
         printf("\nLIVROS\n");
         printf("Escolha a opção que você quer acessar:\n0.Voltar\n1.Cadastrar Livro\n2. Remover Livro\n3.Atualizar Livro\n");
+        scanf("%d", &op);
         switch (op)
         {
             case 0:

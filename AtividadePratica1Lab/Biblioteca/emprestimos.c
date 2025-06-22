@@ -15,6 +15,7 @@ void MenuEmprestimos(){
     do {
         printf("\nEMPRESTIMOS\n");
         printf("Escolha a opção que você quer acessar:\n0.Voltar\n1.Cadastrar Empréstimo\n2.Registrar Devolução\n3.Listar Empréstimos por Status\n");
+        scanf("%d", &op);
         switch (op)
         {
             case 0:

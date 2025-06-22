@@ -17,6 +17,7 @@ int main(){
     do {
         printf("Sistema de Gerenciamento de uma biblioteca\n");
         printf("Escolha a opção que você quer acessar:\n0.Sair\n1.Livros\n2.Empréstimos\n3.Relatórios\n");
+        scanf("%d", &op);
         switch (op)
         {
             case 0:
