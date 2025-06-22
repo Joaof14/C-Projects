@@ -11,9 +11,28 @@
 const char* generoParaTexto(int n){}
 
 //Funções para ISBN
-void validarISBN(char ISBN){}
+int validarISBN(const char *isbn){
+        if (strlen(isbn) != 11) 
+    {return 0;}
+    for (int i = 0; i < 11; i++) {
+        if (!isdigit(isbn[i])) return 0;
+    }
 
-void receberISBN(){}
+    return 1; // isbn válido
+}
+
+int receberISBN(char * ISBN){
+    int isbnValido = 0;
+
+    do {
+        printf("\nDigite o ISBN do livro\n");
+        ler_entrada_limitada(ISBN, 14);
+        if(validarISBN(ISBN)){
+            isbnValido = 1;
+        }
+        printf("\nErro: ISBN deve conter exatamente 13 números\n");
+    } while(!isbnValido);
+}
 
 
 //Funções para titulo

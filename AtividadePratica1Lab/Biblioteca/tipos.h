@@ -32,9 +32,14 @@ typedef struct {
 //-------------------------------------------
 //LIVROS
 //Função de conversão de enums
-const char* generoParaTexto(int n){}
+const char* generoParaTexto(int n);
+
+int validarISBN(const char *isbn);
+int receberISBN(char * ISBN);
+
 int validarTitulo(const char *nome);
 int receberTitulo(char *nome);
+
 
 
 
@@ -42,7 +47,7 @@ int receberTitulo(char *nome);
 //EMPRESTIMOS
 //Função de conversão de enums
 const char* statusParaTexto(int n);
-void gerarIdEmprestimo(){}
+void gerarIdEmprestimo();
 
 //--------------------------------------------
 //DATA E HORA
