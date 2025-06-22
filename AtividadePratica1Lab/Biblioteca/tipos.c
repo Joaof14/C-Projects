@@ -4,22 +4,27 @@
 #include "tipos.h"
 #include "auxiliar.h"
 
+//--------------------------------------------
+//LIVROS
+
 //Função de conversão de enums
 const char* generoParaTexto(int n){}
 
+//Funções para ISBN
+void validarISBN(char ISBN){}
+
+void receberISBN(){}
 
 
-
-//Função para ISBN
-void verificarISBN(char ISBN){}
-
-
-
+//--------------------------------------------
 //EMPRESTIMOS
 //Função de conversão de enums
 const char* statusParaTexto(int n){}
 
-//Data e hora
+void gerarIdEmprestimo(){}
+
+//--------------------------------------------
+//DATA E HORA
 
 int validarHora(int hora, int minuto) {
     if (hora < 0 || hora > 23) return 0;
@@ -82,4 +87,8 @@ int receberDataHora(DataHora *dh) {
     return 1;
 }
 
-//
+
+//-------------------------------------------
+//Funções para componentes de ambas as structs: titulo, autor, e leitor
+void validarNome(char titulo){}
+void receberNome(){}

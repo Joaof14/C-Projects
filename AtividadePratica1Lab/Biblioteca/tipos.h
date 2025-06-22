@@ -29,22 +29,29 @@ typedef struct {
     enum STATUS status;
 } Emprestimos;
 
-
+//-------------------------------------------
 //LIVROS
-void verificarISBN(char ISBN);
-const char* generoParaTexto(int n);
+//Função de conversão de enums
+const char* generoParaTexto(int n){}
 
+
+//-------------------------------------------
 //EMPRESTIMOS
 //Função de conversão de enums
 const char* statusParaTexto(int n);
-//Data e hora
+void gerarIdEmprestimo(){}
+
+//--------------------------------------------
+//DATA E HORA
 int receberDataHora(DataHora *dh);
 int validarHora(int hora, int minuto);
 int validarData(int dia, int mes, int ano);
 
 
-
-
+//-------------------------------------------
+//Funções para  conponentes de ambas as structs: titulo, autor, e leitor
+void validarNome(char titulo){}
+void receberNome(){}
 
 
 #endif
