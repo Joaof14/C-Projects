@@ -9,8 +9,8 @@
 
 int main(){
     //Criação dos arquivos que servirão como banco de dados
-    criarArquivos("arquivos/livros.txt", "Colunas");
-    criarArquivos("arquivos/emprestimos.txt", "Colunas");
+    criarArquivos("arquivos/livros.txt", "ISBN,titulo,autor,genero\n");
+    criarArquivos("arquivos/emprestimos.txt", "id,ISBN,leitor,data,status\n");
 
 
     int op;

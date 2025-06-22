@@ -7,14 +7,12 @@ typedef struct {
     int dia;
     int mes;
     int ano;
-    int hora;
-    int minuto;
-} DataHora;
+} Data;
 enum GENERO {FICÇÃO, DIDÁTICO, BIOGRAFIA, COMEDIA, TERROR, ROMANCE};
 
 typedef struct {
     char titulo[200];
-    char Autor[200];
+    char autor[200];
     char ISBN[13];
     enum GENERO genero;
 } Livros;
@@ -25,7 +23,7 @@ typedef struct {
     unsigned int id;
     char leitor[200];
     char ISBN[13];
-    DataHora DataDoEmprestimo;
+    Data DataDoEmprestimo;
     enum STATUS status;
 } Emprestimos;
 
@@ -51,8 +49,7 @@ void gerarIdEmprestimo();
 
 //--------------------------------------------
 //DATA E HORA
-int receberDataHora(DataHora *dh);
-int validarHora(int hora, int minuto);
+int receberData(Data *dh);
 int validarData(int dia, int mes, int ano);
 
 

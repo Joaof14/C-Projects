@@ -105,10 +105,10 @@ int validarData(int dia, int mes, int ano) {
     return 1;
 }
 
-int receberDataHora(DataHora *dh) {
+int receberData(Data *dh) {
     char buffer[100];
     do {
-        printf("Data e hora da consulta (DD/MM/AAAA HH:MM): ");
+        printf("Data do empréstimo (DD/MM/AAAA): ");
         
         // Lê toda a linha incluindo o '\n'
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
@@ -120,22 +120,16 @@ int receberDataHora(DataHora *dh) {
         char *pos = strchr(buffer, '\n');
         if (pos) *pos = '\0';
         
-        int resultado = sscanf(buffer, "%d/%d/%d %d:%d", 
-                               &dh->dia, &dh->mes, &dh->ano, 
-                               &dh->hora, &dh->minuto);
+        int resultado = sscanf(buffer, "%d/%d/%d", 
+                               &dh->dia, &dh->mes, &dh->ano);
         
-        if (resultado != 5) {
-            printf("Erro: Formato inválido! Use DD/MM/AAAA HH:MM.\n");
+        if (resultado != 3) {
+            printf("Erro: Formato inválido! Use DD/MM/AAAA.\n");
             continue;
         }
         
         if (!validarData(dh->dia, dh->mes, dh->ano)) {
             printf("Erro: Data inválida!\n");
-            continue;
-        }
-        
-        if (!validarHora(dh->hora, dh->minuto)) {
-            printf("Erro: Hora inválida!\n");
             continue;
         }
         
