@@ -16,6 +16,44 @@ void validarISBN(char ISBN){}
 void receberISBN(){}
 
 
+//Funções para titulo
+int validarTitulo(const char *nome) {
+    // Verificar tamanho e se contém apenas letras e espaços
+    if (strlen(nome) == 0 || strlen(nome) > 199) {
+        return 0;
+    }
+
+    // Verificar se contém apenas espaços
+    int apenasEspacos = 1;
+    for (int i = 0; i < strlen(nome); i++) {
+        if (!isspace(nome[i])) {
+            apenasEspacos = 0;
+            break;
+        }
+    }
+    if (apenasEspacos) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int receberTitulo(char *nome){
+    do {
+        printf("Nome (máx 199 caracteres): ");
+        entradaLimitada(nome, 200);
+
+        if (!validarTitulo(nome)) {
+            printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");
+            continue;
+        }
+        break;
+    }
+    while (1);
+
+    return 1;
+}
+
 //--------------------------------------------
 //EMPRESTIMOS
 //Função de conversão de enums
@@ -89,6 +127,48 @@ int receberDataHora(DataHora *dh) {
 
 
 //-------------------------------------------
-//Funções para componentes de ambas as structs: titulo, autor, e leitor
-void validarNome(char titulo){}
-void receberNome(){}
+//Funções para componentes de ambas as structs: autor, e leitor
+int validarNome(const char *nome) {
+    // Verificar tamanho e se contém apenas letras e espaços
+    if (strlen(nome) == 0 || strlen(nome) > 199) {
+        return 0;
+    }
+
+    // Verificar se contém apenas espaços
+    int apenasEspacos = 1;
+    for (int i = 0; i < strlen(nome); i++) {
+        if (!isspace(nome[i])) {
+            apenasEspacos = 0;
+            break;
+        }
+    }
+    if (apenasEspacos) {
+        return 0;
+    }
+
+    for (int i = 0; i < strlen(nome); i++) {
+        if (!isalpha(nome[i]) && nome[i] != ' ') {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+
+//Receber Nome
+int receberNome(char *nome){
+    do {
+        printf("Nome (máx 199 caracteres): ");
+        entradaLimitada(nome, 200);
+
+        if (!validarNome(nome)) {
+            printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");
+            continue;
+        }
+        break;
+    }
+    while (1);
+
+    return 1;
+}

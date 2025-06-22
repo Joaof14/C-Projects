@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tipos.h"
 
 // cria um arquivo com cabeçalhos se ele não existir
 void criarArquivos(const char *caminho, const char *colunas) {

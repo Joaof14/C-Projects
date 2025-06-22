@@ -33,6 +33,9 @@ typedef struct {
 //LIVROS
 //Função de conversão de enums
 const char* generoParaTexto(int n){}
+int validarTitulo(const char *nome);
+int receberTitulo(char *nome);
+
 
 
 //-------------------------------------------
@@ -50,8 +53,8 @@ int validarData(int dia, int mes, int ano);
 
 //-------------------------------------------
 //Funções para  conponentes de ambas as structs: titulo, autor, e leitor
-void validarNome(char titulo){}
-void receberNome(){}
+int validarNome(const char *nome);
+int receberNome(char *nome);
 
 
 #endif
