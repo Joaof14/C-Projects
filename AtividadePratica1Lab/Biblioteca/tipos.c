@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tipos.h"
+#include "auxiliar.h"
 
 //Função de conversão de enums
 const char* generoParaTexto(int n){}

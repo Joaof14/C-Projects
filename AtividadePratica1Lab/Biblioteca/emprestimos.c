@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tipos.h"
+#include "auxiliar.h"
 
 void cadastrarEmprestimo(){}
 
