@@ -8,7 +8,40 @@
 //LIVROS
 
 //Função de conversão de enums
-const char* generoParaTexto(int n){}
+const char* generoParaTexto(enum GENERO genero){
+    switch(genero) {
+        case FICÇÃO: return "Ficção";
+        case DIDÁTICO: return "Didático";
+        case BIOGRAFIA: return "Biografia";
+        case COMEDIA: return "Comédia";
+        case TERROR: return "Terror";
+        case ROMANCE: return "Romance";
+        default: return "DESCONHECIDO";
+    }
+}
+
+int receberGenero(enum GENERO * genero){
+    for (int i = 0; i < 3; i++){
+        printf("%d - %s\n", i, GeneroParaTexto(i));
+    }
+
+    int op;
+        do {
+        printf("Digite o número do status: ");
+        scanf("%d", &op);
+        while (getchar() != '\n'); 
+
+        if (op < 0 || op >= 6) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        else {
+            *genero = (enum GENERO)op;
+            break;
+        }
+    } while (1);
+
+    return 1;
+}
 
 //Funções para ISBN
 int validarISBN(const char *isbn){
@@ -76,9 +109,79 @@ int receberTitulo(char *nome){
 //--------------------------------------------
 //EMPRESTIMOS
 //Função de conversão de enums
-const char* statusParaTexto(int n){}
+const char* statusParaTexto(enum STATUS status){
+        switch(status) {
+        case CANCELADO: return "CANCELADO";
+        case ANDAMENTO: return "EM ANDAMENTO";
+        case CONCLUIDO: return "CONCLUÍDO";
+        default: return "DESCONHECIDO";
+    }
+}
 
-void gerarIdEmprestimo(){}
+int receberStatus(enum STATUS * status){
+    printf("\nDigite o status:\n");
+    for (int i = 0; i < 3; i++){
+        printf("%d - %s\n", i, statusParaTexto(i));
+    }
+
+    int op;
+        do {
+        printf("Digite o número do status: ");
+        scanf("%d", &op);
+        while (getchar() != '\n'); 
+
+        if (op < 0 || op >= 3) {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        else {
+            *status = (enum STATUS )op;
+            break;
+        }
+    } while (1);
+
+    return 1;
+}
+
+void gerarIdEmprestimo(){
+        FILE *arquivo = fopen("arquivos/emprestimos.txt", "r");
+    if (!arquivo) {
+        return 1; // Primeiro ID se arquivo não existir
+    }
+
+    int maxId = 0;
+    char linha[256];
+    int primeiraLinha = 1;
+    int idsValidos = 0;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        // Ignorar cabeçalho
+        if (primeiraLinha) {
+            primeiraLinha = 0;
+            continue;
+        }
+
+        // Ignorar linhas vazias ou muito curtas
+        if (strlen(linha) < 3) continue;
+
+        // Extrair ID
+        int id;
+        if (sscanf(linha, "%d,", &id) == 1) {
+            // Filtrar IDs inválidos
+            if (id > 0 && id < 1000000000) { // ID entre 1 e 999.999.999
+                if (id > maxId) maxId = id;
+                idsValidos++;
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    // Se não encontrou IDs válidos, começa em 1
+    return (idsValidos == 0) ? 1 : maxId + 1;
+    
+}
+
+
 
 //--------------------------------------------
 //DATA E HORA
