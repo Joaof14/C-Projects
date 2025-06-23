@@ -39,3 +39,40 @@ int ler_entrada_limitada(char *buffer, size_t tamanho_max) {
     return 1;
 }
 
+//Carregar arquivos
+void carregarLivros(Livros ** livros){
+        FILE *arquivo = fopen("Arquivos/livros.txt", "r");
+        int * total = 0;
+    if (!arquivo) {
+        *total = 0;
+        *livros = NULL;
+        return;
+    }
+
+    //pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Livros temp;
+    int genero_tmp;
+
+    //ler cada linha do arquivo
+    while (fscanf(arquivo, "%s,%199[^,],%199[^,],%d\n", 
+                &temp.ISBN,
+                temp.titulo, 
+                temp.autor, 
+                &genero_tmp) == 4) {
+
+        //converter genero
+        temp.genero = (enum GENERO)genero_tmp;
+
+        //alocar espaço para mais um médico e adicionar
+        *livros = realloc(*livros, (*total + 1) * sizeof(Livros));
+        (*livros)[*total] = temp;
+        (*total)++;
+    }
+    fclose(arquivo);
+}
+
+
