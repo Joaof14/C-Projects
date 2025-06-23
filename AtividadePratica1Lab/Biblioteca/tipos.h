@@ -40,7 +40,7 @@ int validarTitulo(const char *nome);
 int receberTitulo(char *nome);
 
 
-
+void exibirLivro(Livros livro);
 
 //-------------------------------------------
 //EMPRESTIMOS

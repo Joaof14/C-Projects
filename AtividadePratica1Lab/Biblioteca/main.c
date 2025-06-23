@@ -8,9 +8,6 @@
 #include "auxiliar.h"
 
 int main(){
-    //Criação dos arquivos que servirão como banco de dados
-    
-    
 
 
     int op;

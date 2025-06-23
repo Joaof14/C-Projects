@@ -1,7 +1,7 @@
 #ifndef LIVROS_H
 #define LIVROS_H
 
-void salvarLivro(Livros * livros);
+void salvarLivros(Livros * livros);
 
 void cadastrarLivro();
 

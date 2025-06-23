@@ -59,7 +59,7 @@ void carregarLivros(Livros ** livros){
 
     //ler cada linha do arquivo
     while (fscanf(arquivo, "%s,%199[^,],%199[^,],%d\n", 
-                &temp.ISBN,
+                temp.ISBN,
                 temp.titulo, 
                 temp.autor, 
                 &genero_tmp) == 4) {

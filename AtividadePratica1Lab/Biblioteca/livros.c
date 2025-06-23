@@ -7,7 +7,7 @@
 
 
 
-void salvarLivro(Livros * livros){
+void salvarLivros(Livros * livros){
         FILE *arquivo = fopen("Arquivos/livros.txt","a");
     if (!arquivo) {
         printf("Erro ao abrir arquivo!\n");
@@ -29,8 +29,62 @@ void salvarLivro(Livros * livros){
 }
 
 void cadastrarLivro(){
+// alocar memória para o Livros
+    Livros *novo = (Livros*)malloc(sizeof(Livros));
+    if (novo == NULL) {
+        printf("Erro de alocação de memória!\n");
+        return;
+    }
+    // coleta do CRM com validações
+    receberISBN(novo->ISBN);
+    // coletar dados usando ponteiros
+    printf("\n Novo Livros \n");
+    while (getchar() != '\n');
 
+
+    // coleta do ISBN com validações
+    receberISBN(novo->ISBN);
+
+    // coleta do titulo
+    receberTitulo(novo->ISBN);
+
+    // coleta do ISBN com validações
+    printf("\nAutor do livro\n");
+    receberNome(novo->ISBN);
+
+    // coleta do genero
+    receberGenero(&novo->genero);
+
+    // exibir os dados coletados
+    exibirLivro(*novo);
+
+    // perguntar se deseja salvar ou sair sem salvar
+    printf("\nDeseja salvar os dados?");
+    int opcao;
+    do {
+        printf("\n1. Salvar\n");
+        printf("2. Sair sem salvar\n");
+        printf("selecione uma opção: ");
+        scanf("%d", &opcao);
+        getchar(); 
+
+        switch(opcao) {
+            case 1:
+            salvarLivros(novo); 
+            printf("Médico cadastrado com sucesso!\n");
+            case 2:
+                printf("Cadastro descartado.\n");
+                break;
+
+            default:
+                printf("Opção inválida!\n");
+                continue;
+        }
+    } while(opcao < 1 || opcao > 2);
+
+    free(novo); 
 }
+
 
 void removerLivro(){
     //criarArquivos("arquivos/livros.txt", "ISBN,titulo,autor,genero\n");

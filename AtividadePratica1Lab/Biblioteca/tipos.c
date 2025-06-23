@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "tipos.h"
 #include "auxiliar.h"
 
 //--------------------------------------------
 //LIVROS
+
 
 //Função de conversão de enums
 const char* generoParaTexto(enum GENERO genero){
@@ -22,7 +24,7 @@ const char* generoParaTexto(enum GENERO genero){
 
 int receberGenero(enum GENERO * genero){
     for (int i = 0; i < 3; i++){
-        printf("%d - %s\n", i, GeneroParaTexto(i));
+        printf("%d - %s\n", i, generoParaTexto(i));
     }
 
     int op;
@@ -93,7 +95,7 @@ int validarTitulo(const char *nome) {
 int receberTitulo(char *nome){
     do {
         printf("Nome (máx 199 caracteres): ");
-        entradaLimitada(nome, 200);
+        ler_entrada_limitada(nome, 200);
 
         if (!validarTitulo(nome)) {
             printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");
@@ -106,6 +108,13 @@ int receberTitulo(char *nome){
     return 1;
 }
 
+
+void exibirLivro(Livros livro){
+    printf("ISBN: %s", livro.ISBN);
+    printf("Título: %s", livro.titulo);
+    printf("ISBN: %s", livro.autor);
+    printf("ISBN: %s", generoParaTexto(livro.genero));
+}
 //--------------------------------------------
 //EMPRESTIMOS
 //Função de conversão de enums
@@ -142,7 +151,7 @@ int receberStatus(enum STATUS * status){
     return 1;
 }
 
-void gerarIdEmprestimo(){
+/*void gerarIdEmprestimo(){
         FILE *arquivo = fopen("arquivos/emprestimos.txt", "r");
     if (!arquivo) {
         return 1; // Primeiro ID se arquivo não existir
@@ -181,7 +190,7 @@ void gerarIdEmprestimo(){
     
 }
 
-
+*/
 
 //--------------------------------------------
 //DATA E HORA
@@ -276,7 +285,7 @@ int validarNome(const char *nome) {
 int receberNome(char *nome){
     do {
         printf("Nome (máx 199 caracteres): ");
-        entradaLimitada(nome, 200);
+        ler_entradaLimitada(nome, 200);
 
         if (!validarNome(nome)) {
             printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");
