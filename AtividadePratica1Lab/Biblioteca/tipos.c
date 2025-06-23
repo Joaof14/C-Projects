@@ -47,9 +47,9 @@ int receberGenero(enum GENERO * genero){
 
 //Funções para ISBN
 int validarISBN(const char *isbn){
-        if (strlen(isbn) != 11) 
+        if (strlen(isbn) != 13) 
     {return 0;}
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 13; i++) {
         if (!isdigit(isbn[i])) return 0;
     }
 
@@ -285,7 +285,7 @@ int validarNome(const char *nome) {
 int receberNome(char *nome){
     do {
         printf("Nome (máx 199 caracteres): ");
-        ler_entradaLimitada(nome, 200);
+        ler_entrada_limitada(nome, 200);
 
         if (!validarNome(nome)) {
             printf("Erro: Use apenas letras e espaços no nome e não deixe em branco!\n");

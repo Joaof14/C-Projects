@@ -35,8 +35,7 @@ void cadastrarLivro(){
         printf("Erro de alocação de memória!\n");
         return;
     }
-    // coleta do CRM com validações
-    receberISBN(novo->ISBN);
+    
     // coletar dados usando ponteiros
     printf("\n Novo Livros \n");
     while (getchar() != '\n');
