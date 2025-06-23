@@ -4,9 +4,17 @@
 #include "tipos.h"
 #include "auxiliar.h"
 
+void salvarEmprestimo(Emprestimos * emprestimo){
+
+}
+
 void cadastrarEmprestimo(){}
 
-void registrarDevol(){}
+
+void registrarDevol(){
+    //criarArquivos("arquivos/emprestimos.txt", "id,ISBN,leitor,data,status\n");
+    
+}
 
 void listarEmprestimoPorStatus(){}
 

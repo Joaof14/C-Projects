@@ -4,11 +4,75 @@
 #include "tipos.h"
 #include "auxiliar.h"
 
-void cadastrarLivro(){}
 
-void removerLivro(){}
 
-void atualizarLivro(){}
+void carregarLivros(){
+        FILE *arquivo = fopen("Arquivos/livros.txt", "r");
+    if (!arquivo) {
+        *total = 0;
+        *medicos = NULL;
+        return;
+    }
+
+    //pular cabeçalho (primeira linha)
+    char buffer[256];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    *total = 0;
+    Medico temp;
+    int especialidade_tmp;
+
+    //ler cada linha do arquivo
+    while (fscanf(arquivo, "%d,%99[^,],%6[^,],%d,%19[^\n]\n", 
+                &temp.id,
+                temp.nome, 
+                temp.crm, 
+                &especialidade_tmp, 
+                temp.contato) == 5) {
+
+        //converter especialidade
+        temp.especialidade = (enum ESPECIALIDADE)especialidade_tmp;
+
+        //alocar espaço para mais um médico e adicionar
+        *medicos = realloc(*medicos, (*total + 1) * sizeof(Medico));
+        (*medicos)[*total] = temp;
+        (*total)++;
+    }
+    fclose(arquivo);
+}
+
+void salvarLivro(Livros * livros){
+        FILE *arquivo = fopen("Arquivos/livros.txt","a");
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo!\n");
+        return;
+    }
+    int total = sizeof(livros)/sizeof(Livros);
+
+    //escreve os médicos
+    for (int i = 0; i < total; i++) {
+
+        fprintf(arquivo, "%s,%s,%s,%d\n",
+                livros[i].ISBN, 
+                livros[i].titulo, 
+                livros[i].autor, 
+                livros[i].genero);
+    }
+
+    fclose(arquivo);
+}
+
+void cadastrarLivro(){
+
+}
+
+void removerLivro(){
+    //criarArquivos("arquivos/livros.txt", "ISBN,titulo,autor,genero\n");
+}
+
+void atualizarLivro(){
+    //criarArquivos("arquivos/livros.txt", "ISBN,titulo,autor,genero\n");
+}
 
 void MenuLivros(){
 
