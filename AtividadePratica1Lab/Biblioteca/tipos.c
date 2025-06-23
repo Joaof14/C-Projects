@@ -23,13 +23,13 @@ const char* generoParaTexto(enum GENERO genero){
 }
 
 int receberGenero(enum GENERO * genero){
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 6; i++){
         printf("%d - %s\n", i, generoParaTexto(i));
     }
 
     int op;
         do {
-        printf("Digite o número do status: ");
+        printf("Digite o gênero do livro: ");
         scanf("%d", &op);
         while (getchar() != '\n'); 
 
@@ -65,7 +65,7 @@ int receberISBN(char * ISBN){
         if(validarISBN(ISBN)){
             isbnValido = 1;
         }
-        printf("\nErro: ISBN deve conter exatamente 13 números\n");
+        else{printf("\nErro: ISBN deve conter exatamente 13 números\n");}
     } while(!isbnValido);
 }
 
@@ -110,10 +110,10 @@ int receberTitulo(char *nome){
 
 
 void exibirLivro(Livros livro){
-    printf("ISBN: %s", livro.ISBN);
-    printf("Título: %s", livro.titulo);
-    printf("ISBN: %s", livro.autor);
-    printf("ISBN: %s", generoParaTexto(livro.genero));
+    printf("ISBN: %s\n", livro.ISBN);
+    printf("Título: %s\n", livro.titulo);
+    printf("ISBN: %s\n", livro.autor);
+    printf("ISBN: %s\n", generoParaTexto(livro.genero));
 }
 //--------------------------------------------
 //EMPRESTIMOS

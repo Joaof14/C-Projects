@@ -8,14 +8,14 @@
 
 
 void salvarLivros(Livros * livros){
-        FILE *arquivo = fopen("Arquivos/livros.txt","a");
+        FILE *arquivo = fopen("arquivos/livros.txt","a");
     if (!arquivo) {
         printf("Erro ao abrir arquivo!\n");
         return;
     }
     int total = sizeof(livros)/sizeof(Livros);
 
-    //escreve os médicos
+    //escreve os livros
     for (int i = 0; i < total; i++) {
 
         fprintf(arquivo, "%s,%s,%s,%d\n",
@@ -45,6 +45,7 @@ void cadastrarLivro(){
     receberISBN(novo->ISBN);
 
     // coleta do titulo
+    printf("\nTítulo do livro\n");
     receberTitulo(novo->ISBN);
 
     // coleta do ISBN com validações
@@ -69,12 +70,12 @@ void cadastrarLivro(){
 
         switch(opcao) {
             case 1:
-            salvarLivros(novo); 
-            printf("Médico cadastrado com sucesso!\n");
+                salvarLivros(novo); 
+                printf("Livro cadastrado com sucesso!\n");
+                break;
             case 2:
                 printf("Cadastro descartado.\n");
                 break;
-
             default:
                 printf("Opção inválida!\n");
                 continue;
