@@ -39,6 +39,40 @@ int ler_entrada_limitada(char *buffer, size_t tamanho_max) {
     return 1;
 }
 
+int gerarNovoId(const char *arquivoPath) {
+    FILE *arquivo = fopen(arquivoPath, "r");
+    if (!arquivo) {
+        return 1; // Primeiro ID se arquivo não existir
+    }
+    
+    int maxId = 0;
+    char linha[256];
+    int primeiraLinha = 1;
+    int idsValidos = 0;
+    
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        //ignorar cabeçalho
+        if (primeiraLinha) {
+            primeiraLinha = 0;
+            continue;
+        }
+    
+        //extrair ID
+        int id;
+        if (sscanf(linha, "%d,", &id) == 1) {
+            //filtrar IDs inválidos
+            if (id > 0 && id < 1000000000) {
+                if (id > maxId) maxId = id;
+                idsValidos++;
+            }
+        }
+    }
+    fclose(arquivo);
+    return (idsValidos == 0) ? 1 : maxId + 1;
+}
+
+
+
 //Carregar arquivos
 void carregarLivros(Livros ** livros){
         FILE *arquivo = fopen("Arquivos/livros.txt", "r");
@@ -58,7 +92,8 @@ void carregarLivros(Livros ** livros){
     int genero_tmp;
 
     //ler cada linha do arquivo
-    while (fscanf(arquivo, "%s,%199[^,],%199[^,],%d\n", 
+    while (fscanf(arquivo, "%d, %s,%199[^,],%199[^,],%d\n", 
+                &temp.id,
                 temp.ISBN,
                 temp.titulo, 
                 temp.autor, 

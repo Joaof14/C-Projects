@@ -17,7 +17,12 @@ void salvarLivros(Livros * livros, int total){
     //escreve os livros
     for (int i = 0; i < total; i++) {
 
-        fprintf(arquivo, "%s,%s,%s,%d\n",
+        if (livros[i].id == 0){
+            livros[i].id = gerarNovoId("arquivos/livros.txt");
+        }
+
+        fprintf(arquivo, "%d,%s,%s,%s,%d\n",
+                livros[i].id,
                 livros[i].ISBN, 
                 livros[i].titulo, 
                 livros[i].autor, 
@@ -39,16 +44,17 @@ void cadastrarLivro(){
     printf("\n Novo Livros \n");
     while (getchar() != '\n');
 
+    novo->id = 0;
 
     // coleta do ISBN com validações
     receberISBN(novo->ISBN);
 
     // coleta do titulo
-    printf("\nTítulo do livro\n");
+    printf("\nTítulo do livro ");
     receberTitulo(novo->titulo);
 
     // coleta do ISBN com validações
-    printf("\nAutor do livro\n");
+    printf("\nAutor do livro ");
     receberNome(novo->autor);
 
     // coleta do genero

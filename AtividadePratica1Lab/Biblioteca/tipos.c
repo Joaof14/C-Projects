@@ -284,7 +284,7 @@ int validarNome(const char *nome) {
 //Receber Nome
 int receberNome(char *nome){
     do {
-        printf("Nome (máx 199 caracteres): ");
+        printf("(máx 199 caracteres): \n");
         ler_entrada_limitada(nome, 200);
 
         if (!validarNome(nome)) {

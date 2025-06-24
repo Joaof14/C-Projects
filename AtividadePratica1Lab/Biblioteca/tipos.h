@@ -11,6 +11,7 @@ typedef struct {
 enum GENERO {FICÇÃO, DIDÁTICO, BIOGRAFIA, COMEDIA, TERROR, ROMANCE};
 
 typedef struct {
+    int id;
     char titulo[200];
     char autor[200];
     char ISBN[13];
@@ -48,7 +49,7 @@ void exibirLivro(Livros livro);
 const char* statusParaTexto(enum STATUS status);
 int receberStatus(enum STATUS * status);
 
-void gerarIdEmprestimo();
+//void gerarIdEmprestimo();
 
 //--------------------------------------------
 //DATA E HORA
