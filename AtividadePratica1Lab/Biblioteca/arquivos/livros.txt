@@ -1,2 +1,1 @@
-ISBN,titulo,autor,genero
-0980980980987,auto da compadecida,ariano suassuna,3
+id,ISBN,titulo,autor,genero

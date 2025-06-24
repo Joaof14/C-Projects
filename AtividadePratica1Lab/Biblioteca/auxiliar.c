@@ -74,11 +74,11 @@ int gerarNovoId(const char *arquivoPath) {
 
 
 //Carregar arquivos
-void carregarLivros(Livros ** livros){
-        FILE *arquivo = fopen("Arquivos/livros.txt", "r");
-        int * total = 0;
+void carregarLivros(Livros ** livros, int * total){
+    FILE *arquivo = fopen("Arquivos/livros.txt", "r");
+    * total = 0;
     if (!arquivo) {
-        *total = 0;
+        
         *livros = NULL;
         return;
     }
@@ -87,7 +87,6 @@ void carregarLivros(Livros ** livros){
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
-    *total = 0;
     Livros temp;
     int genero_tmp;
 
