@@ -1,3 +1,3 @@
 id,ISBN,titulo,autor,genero
-1,1231234564567,O Auto da Compadecida,ariano suassuna,3
-2,1231231231234,memorias postumas de bras cuba,Machado de Assis,5
+1,1231234564567,O Auto da Compadecida,Ariano Suassuna,3
+3,1234567891234,Dom casmurro,Machado de Assis,5

@@ -68,11 +68,15 @@ void cadastrarLivro(){
 
 
     // coleta do ISBN com validações e verificação de unicidade
-    do{receberISBN(novo->ISBN);
-        if(buscarLivroPorISBN(livros, total, novo->ISBN) != -1) 
-            {printf("ISBN ja cadastrado.");}
-        else{break;}
-    }while(1);
+    receberISBN(novo->ISBN);
+    if(buscarLivroPorISBN(livros, total, novo->ISBN) != -1) 
+    {
+        printf("ISBN ja cadastrado.");
+        free(novo); 
+        free(livros);
+        return;
+    }
+       
 
     // coleta do titulo
     printf("\nTítulo do livro ");
@@ -112,13 +116,11 @@ void cadastrarLivro(){
         }
     } while(opcao < 1 || opcao > 2);
 
+    free(livros);
     free(novo); 
 }
 
 
-void removerLivro(){
-    
-}
     
 
 
@@ -128,7 +130,7 @@ void atualizarLivro(){
     carregarLivros(&livros, &total);
     
 
-    //Buscar médico pelo crm
+    //Buscar livro
      printf("\n--- Atualização de Livro ---\n");
     char isbnBusca[14];
     while (getchar() != '\n');
@@ -163,11 +165,15 @@ void atualizarLivro(){
 
         switch(opcaoCampo) {
             case 1:
-                do{receberISBN(atualizado.ISBN);
-                    if(buscarLivroPorISBN(livros, total, atualizado.ISBN) != -1) 
-                        {printf("ISBN ja cadastrado.");}
-                    else{break;}
-                }while(1);
+
+                receberISBN(atualizado.ISBN);
+                if(buscarLivroPorISBN(livros, total, atualizado.ISBN) != -1) 
+                {
+                    printf("ISBN ja cadastrado.");
+                    free(livros);
+                    return;
+                }
+                
                 break;
             case 2:
                 printf("\nTítulo do livro ");
@@ -231,6 +237,75 @@ void atualizarLivro(){
     if(livros) {free(livros);}
     
 }
+
+
+void removerLivro(){
+    Livros *livros = NULL;
+    int total = 0;
+    carregarLivros(&livros, &total);
+    
+
+    //Buscar médico pelo crm
+     printf("\n--- Atualização de Livro ---\n");
+    char isbnBusca[14];
+    while (getchar() != '\n');
+    receberISBN(isbnBusca);
+    
+    int encontrado = buscarLivroPorISBN(livros, total, isbnBusca);
+
+    if(encontrado == -1) {
+        printf("livro não encontrado!\n");
+        free(livros);
+        return;
+    }
+
+    
+    int opcao;
+    do {
+        printf("\nDeseja realmente remover o livro?\n");
+        exibirLivro(livros[encontrado]);
+
+        printf("1. Confirmar\n");
+        printf("2. Cancelar\n");
+        printf("Opção: ");
+        scanf("%d", &opcao);
+        getchar(); 
+
+        if(opcao < 1 || opcao > 2){
+            printf("Opção inválida\n");
+        }
+        else{break;}
+    } while(1);
+
+     if(opcao == 2) {
+        printf("Operação cancelada.\n");
+        free(livros);
+        return;
+    }
+
+    Livros * novoVetor = malloc((total - 1) * sizeof(Livros));
+    if(!novoVetor) {
+        printf("Erro de memória!\n");
+        free(livros);
+        return;
+    }
+    int j = 0;
+    for(int i = 0; i < total; i++) {
+        if(i != encontrado) {
+            novoVetor[j] = livros[i];
+            j++;
+        }
+    }
+
+    salvarTodosLivros(novoVetor, total-1);
+
+
+    free(novoVetor);
+    if(livros) {free(livros);}
+    printf("\nRemoção realizada com sucesso\n");
+    return;
+}
+
 
 void MenuLivros(){
 
