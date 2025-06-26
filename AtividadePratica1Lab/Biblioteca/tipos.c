@@ -109,7 +109,7 @@ int receberTitulo(char *nome){
 }
 
 
-void exibirLivro(Livros livro){
+void exibirLivro(Livro livro){
     printf("ISBN: %s\n", livro.ISBN);
     printf("Título: %s\n", livro.titulo);
     printf("ISBN: %s\n", livro.autor);

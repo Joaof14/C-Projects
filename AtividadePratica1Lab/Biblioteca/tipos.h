@@ -16,7 +16,7 @@ typedef struct {
     char autor[200];
     char ISBN[14];
     enum GENERO genero;
-} Livros;
+} Livro;
 
 enum STATUS {CONCLUIDO, ANDAMENTO, CANCELADO};
 
@@ -41,7 +41,7 @@ int validarTitulo(const char *nome);
 int receberTitulo(char *nome);
 
 
-void exibirLivro(Livros livro);
+void exibirLivro(Livro livro);
 
 //-------------------------------------------
 //EMPRESTIMOS

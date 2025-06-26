@@ -74,7 +74,7 @@ int gerarNovoId(const char *arquivoPath) {
 
 
 //Carregar arquivos
-void carregarLivros(Livros ** livros, int * total){
+void carregarLivros(Livro ** livros, int * total){
     FILE *arquivo = fopen("arquivos/livros.txt", "r");
     * total = 0;
     if (!arquivo) {
@@ -87,7 +87,7 @@ void carregarLivros(Livros ** livros, int * total){
     char buffer[256];
     fgets(buffer, sizeof(buffer), arquivo);
 
-    Livros temp;
+    Livro temp;
     int genero_tmp;
 
     //ler cada linha do arquivo
@@ -102,7 +102,7 @@ void carregarLivros(Livros ** livros, int * total){
         temp.genero = (enum GENERO)genero_tmp;
 
         //alocar espaço para mais um médico e adicionar
-        *livros = realloc(*livros, (*total + 1) * sizeof(Livros));
+        *livros = realloc(*livros, (*total + 1) * sizeof(Livro));
         (*livros)[*total] = temp;
         (*total)++;
     }
@@ -111,7 +111,7 @@ void carregarLivros(Livros ** livros, int * total){
 
 
 //Busca ISBN em livros e retorna id
-int buscarLivroPorISBN(Livros * livros, int total, const char * isbnBusca){
+int buscarLivroPorISBN(Livro * livros, int total, const char * isbnBusca){
     for(int i = 0; i < total; i++) {
         if(strcmp(livros[i].ISBN, isbnBusca) == 0) {
             return i;

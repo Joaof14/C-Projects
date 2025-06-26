@@ -6,7 +6,7 @@ int ler_entrada_limitada(char *buffer, size_t tamanho_max);
 
 int gerarNovoId(const char *arquivoPath);
 
-void carregarLivros(Livros ** livros, int * total);
+void carregarLivros(Livro ** livros, int * total);
 
-int buscarLivroPorISBN(Livros * livros, int total, const char * isbnBusca);
+int buscarLivroPorISBN(Livro * livros, int total, const char * isbnBusca);
 #endif

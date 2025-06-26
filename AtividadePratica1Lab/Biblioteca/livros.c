@@ -5,7 +5,7 @@
 #include "auxiliar.h"
 
 
-void salvarTodosLivros(Livros *livros, int total) {
+void salvarTodosLivros(Livro *livros, int total) {
     FILE *arquivo = fopen("arquivos/livros.txt", "w"); 
     
     //cabeçalho
@@ -24,7 +24,7 @@ void salvarTodosLivros(Livros *livros, int total) {
 }
 
 
-void salvarNovoLivro(Livros * livro){
+void salvarNovoLivro(Livro * livro){
         FILE *arquivo = fopen("arquivos/livros.txt","a");
     if (!arquivo) {
         printf("Erro ao abrir arquivo!\n");
@@ -48,7 +48,7 @@ void salvarNovoLivro(Livros * livro){
 
 void cadastrarLivro(){
 // alocar memória para o Livro novo
-    Livros *novo = (Livros*)malloc(sizeof(Livros));
+    Livro *novo = (Livro*)malloc(sizeof(Livro));
     if (novo == NULL) {
         printf("Erro de alocação de memória!\n");
         return;
@@ -62,7 +62,7 @@ void cadastrarLivro(){
     novo->id = 0;
 
     // coleta do ISBN com validações
-    Livros *livros = NULL;
+    Livro *livros = NULL;
     int total = 0;
     carregarLivros(&livros, &total);
 
@@ -125,7 +125,7 @@ void cadastrarLivro(){
 
 
 void atualizarLivro(){
-    Livros *livros = NULL;
+    Livro *livros = NULL;
     int total = 0;
     carregarLivros(&livros, &total);
     
@@ -143,7 +143,7 @@ void atualizarLivro(){
         free(livros);
         return;
     }
-    Livros atualizado = livros[encontrado];
+    Livro atualizado = livros[encontrado];
 
    int modificarOutro = 1;
     do {
@@ -240,7 +240,7 @@ void atualizarLivro(){
 
 
 void removerLivro(){
-    Livros *livros = NULL;
+    Livro *livros = NULL;
     int total = 0;
     carregarLivros(&livros, &total);
     
@@ -283,7 +283,7 @@ void removerLivro(){
         return;
     }
 
-    Livros * novoVetor = malloc((total - 1) * sizeof(Livros));
+    Livro * novoVetor = malloc((total - 1) * sizeof(Livro));
     if(!novoVetor) {
         printf("Erro de memória!\n");
         free(livros);
