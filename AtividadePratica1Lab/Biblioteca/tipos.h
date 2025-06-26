@@ -14,7 +14,7 @@ typedef struct {
     int id;
     char titulo[200];
     char autor[200];
-    char ISBN[13];
+    char ISBN[14];
     enum GENERO genero;
 } Livros;
 

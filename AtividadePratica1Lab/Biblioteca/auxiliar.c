@@ -75,7 +75,7 @@ int gerarNovoId(const char *arquivoPath) {
 
 //Carregar arquivos
 void carregarLivros(Livros ** livros, int * total){
-    FILE *arquivo = fopen("Arquivos/livros.txt", "r");
+    FILE *arquivo = fopen("arquivos/livros.txt", "r");
     * total = 0;
     if (!arquivo) {
         
@@ -91,7 +91,7 @@ void carregarLivros(Livros ** livros, int * total){
     int genero_tmp;
 
     //ler cada linha do arquivo
-    while (fscanf(arquivo, "%d, %s, %199[^,],%199[^,],%d\n", 
+    while (fscanf(arquivo, "%d,%13[^,], %199[^,],%199[^,],%d\n", 
                 &temp.id,
                 temp.ISBN,
                 temp.titulo, 
