@@ -1,2 +1,3 @@
 ISBN,titulo,autor,genero
 1,0987609876098,o auto da compadecida,ariano suassuna,3
+2,1231231231234,memorias postumas de bras cuba,machado de assis,5

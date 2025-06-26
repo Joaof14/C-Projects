@@ -7,7 +7,7 @@
 
 
 
-void salvarLivros(Livros * livros, int total){
+void salvarNovoLivro(Livros * livro){
         FILE *arquivo = fopen("arquivos/livros.txt","a");
     if (!arquivo) {
         printf("Erro ao abrir arquivo!\n");
@@ -15,19 +15,16 @@ void salvarLivros(Livros * livros, int total){
     }
 
     //escreve os livros
-    for (int i = 0; i < total; i++) {
+    livro->id = gerarNovoId("arquivos/livros.txt");
 
-        if (livros[i].id == 0){
-            livros[i].id = gerarNovoId("arquivos/livros.txt");
-        }
 
-        fprintf(arquivo, "%d,%s,%s,%s,%d\n",
-                livros[i].id,
-                livros[i].ISBN, 
-                livros[i].titulo, 
-                livros[i].autor, 
-                livros[i].genero);
-    }
+    fprintf(arquivo, "%d,%s,%s,%s,%d\n",
+            livro->id,
+            livro->ISBN, 
+            livro->titulo, 
+            livro->autor, 
+            livro->genero);
+    
 
     fclose(arquivo);
 }
@@ -75,7 +72,7 @@ void cadastrarLivro(){
 
         switch(opcao) {
             case 1:
-                salvarLivros(novo, 1); 
+                salvarNovoLivro(novo); 
                 printf("Livro cadastrado com sucesso!\n");
                 break;
             case 2:
@@ -196,7 +193,7 @@ void atualizarLivro(){
 
         switch(opcao) {
             case 1:
-                salvarLivros(livros, total);
+                //salvarTodosLivros(livros);
                 printf("\nDados atualizados com sucesso\n");
                 break;
             case 2:
