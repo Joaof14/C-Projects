@@ -91,12 +91,12 @@ void carregarLivros(Livros ** livros, int * total){
     int genero_tmp;
 
     //ler cada linha do arquivo
-    while (fscanf(arquivo, "%d, %s,%199[^,],%199[^,],%d\n", 
+    while (fscanf(arquivo, "%d, %s, %199[^,],%199[^,],%d\n", 
                 &temp.id,
                 temp.ISBN,
                 temp.titulo, 
                 temp.autor, 
-                &genero_tmp) == 4) {
+                &genero_tmp) == 5) {
 
         //converter genero
         temp.genero = (enum GENERO)genero_tmp;

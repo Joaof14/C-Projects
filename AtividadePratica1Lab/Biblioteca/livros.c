@@ -208,7 +208,7 @@ void atualizarLivro(){
                 continue;
         }
     } while(opcao < 1 || opcao > 2);
-    free(livros);
+    if(livros) {free(livros);}
     
 }
 
