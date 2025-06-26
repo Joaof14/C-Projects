@@ -60,7 +60,7 @@ int receberISBN(char * ISBN){
     int isbnValido = 0;
 
     do {
-        printf("\nDigite o ISBN do livro\n");
+        printf("\nDigite o ISBN do livro:\n");
         ler_entrada_limitada(ISBN, 14);
         if(validarISBN(ISBN)){
             isbnValido = 1;

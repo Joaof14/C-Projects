@@ -5,6 +5,23 @@
 #include "auxiliar.h"
 
 
+void salvarTodosLivros(Livros *livros, int total) {
+    FILE *arquivo = fopen("arquivos/livros.txt", "w"); 
+    
+    //cabeçalho
+    fprintf(arquivo, "id,ISBN,titulo,autor,genero\n");
+    
+    //escreve odos os registros
+    for(int i = 0; i < total; i++) {
+        fprintf(arquivo, "%d,%s,%s,%s,%d\n", 
+        livros[i].id,
+            livros[i].ISBN, 
+            livros[i].titulo, 
+            livros[i].autor, 
+            livros[i].genero);
+    }
+    fclose(arquivo);
+}
 
 
 void salvarNovoLivro(Livros * livro){
@@ -98,14 +115,12 @@ void atualizarLivro(){
     Livros *livros = NULL;
     int total = 0;
     carregarLivros(&livros, &total);
-    criarArquivos("arquivos/livros.txt", "ISBN,titulo,autor,genero\n");
     
 
     //Buscar médico pelo crm
     char isbnBusca[14];
     printf("\n--- Atualização de Livro ---\n");
     while (getchar() != '\n');
-    printf("Digite o ISBN do livro(14 dígitos): ");
     receberISBN(isbnBusca);
     
     int encontrado = -1;
@@ -173,9 +188,9 @@ void atualizarLivro(){
         if(opcaoCampo != 5) {
             printf("\nDeseja modificar outro campo? (0-Não /1-Sim): ");
             if(scanf("%d", &modificarOutro) != 1) {
-                modificarOutro = 0;  // Força saída em caso de erro
+                modificarOutro = 0;  //força saída em caso de erro
             }
-            while(getchar() != '\n');  // Limpa buffer
+            while(getchar() != '\n');  //limpa buffer
         }
     } while(modificarOutro == 1);
 
@@ -193,7 +208,7 @@ void atualizarLivro(){
 
         switch(opcao) {
             case 1:
-                //salvarTodosLivros(livros);
+                salvarTodosLivros(livros, total);
                 printf("\nDados atualizados com sucesso\n");
                 break;
             case 2:

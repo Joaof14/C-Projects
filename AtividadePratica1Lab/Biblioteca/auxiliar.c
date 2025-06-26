@@ -5,7 +5,7 @@
 #include "tipos.h"
 
 // cria um arquivo com cabeçalhos se ele não existir
-void criarArquivos(const char *caminho, const char *colunas) {
+/*void criarArquivos(const char *caminho, const char *colunas) {
     FILE *arquivo =fopen(caminho, "w");
         if (arquivo != NULL) {
             fprintf(arquivo, "%s", colunas); 
@@ -14,7 +14,7 @@ void criarArquivos(const char *caminho, const char *colunas) {
             printf("Erro ao criar o arquivo: %s\n", caminho);
         }
         fclose(arquivo);
-}
+}*/
 
 int ler_entrada_limitada(char *buffer, size_t tamanho_max) {
     if (fgets(buffer, tamanho_max, stdin) == NULL) {
