@@ -47,12 +47,13 @@ void salvarNovoLivro(Livros * livro){
 }
 
 void cadastrarLivro(){
-// alocar memória para o Livros
+// alocar memória para o Livro novo
     Livros *novo = (Livros*)malloc(sizeof(Livros));
     if (novo == NULL) {
         printf("Erro de alocação de memória!\n");
         return;
     }
+
     
     // coletar dados usando ponteiros
     printf("\n Novo Livros \n");
@@ -61,7 +62,17 @@ void cadastrarLivro(){
     novo->id = 0;
 
     // coleta do ISBN com validações
-    receberISBN(novo->ISBN);
+    Livros *livros = NULL;
+    int total = 0;
+    carregarLivros(&livros, &total);
+
+
+    // coleta do ISBN com validações e verificação de unicidade
+    do{receberISBN(novo->ISBN);
+        if(buscarLivroPorISBN(livros, total, novo->ISBN) != -1) 
+            {printf("ISBN ja cadastrado.");}
+        else{break;}
+    }while(1);
 
     // coleta do titulo
     printf("\nTítulo do livro ");
@@ -118,18 +129,12 @@ void atualizarLivro(){
     
 
     //Buscar médico pelo crm
+     printf("\n--- Atualização de Livro ---\n");
     char isbnBusca[14];
-    printf("\n--- Atualização de Livro ---\n");
     while (getchar() != '\n');
     receberISBN(isbnBusca);
     
-    int encontrado = -1;
-    for(int i = 0; i < total; i++) {
-        if(strcmp(livros[i].ISBN, isbnBusca) == 0) {
-            encontrado = i;
-            break;
-        }
-    }
+    int encontrado = buscarLivroPorISBN(livros, total, isbnBusca);
 
     if(encontrado == -1) {
         printf("livro não encontrado!\n");
@@ -158,9 +163,12 @@ void atualizarLivro(){
 
         switch(opcaoCampo) {
             case 1:
-                receberISBN(atualizado.ISBN);
+                do{receberISBN(atualizado.ISBN);
+                    if(buscarLivroPorISBN(livros, total, atualizado.ISBN) != -1) 
+                        {printf("ISBN ja cadastrado.");}
+                    else{break;}
+                }while(1);
                 break;
-            
             case 2:
                 printf("\nTítulo do livro ");
                 receberTitulo(atualizado.titulo);

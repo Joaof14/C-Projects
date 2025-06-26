@@ -8,5 +8,5 @@ int gerarNovoId(const char *arquivoPath);
 
 void carregarLivros(Livros ** livros, int * total);
 
-
+int buscarLivroPorISBN(Livros * livros, int total, const char * isbnBusca);
 #endif

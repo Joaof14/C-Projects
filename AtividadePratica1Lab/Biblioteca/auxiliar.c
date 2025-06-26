@@ -110,3 +110,13 @@ void carregarLivros(Livros ** livros, int * total){
 }
 
 
+//Busca ISBN em livros e retorna id
+int buscarLivroPorISBN(Livros * livros, int total, const char * isbnBusca){
+    for(int i = 0; i < total; i++) {
+        if(strcmp(livros[i].ISBN, isbnBusca) == 0) {
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
