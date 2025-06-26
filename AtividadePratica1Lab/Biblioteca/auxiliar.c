@@ -1,4 +1,4 @@
-// ------Funções de mcriações de arquivos e verificação de existência -------
+// ------Funções de mcriações de arquivos/carregamento de dados e verificação de existência/Buscas nos arquivos-------
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
