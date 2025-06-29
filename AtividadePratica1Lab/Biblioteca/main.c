@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h> 
 #include "tipos.h"
 #include "livros.h"
 #include "emprestimos.h"
@@ -8,7 +9,7 @@
 #include "auxiliar.h"
 
 int main(){
-
+    setlocale(LC_ALL, "Portuguese_Brazil.1252"); // formatação dos acentos na hora de imprimir para o usuário
 
     int op;
     do {

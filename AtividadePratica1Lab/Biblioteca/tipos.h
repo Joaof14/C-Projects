@@ -8,7 +8,7 @@ typedef struct {
     int mes;
     int ano;
 } Data;
-enum GENERO {FICÇÃO, DIDÁTICO, BIOGRAFIA, COMEDIA, TERROR, ROMANCE};
+enum GENERO {FICCAO, DIDATICO, BIOGRAFIA, COMEDIA, TERROR, ROMANCE}; // REMOÇÃO DOS ACENTOS NOS enums
 
 typedef struct {
     int id;
@@ -23,7 +23,7 @@ enum STATUS {CONCLUIDO, ANDAMENTO, CANCELADO};
 typedef struct {
     unsigned int id;
     char leitor[200];
-    char ISBN[13];
+    char ISBN[14]; // alteração realizada (28/06/2025) -- O tamanho é 14 para comportar 13 números + o terminador nulo '\0'
     Data DataDoEmprestimo;
     enum STATUS status;
 } Emprestimos;

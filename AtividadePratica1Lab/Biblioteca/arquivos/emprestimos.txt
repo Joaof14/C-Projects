@@ -1,1 +1,5 @@
-id,ISBN,leitor,data,status
+id,leitor,isbn,dia,mes,ano,status
+1,Guilherme,9788424916404,29,6,2025,0
+2,Fred,9788424916404,29,6,2025,1
+3,Joazinho,1234567891234,29,6,2025,1
+4,Frederico,1231231231231,29,6,2025,0
