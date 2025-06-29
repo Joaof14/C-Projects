@@ -9,7 +9,7 @@
 #include "auxiliar.h"
 
 int main(){
-    setlocale(LC_ALL, ".UTF8"); // formatação dos acentos na hora de imprimir para o usuário
+    setlocale(LC_ALL, "Portuguese_Brazil.1252"); // formatação dos acentos na hora de imprimir para o usuário
 
     int op;
     do {
