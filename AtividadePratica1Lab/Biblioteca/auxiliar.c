@@ -120,3 +120,41 @@ int buscarLivroPorISBN(Livro * livros, int total, const char * isbnBusca){
     }
     return -1;
 }
+
+// FUN ADICIONADA HOJE (28/06/2025)
+
+void carregarEmprestimos(Emprestimos **emprestimos, int *total) {
+    FILE *arquivo = fopen("arquivos/emprestimos.txt", "r");
+    *total = 0;
+    if (!arquivo) {
+        *emprestimos = NULL;
+        return; // Arquivo ainda não existe, não há o que carregar.
+    }
+
+    // Pular cabeçalho 
+    char buffer[512];
+    fgets(buffer, sizeof(buffer), arquivo);
+
+    Emprestimos temp;
+    int status_temp;
+
+    // Ler cada linha do arquivo
+    while (fscanf(arquivo, "%u,%199[^,],%13[^,],%d,%d,%d,%d\n", 
+                  &temp.id,
+                  temp.leitor,
+                  temp.ISBN,
+                  &temp.DataDoEmprestimo.dia,
+                  &temp.DataDoEmprestimo.mes,
+                  &temp.DataDoEmprestimo.ano,
+                  &status_temp) == 7) {
+        
+        // Atribuir o status convertido à struct temporária
+        temp.status = (enum STATUS)status_temp;
+
+        // Alocar/Realocar memória para o vetor
+        *emprestimos = realloc(*emprestimos, (*total + 1) * sizeof(Emprestimos));
+        (*emprestimos)[*total] = temp;
+        (*total)++;
+    }
+    fclose(arquivo);
+}      

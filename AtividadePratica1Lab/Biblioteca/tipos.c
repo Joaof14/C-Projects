@@ -12,8 +12,8 @@
 //Função de conversão de enums
 const char* generoParaTexto(enum GENERO genero){
     switch(genero) {
-        case FICÇÃO: return "Ficção";
-        case DIDÁTICO: return "Didático";
+        case FICCAO: return "Ficção"; // REMOÇÃO DOS ACENTOS AQUI TAMBÉM ( FOI FEITO DIRETO NA  DEFINIÇÃO DO ENUM LÁ NO "tipos.h")
+        case DIDATICO: return "Didático"; // REMOÇÃO DOS ACENTOS AQUI TAMBÉM ( FOI FEITO DIRETO NA  DEFINIÇÃO DO ENUM LÁ NO "tipos.h")
         case BIOGRAFIA: return "Biografia";
         case COMEDIA: return "Comédia";
         case TERROR: return "Terror";
