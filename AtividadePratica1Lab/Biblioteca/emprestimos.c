@@ -186,6 +186,27 @@ void registrarDevol() {
         return;
     }
 
+    // Mostra todos os empréstimos em andamento
+    printf("\n--- Empréstimos em Andamento ---\n");
+    int algum = 0;
+    for (int i = 0; i < total; i++) {
+        if (emprestimos[i].status == ANDAMENTO) {
+            printf("ID: %u | Leitor: %s | ISBN do Livro: %s | Data: %02d/%02d/%d\n",
+                   emprestimos[i].id,
+                   emprestimos[i].leitor,
+                   emprestimos[i].ISBN,
+                   emprestimos[i].DataDoEmprestimo.dia,
+                   emprestimos[i].DataDoEmprestimo.mes,
+                   emprestimos[i].DataDoEmprestimo.ano);
+            algum = 1;
+        }
+    }
+    if (!algum) {
+        printf("Nenhum empréstimo em andamento para devolução.\n");
+        free(emprestimos);
+        return;
+    }
+
     printf("\n--- Registrar Devolução ---\n");
     unsigned int id_busca;
     printf("Digite o ID do empréstimo para devolver (ou 0 para cancelar): ");
