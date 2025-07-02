@@ -44,9 +44,9 @@ int main(){
         return 1;
     }
 
-    int vetor[] = {3,7,6,4,8,5,9,2}; //Caso aleatório
+    //int vetor[] = {3,7,6,4,8,5,9,2}; //Caso aleatório
     //int vetor[] = {2,3,4,5,6,7,8,9}; //Melhor cenário
-    //int vetor[] = {9,7,6,5,4,3,2}; //Pior cenário
+    int vetor[] = {9,7,6,5,4,3,2}; //Pior cenário
 
     int tamanho = sizeof(vetor)/sizeof(int);
 
