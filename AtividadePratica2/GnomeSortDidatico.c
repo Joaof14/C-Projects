@@ -45,8 +45,8 @@ int main(){
     }
 
     int vetor[] = {3,7,6,4,8,5,9,2}; //Caso aleatório
-    //int vetor[] = {2,3,4,6,5,7,8,9}; //Melhor cenário: O(n)
-    //int vetor[] = {9,7,6,5,4,3,2}; //Pior cenário: O(n)
+    //int vetor[] = {2,3,4,5,6,7,8,9}; //Melhor cenário
+    //int vetor[] = {9,7,6,5,4,3,2}; //Pior cenário
 
     int tamanho = sizeof(vetor)/sizeof(int);
 
@@ -54,3 +54,5 @@ int main(){
     fclose(arquivo);
     return 0;
 }
+
+//gcc GnomeSortDidatico.c -o GSD; ./GSD

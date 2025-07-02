@@ -27,7 +27,7 @@ int main(){
     clock_t inicio, fim;
     double tempo_gasto;
 
-    int tamanho = 100000;
+    int tamanho = 50000;
 
     int * vetor_original = (int *) malloc(tamanho * sizeof(int));
         int * vetor = (int *)malloc(tamanho*sizeof(int));
@@ -92,3 +92,5 @@ int main(){
 
     return 0;
 }
+
+//gcc comparativo.c sort.c -o comparativo; ./comparativo
