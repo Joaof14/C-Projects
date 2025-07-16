@@ -1,15 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node{
-    int data;
-    struct Node* next;
-} Node;
-
-typedef struct Queue{
-    Node * front;
-    Node * rear;
-} Queue;
+#include "types.h"
 
 void initQueue (Queue * queue){
     queue->front = queue->rear = NULL;
