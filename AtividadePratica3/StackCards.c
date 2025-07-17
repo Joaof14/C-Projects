@@ -4,40 +4,46 @@
 
 void initStack(Stack * stack){
     stack->top = NULL;
+    stack->size = 0;
 }
 
 int isEmpty(Stack * stack){
     return stack->top == NULL;
 }
 
-void push(Stack * stack, int value){
+void push(Stack * stack, Card card){
     Node * newNode = (Node*)malloc(sizeof(Node));
-
-    newNode->data = value;
+    if(!newNode) {
+        printf("Erro de alocação de memória\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->card = card;
     newNode->next = stack->top;
     stack->top = newNode;
+    stack->size++;
 }
 
-int pop(Stack * stack) {
+Card pop(Stack * stack) {
     if (isEmpty(stack)){
         printf("Erro de fila vazia\n");
-        return -1;
+        return (Card){'\0', '\0'};
     }
 
     Node * temp = stack->top;
-    int poppedValue = temp->data;
+    Card poppedCard = temp->card;
     stack->top =temp->next;
     free(temp);
-    return poppedValue;
+    stack->size--;
+    return poppedCard;
 
 }
 
-int peek(Stack* stack){
+Card peek(Stack* stack){
     if (isEmpty(stack)){
         printf("Erro de fila vazia\n");
-        return -1;
+        return (Card){'\0', '\0'};
     }
-    return stack->top->data;
+    return stack->top->card;
 
 }
 
@@ -47,9 +53,9 @@ void display(Stack * stack){
         return;
     }
     Node * temp = stack->top;
-    printf("Pilha: ");
+    printf("Pilha (%d cartas): ", stack->size);
     while(temp){
-        printf("%d ", temp->data);
+         printf("[%c%c] ", temp->card.value, temp->card.suit);
         temp = temp->next;
     }
     printf("\n");
@@ -57,21 +63,22 @@ void display(Stack * stack){
 
 
 int main(){
-    Stack stack;
-    initStack(&stack);
+   Stack baralho;
+    initStack(&baralho);
 
-    push(&stack, 10);
-    push(&stack, 20);
-    push(&stack, 30);
-    display(&stack);
-    pop(&stack);
-    push(&stack, 40);
-    display(&stack);
+    // Adicionando algumas cartas
+    push(&baralho, (Card){'H', 'A'});  // Ás de copas
+    push(&baralho, (Card){'D', 'K'});  // Rei de ouros
+    push(&baralho, (Card){'S', 'Q'});  // Dama de espadas
+    
+    displayStack(&baralho);
 
-    printf("Elemento no topo: %d\n", peek(&stack));
-    printf("Desimpilhando: %d\n", pop(&stack));
-    display(&stack);
+    // Removendo uma carta
+    Card carta = pop(&baralho);
+    printf("Carta removida: %c%c\n", carta.value, carta.suit);
+    
+    displayStack(&baralho);
+
     return 0;
-}
 
 

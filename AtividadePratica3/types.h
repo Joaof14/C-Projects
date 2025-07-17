@@ -1,13 +1,13 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef struct Cards{
+typedef struct Card{
     char suit;
     char value;
-} Cards;
+} Card;
 
 typedef struct Node{
-    Cards card;
+    Card card;
     struct Node* next;
 } Node;
 
