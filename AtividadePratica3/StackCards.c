@@ -80,5 +80,5 @@ int main(){
     displayStack(&baralho);
 
     return 0;
-
+}
 
