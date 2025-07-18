@@ -6,29 +6,40 @@ typedef struct Card{
     char value;
 } Card;
 
-typedef struct Node{
+typedef struct CardNode{
     Card card;
     struct Node* next;
-} Node;
+} CardNode;
 
 typedef struct Stack{
-    Node * top;
+    CardNode * top;
     int size;
     
 } Stack;
 
-typedef struct Queue{
-    Node * front; //inicio da fila
-    Node * rear; //fim da fila
-    int size;
-    
-} Queue;
+
+
+
 
 typedef struct {
     char name[50];
     Stack hand;   //cartas na mão do jogador (pode ser uma pilha ou lista)
     int points;
 } Player;
+
+typedef struct PlayerNode{
+    Player player;
+    struct Node* next;
+} PlayerNode;
+
+typedef struct Queue{
+    PlayerNode * front; //inicio da fila
+    PlayerNode * rear; //fim da fila
+    int size;
+    
+} Queue;
+
+
 
 
 #endif

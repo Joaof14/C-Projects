@@ -12,7 +12,7 @@ int isEmpty(Stack * stack){
 }
 
 void push(Stack * stack, Card card){
-    Node * newNode = (Node*)malloc(sizeof(Node));
+    CardNode * newNode = (CardNode*)malloc(sizeof(CardNode));
     if(!newNode) {
         printf("Erro de alocação de memória\n");
         exit(EXIT_FAILURE);
@@ -29,7 +29,7 @@ Card pop(Stack * stack) {
         return (Card){'\0', '\0'};
     }
 
-    Node * temp = stack->top;
+    CardNode * temp = stack->top;
     Card poppedCard = temp->card;
     stack->top =temp->next;
     free(temp);
@@ -52,7 +52,7 @@ void display(Stack * stack){
         printf("Erro de fila vazia\n");
         return;
     }
-    Node * temp = stack->top;
+    CardNode * temp = stack->top;
     printf("Pilha (%d cartas): ", stack->size);
     while(temp){
          printf("[%c%c] ", temp->card.value, temp->card.suit);

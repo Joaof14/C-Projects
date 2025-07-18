@@ -4,16 +4,21 @@
 
 void initQueue (Queue * queue){
     queue->front = queue->rear = NULL;
+    queue->size = NULL;
 }
 
 int isEmpty(Queue * queue){
     return queue->front == NULL;
 }
 
-void enqueue(Queue * queue, int value){
-    Node * newNode = (Node*)malloc(sizeof(Node));
+void enqueue(Queue * queue, Player player){
+    PlayerNode * newNode = (PlayerNode*)malloc(sizeof(PlayerNode));
+    if (!newNode) {
+        printf("Erro de alocação de memória\n");
+        exit(EXIT_FAILURE);
+    }
 
-    newNode->data = value;
+    newNode->player = player;
     newNode->next = NULL;
 
     if(queue->rear == NULL){
@@ -23,30 +28,40 @@ void enqueue(Queue * queue, int value){
         queue->rear->next = newNode;
         queue->rear = newNode;
     }
+    queue->size++;
 }
 
-int dequeue(Queue* queue){
+Player dequeue(Queue* queue){
     if (isEmpty(queue)){
         printf("Erro: Fila Vazia\n");
-        return -1;
+        Player invalid;
+        strcpy(invalid.name, "INVALID");
+        invalid.points = -1;
+        initStack(&invalid.hand);
+        return invalid;
     }
 
-    Node * temp = queue-> front;
-    int dequeuedValue = temp->data;
+    PlayerNode * temp = queue-> front;
+    Player dequeuedPlayer = temp->player;
     queue->front = temp->next;
     if(queue->front == NULL){
         queue->rear == NULL;
     }
     free(temp);
-    return dequeuedValue;
+    queue->size--;
+    return dequeuedPlayer;
 }
 
-int front(Queue * queue){
+Player front(Queue * queue){
     if (isEmpty(queue)){
         printf("Erro: Fila Vazia\n");
-        return -1;
+        Player invalid;
+        strcpy(invalid.name, "INVALID");
+        invalid.points = -1;
+        initStack(&invalid.hand);
+        return invalid;
     }
-    return queue->front->data;
+    return queue->front->player;
 
 }
 
@@ -55,28 +70,71 @@ void display(Queue * queue){
         printf("Fila Vazia.\n");
         return;
     }
-    Node * temp = queue->front;
-    printf("Fila: ");
+    PlayerNode * temp = queue->front;
+    printf("Fila de Jogadores (%d): \n", queue->size);
 
     while(temp){
-        printf("%d ", temp->data);
+        printf("- %s (Pontos: %d, Cartas: %d)\n", temp->player.name, temp->player.points, temp->player.hand.size);
         temp = temp->next;
     }
     printf("\n");
 }
 
+void rotateQueue(Queue* queue){
+    if (isEmpty(queue) || queue->front == queue->rear) {
+        return;
+    }
+    PlayerNode* temp = queue->front;
+    queue->front = (PlayerNode*)temp->next;
+    queue->rear->next = (struct PlayerNode*)temp;
+    queue->rear = temp;
+    temp->next = NULL;
+}
+
 int main(){
-    Queue queue;
-    initQueue(&queue);
+    Queue turnQueue;
+    initQueue(&turnQueue);
     
-    enqueue(&queue, 10);
-    enqueue(&queue, 20);
-    enqueue(&queue, 30);
-    display(&queue);
-
-    printf("elemento na frente: %d\n",front(&queue));
-    printf("Desinfileirando: %d\n", dequeue(&queue));
-    display(&queue);
-
+    // Criar jogadores de teste
+    Player p1, p2, p3;
+    
+    strcpy(p1.name, "Alice");
+    initStack(&p1.hand);
+    p1.points = 10;
+    
+    strcpy(p2.name, "Bob");
+    initStack(&p2.hand);
+    p2.points = 15;
+    
+    strcpy(p3.name, "Carol");
+    initStack(&p3.hand);
+    p3.points = 8;
+    
+    // Adicionar jogadores à fila
+    enqueue(&turnQueue, p1);
+    enqueue(&turnQueue, p2);
+    enqueue(&turnQueue, p3);
+    
+    // Mostrar fila
+    display(&turnQueue);
+    
+    // Simular rodada de turnos
+    printf("\n--- Simulando turnos ---\n");
+    for (int i = 0; i < 3; i++) {
+        Player current = front(&turnQueue);
+        printf("Vez de: %s\n", current.name);
+        
+        // Rotacionar fila
+        rotateQueue(&turnQueue);
+        printf("Após rotação: ");
+        display(&turnQueue);
+    }
+    
+    // Remover jogador
+    Player removed = dequeue(&turnQueue);
+    printf("\nJogador removido: %s\n", removed.name);
+    printf("Fila após remoção: ");
+    display(&turnQueue);
+    
     return 0;
 }
