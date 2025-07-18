@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "QueueActions.h"
+#include "StackCards.h"
 
 void initQueue (Queue * queue){
     queue->front = queue->rear = NULL;
-    queue->size = NULL;
+    queue->size = 0;
 }
 
-int isEmpty(Queue * queue){
+int isEmptyQueue(Queue * queue){
     return queue->front == NULL;
 }
 
@@ -33,7 +35,7 @@ void enqueue(Queue * queue, Player player){
 }
 
 Player dequeue(Queue* queue){
-    if (isEmpty(queue)){
+    if (isEmptyQueue(queue)){
         printf("Erro: Fila Vazia\n");
         Player invalid;
         strcpy(invalid.name, "INVALID");
@@ -54,7 +56,7 @@ Player dequeue(Queue* queue){
 }
 
 Player front(Queue * queue){
-    if (isEmpty(queue)){
+    if (isEmptyQueue(queue)){
         printf("Erro: Fila Vazia\n");
         Player invalid;
         strcpy(invalid.name, "INVALID");
@@ -66,8 +68,8 @@ Player front(Queue * queue){
 
 }
 
-void display(Queue * queue){
-    if (isEmpty(queue)){
+void displayQueue(Queue * queue){
+    if (isEmptyQueue(queue)){
         printf("Fila Vazia.\n");
         return;
     }
@@ -82,7 +84,7 @@ void display(Queue * queue){
 }
 
 void rotateQueue(Queue* queue){
-    if (isEmpty(queue) || queue->front == queue->rear) {
+    if (isEmptyQueue(queue) || queue->front == queue->rear) {
         return;
     }
     PlayerNode* temp = queue->front;
@@ -92,7 +94,7 @@ void rotateQueue(Queue* queue){
     temp->next = NULL;
 }
 
-int main(){
+int Queuemain(){
     Queue turnQueue;
     initQueue(&turnQueue);
     

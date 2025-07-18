@@ -8,7 +8,7 @@ typedef struct Card{
 
 typedef struct CardNode{
     Card card;
-    struct Node* next;
+    struct CardNode* next;
 } CardNode;
 
 typedef struct Stack{

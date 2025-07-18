@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "types.h"
 #include "StackCards.h"
+
 
 void initStack(Stack * stack){
     stack->top = NULL;
     stack->size = 0;
 }
 
-int isEmpty(Stack * stack){
+int isEmptyStack(Stack * stack){
     return stack->top == NULL;
 }
 
@@ -25,7 +27,7 @@ void push(Stack * stack, Card card){
 }
 
 Card pop(Stack * stack) {
-    if (isEmpty(stack)){
+    if (isEmptyStack(stack)){
         printf("Erro de fila vazia\n");
         return (Card){'\0', '\0'};
     }
@@ -40,7 +42,7 @@ Card pop(Stack * stack) {
 }
 
 Card peek(Stack* stack){
-    if (isEmpty(stack)){
+    if (isEmptyStack(stack)){
         printf("Erro de fila vazia\n");
         return (Card){'\0', '\0'};
     }
@@ -48,8 +50,8 @@ Card peek(Stack* stack){
 
 }
 
-void display(Stack * stack){
-    if (isEmpty(stack)){
+void displayStack(Stack * stack){
+    if (isEmptyStack(stack)){
         printf("Erro de fila vazia\n");
         return;
     }
