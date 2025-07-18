@@ -29,7 +29,7 @@ typedef struct {
 
 typedef struct PlayerNode{
     Player player;
-    struct Node* next;
+    struct PlayerNode* next;
 } PlayerNode;
 
 typedef struct Queue{
