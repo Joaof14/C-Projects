@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "types.h"
+#include "QueueActions.h"
 
 void initQueue (Queue * queue){
     queue->front = queue->rear = NULL;

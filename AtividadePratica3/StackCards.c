@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "types.h"
+#include "StackCards.h"
 
 void initStack(Stack * stack){
     stack->top = NULL;
@@ -60,7 +61,6 @@ void display(Stack * stack){
     }
     printf("\n");
 }
-
 
 int main(){
    Stack baralho;
