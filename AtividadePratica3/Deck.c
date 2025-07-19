@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "types.h"
 #include "StackCards.h"
+#include "Deck.h"
 
 //Criar baralho no inicio do jogo
 void createDeck(Stack* deck) {
