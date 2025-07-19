@@ -94,7 +94,7 @@ void rotateQueue(Queue* queue){
     temp->next = NULL;
 }
 
-int Queuemain(){
+int QueueMain(){
     Queue turnQueue;
     initQueue(&turnQueue);
     
@@ -119,7 +119,7 @@ int Queuemain(){
     enqueue(&turnQueue, p3);
     
     // Mostrar fila
-    display(&turnQueue);
+    displayQueue(&turnQueue);
     
     // Simular rodada de turnos
     printf("\n--- Simulando turnos ---\n");
@@ -130,14 +130,14 @@ int Queuemain(){
         // Rotacionar fila
         rotateQueue(&turnQueue);
         printf("Após rotação: ");
-        display(&turnQueue);
+        displayQueue(&turnQueue);
     }
     
     // Remover jogador
     Player removed = dequeue(&turnQueue);
     printf("\nJogador removido: %s\n", removed.name);
     printf("Fila após remoção: ");
-    display(&turnQueue);
+    displayQueue(&turnQueue);
     
     return 0;
 }

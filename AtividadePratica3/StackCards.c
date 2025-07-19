@@ -64,7 +64,7 @@ void displayStack(Stack * stack){
     printf("\n");
 }
 
-int main(){
+int StackMain(){
    Stack baralho;
     initStack(&baralho);
 

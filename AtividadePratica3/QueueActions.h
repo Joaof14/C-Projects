@@ -11,7 +11,7 @@ Player dequeue(Queue* queue);
 
 Player front(Queue * queue);
 
-void display(Queue * queue);
+void displayQueue(Queue * queue);
 
 void rotateQueue(Queue* queue);
 

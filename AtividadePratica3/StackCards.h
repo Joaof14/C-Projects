@@ -13,4 +13,6 @@ Card peek(Stack* stack);
 
 void displayStack(Stack * stack);
 
+int StackMain();
+
 #endif
