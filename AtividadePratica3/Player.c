@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "StackCards.h"
+#include "QueueActions.h" 
+#include "Player.h"
 
 void initPlayer(Player* player, const char* name) {
     strncpy(player->name, name, sizeof(player->name) - 1);
@@ -18,17 +21,19 @@ Card removeCardFromPlayer(Player* player, int cardIndex) {
     initStack(&temp);
     Card selected;
     
-    //transferir cartas até o índice desejado
+    // Transferir cartas até o índice desejado
     for (int i = 0; i < cardIndex; i++) {
-        push(&temp, pop(&player->hand));
+        Card c = pop(&player->hand);  
+        push(&temp, c);               
     }
     
     //remover carta selecionada
     selected = pop(&player->hand);
     
-    // Devolver cartas restantes
+    //devolver cartas restantes
     while (!isEmptyStack(&temp)) {
-        push(&player->hand, pop(&temp));
+        Card c = pop(&temp);         
+        push(&player->hand, c);       
     }
     
     return selected;
@@ -52,10 +57,12 @@ void displayPlayerHand(Player* player) {
         push(&tempStack, c);
     }
     
-    // Mostrar cartas e recolocar na mão do jogador
+    //mostrar cartas
     for (int i = 0; i < count; i++) {
         Card c = pop(&tempStack);
         printf("  %d: [%c%c]\n", i+1, c.value, c.suit);
         push(&player->hand, c);
     }
 }
+
+//Player.c

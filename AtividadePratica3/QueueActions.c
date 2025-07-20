@@ -48,7 +48,7 @@ Player dequeue(Queue* queue){
     Player dequeuedPlayer = temp->player;
     queue->front = temp->next;
     if(queue->front == NULL){
-        queue->rear == NULL;
+        queue->rear = NULL;
     }
     free(temp);
     queue->size--;
@@ -65,7 +65,6 @@ Player front(Queue * queue){
         return invalid;
     }
     return queue->front->player;
-
 }
 
 void displayQueue(Queue * queue){
@@ -94,50 +93,4 @@ void rotateQueue(Queue* queue){
     temp->next = NULL;
 }
 
-int QueueMain(){
-    Queue turnQueue;
-    initQueue(&turnQueue);
-    
-    // Criar jogadores de teste
-    Player p1, p2, p3;
-    
-    strcpy(p1.name, "Alice");
-    initStack(&p1.hand);
-    p1.points = 10;
-    
-    strcpy(p2.name, "Bob");
-    initStack(&p2.hand);
-    p2.points = 15;
-    
-    strcpy(p3.name, "Carol");
-    initStack(&p3.hand);
-    p3.points = 8;
-    
-    // Adicionar jogadores à fila
-    enqueue(&turnQueue, p1);
-    enqueue(&turnQueue, p2);
-    enqueue(&turnQueue, p3);
-    
-    // Mostrar fila
-    displayQueue(&turnQueue);
-    
-    // Simular rodada de turnos
-    printf("\n--- Simulando turnos ---\n");
-    for (int i = 0; i < 3; i++) {
-        Player current = front(&turnQueue);
-        printf("Vez de: %s\n", current.name);
-        
-        // Rotacionar fila
-        rotateQueue(&turnQueue);
-        printf("Após rotação: ");
-        displayQueue(&turnQueue);
-    }
-    
-    // Remover jogador
-    Player removed = dequeue(&turnQueue);
-    printf("\nJogador removido: %s\n", removed.name);
-    printf("Fila após remoção: ");
-    displayQueue(&turnQueue);
-    
-    return 0;
-}
+//QueueActions.c

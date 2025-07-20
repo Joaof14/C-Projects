@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "types.h"
 #include "StackCards.h"
+#include "QueueActions.h"
+#include "Deck.h"
+#include "Player.h"
+#include "Game.h"
 
 void startGame(int numPlayers) {
     //inicializar estruturas
@@ -49,7 +53,7 @@ void startGame(int numPlayers) {
         printf("\n--- VEZ DE %s ---\n", currentPlayer.name);
         
         //mostrar estado do jogo
-        printf("Topo do descarte: [%c%c]\n", peekStack(&discardPile).value, peekStack(&discardPile).suit);
+        printf("Topo do descarte: [%c%c]\n", peek(&discardPile).value, peek(&discardPile).suit);
         displayPlayerHand(&currentPlayer);
         
         // TODO: Implementar ações do jogador
@@ -75,3 +79,5 @@ void startGame(int numPlayers) {
         }
     }
 }
+
+//Game.c

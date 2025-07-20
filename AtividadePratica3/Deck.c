@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "types.h"
 #include "StackCards.h"
 #include "Deck.h"
@@ -18,7 +19,7 @@ void createDeck(Stack* deck) {
 }
 
 void shuffleDeck(Stack* deck) {
-    // Converter pilha para array
+    //converter pilha para array
     int n = deck->size;
     Card* array = (Card*)malloc(n * sizeof(Card));
     
@@ -43,3 +44,7 @@ void shuffleDeck(Stack* deck) {
     
     free(array);
 }
+
+//Deck.c
+
+

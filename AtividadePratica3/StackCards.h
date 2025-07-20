@@ -1,18 +1,13 @@
-#ifndef STACKCARDS_H
-#define STACKCARDS_H
+#ifndef STACK_CARDS_H
+#define STACK_CARDS_H
 
-void initStack(Stack * stack);
+#include "types.h"
 
-int isEmptyStack(Stack * stack);
-
-void push(Stack * stack, Card card);
-
-Card pop(Stack * stack); 
-
+void initStack(Stack *stack);
+int isEmptyStack(Stack *stack);
+void push(Stack *stack, Card card);
+Card pop(Stack *stack);
 Card peek(Stack* stack);
-
-void displayStack(Stack * stack);
-
-int StackMain();
+void displayStack(Stack *stack);
 
 #endif

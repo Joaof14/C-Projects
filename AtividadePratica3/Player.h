@@ -1,12 +1,11 @@
-#define PLAYER_H
 #ifndef PLAYER_H
+#define PLAYER_H
 
-void initPlayer(Player* player, const char* name) ;
+#include "types.h"
 
-void addCardToPlayer(Player* player, Card card) ;
-
-Card removeCardFromPlayer(Player* player, int cardIndex) ;
-
+void initPlayer(Player* player, const char* name);
+void addCardToPlayer(Player* player, Card card);
+Card removeCardFromPlayer(Player* player, int cardIndex);
 void displayPlayerHand(Player* player);
 
-#endif 
+#endif

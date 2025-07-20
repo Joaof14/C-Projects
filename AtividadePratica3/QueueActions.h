@@ -1,19 +1,14 @@
-#ifndef QUEUEACTIONS
-#define QUEUEACTIONS
+#ifndef QUEUE_ACTIONS_H
+#define QUEUE_ACTIONS_H
 
-void initQueue (Queue * queue);
+#include "types.h"
 
-int isEmptyQueue(Queue * queue);
-
-void enqueue(Queue * queue, Player player);
-
-Player dequeue(Queue* queue);
-
-Player front(Queue * queue);
-
-void displayQueue(Queue * queue);
-
-void rotateQueue(Queue* queue);
-
+void initQueue(Queue *queue);
+int isEmptyQueue(Queue *queue);
+void enqueue(Queue *queue, Player player);
+Player dequeue(Queue *queue);
+Player front(Queue *queue);
+void displayQueue(Queue *queue);
+void rotateQueue(Queue *queue);
 
 #endif

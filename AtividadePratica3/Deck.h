@@ -1,9 +1,10 @@
-#define DECK_H
 #ifndef DECK_H
+#define DECK_H
 
-
-void shuffleDeck(Stack* deck);
+#include "types.h"
+#include "StackCards.h"
 
 void createDeck(Stack* deck);
+void shuffleDeck(Stack* deck);
 
 #endif

@@ -2,6 +2,7 @@
 #include "types.h"
 #include "StackCards.h"
 #include "Player.h"
+#include "Actions.h"
 
 // jogador compra carta
 void buyCard(Player* player, Stack* deck) {
@@ -30,3 +31,5 @@ int isValidPlay(Card topDiscard, Card playedCard) {
     return (topDiscard.suit == playedCard.suit) || 
            (topDiscard.value == playedCard.value);
 }
+
+//Actions.c

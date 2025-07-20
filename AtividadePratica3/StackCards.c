@@ -63,23 +63,6 @@ void displayStack(Stack * stack){
     printf("\n");
 }
 
-int StackMain(){
-   Stack baralho;
-    initStack(&baralho);
 
-    // Adicionando algumas cartas
-    push(&baralho, (Card){'H', 'A'});  // Ás de copas
-    push(&baralho, (Card){'D', 'K'});  // Rei de ouros
-    push(&baralho, (Card){'S', 'Q'});  // Dama de espadas
-    
-    displayStack(&baralho);
 
-    // Removendo uma carta
-    Card carta = pop(&baralho);
-    printf("Carta removida: %c%c\n", carta.value, carta.suit);
-    
-    displayStack(&baralho);
-
-    return 0;
-}
-
+//StackCards.c

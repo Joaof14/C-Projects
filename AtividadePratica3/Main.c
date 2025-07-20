@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "types.h"
 #include "StackCards.h"
 #include "Player.h"
 #include "Game.h"
 #include "Actions.h"
 
-void startGame(int numPlayers);
 
 int main() {
     srand(time(NULL));
@@ -34,3 +34,5 @@ int main() {
     
     return 0;
 }
+
+//Main.c
