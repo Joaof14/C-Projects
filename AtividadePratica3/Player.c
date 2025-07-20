@@ -60,7 +60,7 @@ void displayPlayerHand(Player* player) {
     //mostrar cartas
     for (int i = 0; i < count; i++) {
         Card c = pop(&tempStack);
-        printf("  %d: [%c%c]\n", i+1, c.value, c.suit);
+        printf("  %d: [%c-%c]\n", count - i, c.value, c.suit);
         push(&player->hand, c);
     }
 }

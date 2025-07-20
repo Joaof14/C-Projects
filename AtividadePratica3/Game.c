@@ -53,12 +53,13 @@ void startGame(int numPlayers) {
         Player* currentPlayer = &turnQueue.front->player;
         printf("\n--- VEZ DE %s ---\n", currentPlayer->name);
         
-        //mostrar estado do jogo
-        printf("Topo do descarte: [%c%c]\n", peek(&discardPile).value, peek(&discardPile).suit);
-        displayPlayerHand(currentPlayer);
+       
 
         int action;
         do {
+             //mostrar estado do jogo
+            printf("Topo do descarte: [%c-%c]\n", peek(&discardPile).value, peek(&discardPile).suit);
+            displayPlayerHand(currentPlayer);
             printf("\nEscolha uma ação:\n");
             printf("1. Comprar carta\n");
             printf("2. Descartar carta\n");
@@ -71,7 +72,7 @@ void startGame(int numPlayers) {
                 if (currentPlayer->hand.size == 0) {
                     printf("Você não tem cartas para descartar!\n");
                 } else {
-                    displayPlayerHand(currentPlayer);
+                    
                     printf("Escolha o número da carta para descartar: ");
                     int idx;
                     scanf("%d", &idx);
@@ -88,10 +89,12 @@ void startGame(int numPlayers) {
 
                     if (idx < 1 || idx > currentPlayer->hand.size) {
                         printf("Índice inválido!\n");
+                        action = 0;
                     } else if (node && isValidPlay(top, node->card)) {
                         discardCard(currentPlayer, idx, &discardPile);
                     } else {
                         printf("Jogada inválida! Carta não combina com o topo do descarte.\n");
+                        action = 0;
                     }
                 }
             }
