@@ -7,8 +7,8 @@
 
 //Criar baralho no inicio do jogo
 void createDeck(Stack* deck) {
-    char suits[] = {'H', 'D', 'C', 'S'}; // Hearts, Diamonds, Clubs, Spades
-    char values[] = {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'};
+    char suits[] = {'C', 'O', 'P', 'E'}; //  C = Copas, O = Ouros,P = Paus,E = Espadas
+    char values[] = {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'D', 'J', 'Q', 'K'}; // D = 10
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 13; j++) {
