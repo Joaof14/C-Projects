@@ -23,7 +23,7 @@ typedef struct Stack{
 
 typedef struct {
     char name[50];
-    Stack hand;   //cartas na mão do jogador (pode ser uma pilha ou lista)
+    Stack hand;   //cartas na mão do jogador 
     int points;
 } Player;
 
