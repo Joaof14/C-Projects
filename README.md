@@ -104,5 +104,4 @@ C-projects/
 ## 📝 Licenciamento
 Todos os projetos estão licenciados sob **[MIT License](https://opensource.org/licenses/MIT)**.
 
-```
 
