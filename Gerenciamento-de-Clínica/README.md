@@ -40,10 +40,9 @@ SistemaClinico/
 │   ├── Consulta.c          # Agendamento
 │   ├── Relatorios.c        # Geração de relatórios
 │   ├── Auxiliar.c          # Funções utilitárias
-│   └── Headers/            # Definições de estruturas
-│       ├── tipos.h
-│       ├── Medico.h
-│       └── ... 
+│   ├── tipos.h             # Definições de estruturas
+│   ├── Medico.h
+│   └── ... 
 └── README.md               # Documentação
 ```
 
