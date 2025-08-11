@@ -65,14 +65,23 @@ gcc -o executavel *.c
 ```plaintext
 C-projects/
 ├── Gerenciamento-de-Clínica/
-│   ├── Codigos
 │   ├── Arquivos/
+│   ├── Auxiliar.c
+│   ├── Consulta.c
+│   ├── Main.c
+│   ├── Medico.c
+│   ├── Paciente.c
+│   ├── Relatorios.c
+│   ├── tipos.h
 │   └── README.md
 ├── Gerenciamento-de-Biblioteca/
 │   ├── arquivos/
-│   ├── biblioteca.h
-│   ├── livro.c
+│   ├── auxiliar.c
+│   ├── emprestimos.c
+│   ├── livros.c
 │   ├── main.c
+│   ├── relatorios.c
+│   ├── tipos.c
 │   └── README.md
 ├── Algoritmos-de-Ordenacao/
 │   ├── sort.h
