@@ -1,6 +1,3 @@
-Aqui está o README geral para seu repositório **C-projects**, com espaço dedicado para os colaboradores e uma visão unificada dos projetos:
-
-```markdown
 # 🚀 C Projects Collection
 
 Repositório contendo **4 projetos em linguagem C** desenvolvidos como parte de estudos e aplicações práticas de programação. Cada projeto é independente e possui sua própria documentação detalhada.
