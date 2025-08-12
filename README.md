@@ -1,6 +1,6 @@
 # 🚀 C Projects Collection
 
-Repositório contendo **4 projetos em linguagem C** desenvolvidos como parte de estudos e aplicações práticas de programação. Cada projeto é independente e possui sua própria documentação detalhada.
+Repositório contendo **4 projetos em linguagem C** desenvolvidos como parte de estudos e aplicações práticas de programação. Cada projeto é independente e possui sua própria documentação detalhada de acordo com as especificidades requeridas.
 
 ---
 
