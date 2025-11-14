@@ -105,7 +105,7 @@ All projects are licensed under the **[MIT License](https://opensource.org/licen
 
 
 
-# 🚀 Projetos em Linguagem C
+# 🚀 Projetos em Linguagem C (lang: pt-Br)
 
 Repositório contendo **4 projetos em linguagem C** desenvolvidos como parte de estudos e aplicações práticas de programação. Cada projeto é independente e possui sua própria documentação detalhada.
 
